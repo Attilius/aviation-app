@@ -1,5 +1,6 @@
 <script setup xmlns="http://www.w3.org/1999/html">
 import { onMounted, ref } from 'vue';
+import ArrayToStringTransformer from '../Tools/ArrayToStringTransformer.js';
 
 defineProps({
     modelValue: String,
@@ -13,6 +14,12 @@ defineProps({
 defineEmits(['update:modelValue']);
 
 const input = ref(null);
+
+let inputBaseCssClasses = `relative h-full w-full border-t-0 border-l-0 border-r-0 input-border-outline
+    bg-transparent py-1 focus:ring-transparent transition-colors z-10 peer duration-500`;
+
+let labelBaseCssClasses = `absolute left-2 -top-0.5 text-md cursor-text peer-focus:text-sm peer-focus:-top-4
+    transition-all duration-500 peer-focus:px-2`;
 
 onMounted(() => {
     if (input.value.hasAttribute('autofocus')) {
@@ -43,6 +50,16 @@ const setLabelPositionAndSize = () => {
     }
 }
 
+const classAttributeExpander = (baseCssClasses, customClasses) => {
+
+    if (customClasses) {
+        const transformedArray = new ArrayToStringTransformer(customClasses).transform();
+        baseCssClasses += " " + transformedArray;
+    }
+
+    return baseCssClasses;
+}
+
 defineExpose({ focus: () => input.value.focus() });
 </script>
 
@@ -51,19 +68,14 @@ defineExpose({ focus: () => input.value.focus() });
         <input :type="type"
                :id="id"
                ref="input"
-               class="relative h-full w-full border-t-0 border-l-0 border-r-0 input-border-outline
-                      bg-transparent py-1 focus:ring-transparent transition-colors z-10
-                      peer duration-500"
-               :class="customClasses"
+               :class="classAttributeExpander(inputBaseCssClasses, customClasses)"
                required
                autocomplete="off"
                :value="modelValue"
                @input="$emit('update:modelValue', $event.target.value); setLabelPositionAndSize()">
         <label :for="label._for_"
-               class="absolute left-2 top-2 text-md cursor-text peer-focus:text-sm peer-focus:-top-4
-                      transition-all duration-500 peer-focus:px-2"
-               :class="label.customClasses">
-               {{ label.value }}
+               :class="classAttributeExpander(labelBaseCssClasses, label.customClasses)">
+               {{ label.textValue }}
         </label>
     </div>
 </template>
