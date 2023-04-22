@@ -7,7 +7,7 @@ const inputAttributes = {
         type: 'text',
         label: {
             _for_: 'full_name',
-            value: 'Name',
+            textValue: 'Name',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
@@ -17,7 +17,7 @@ const inputAttributes = {
         type: 'text',
         label: {
             _for_: 'first_name',
-            value: 'First Name',
+            textValue: 'First Name',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
@@ -27,7 +27,7 @@ const inputAttributes = {
         type: 'text',
         label: {
             _for_: 'last_name',
-            value: 'Last Name',
+            textValue: 'Last Name',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
@@ -37,7 +37,7 @@ const inputAttributes = {
         type: 'email',
         label: {
             _for_: 'email',
-            value: 'Email',
+            textValue: 'Email',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
@@ -47,7 +47,7 @@ const inputAttributes = {
         type: 'password',
         label: {
             _for_: 'password',
-            value: 'Password',
+            textValue: 'Password',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
@@ -57,7 +57,7 @@ const inputAttributes = {
         type: 'password',
         label: {
             _for_: 'password_confirmation',
-            value: 'Confirm Password',
+            textValue: 'Confirm Password',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
@@ -67,7 +67,7 @@ const inputAttributes = {
         type: 'text',
         label: {
             _for_: 'code',
-            value: 'Code',
+            textValue: 'Code',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
@@ -77,7 +77,7 @@ const inputAttributes = {
         type: 'text',
         label: {
             _for_: 'recovery_code',
-            value: 'Recovery Code',
+            textValue: 'Recovery Code',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
@@ -87,7 +87,7 @@ const inputAttributes = {
         type: 'password',
         label: {
             _for_: 'current_password',
-            value: 'Current Password',
+            textValue: 'Current Password',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
@@ -97,7 +97,7 @@ const inputAttributes = {
         type: 'password',
         label: {
             _for_: 'new_password',
-            value: 'New Password',
+            textValue: 'New Password',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
@@ -107,7 +107,7 @@ const inputAttributes = {
         type: 'text',
         label: {
             _for_: 'departure_from',
-            value: 'Departure from*',
+            textValue: 'Departure from*',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-baseGray', 'focus:border-b-lightskyblue', 'text-baseGray']
@@ -117,7 +117,7 @@ const inputAttributes = {
         type: 'text',
         label: {
             _for_: 'arriving_at',
-            value: 'Arriving at*',
+            textValue: 'Arriving at*',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
@@ -127,7 +127,7 @@ const inputAttributes = {
         type: 'date',
         label: {
             _for_: 'departure_date',
-            value: 'Departure date*',
+            textValue: 'Departure date*',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
@@ -137,7 +137,7 @@ const inputAttributes = {
         type: 'date',
         label: {
             _for_: 'return_date',
-            value: 'Return date*',
+            textValue: 'Return date*',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
@@ -147,7 +147,7 @@ const inputAttributes = {
         type: 'text',
         label: {
             _for_: 'passengers',
-            value: 'Passengers',
+            textValue: 'Passengers',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-baseGray', 'focus:border-b-lightskyblue', 'text-custom_blue', 'px-3', 'cursor-pointer']
@@ -156,7 +156,7 @@ const inputAttributes = {
         id: 'cabin_class',
         label: {
             _for_: 'cabin_class',
-            value: 'Cabin',
+            textValue: 'Cabin',
             customClasses: ['text-custom_blue', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
@@ -165,7 +165,7 @@ const inputAttributes = {
         id: 'travel_type',
         label: {
             _for_: 'travel_type',
-            value: 'Travel type',
+            textValue: 'Travel type',
             customClasses: ['text-custom_blue', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
