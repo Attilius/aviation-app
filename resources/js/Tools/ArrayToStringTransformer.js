@@ -7,8 +7,10 @@ export default class ArrayToStringTransformer {
     transform(){
         let transformedResult = '';
 
-        this.array.map(item => transformedResult += ' ' + item);
+        if(Array.isArray(this.array)) {
+            this.array.map(item => transformedResult += ' ' + item);
+        }
 
-        return transformedResult;
+        return transformedResult.trim();
     }
 }
