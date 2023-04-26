@@ -65,6 +65,9 @@ describe("Input attributes builder tests", () => {
     });
 
     test("Build method type of return is object", () => {
+        builder = new InputAttributesBuilder('service_1');
+        builder._formServices = testFormServices;
+        builder._inputAttributes = testInputAttributes;
         expect(typeof builder.build()).toBe("object");
     });
 
@@ -91,5 +94,44 @@ describe("Input attributes builder tests", () => {
                                  },
                         "type": "text"}
         });
+    });
+
+    // Test cases for exceptional situations
+
+    test("Missing argument case should throw an error", () => {
+        function expectError() {
+            builder.build();
+        }
+        expect(expectError).toThrow(new Error("Missing argument (formServiceName: )"));
+    });
+
+    test("Wrong argument case should throw an error", () => {
+        const exceptionArguments = [
+            13,
+            ['test', 'name'],
+            {formServiceName: 'test'},
+            true,
+            3.14,
+            null,
+            NaN,
+            () => {return 'formServiceName';}
+        ];
+        function expectError() {
+            exceptionArguments.forEach((item) => {
+                builder = new InputAttributesBuilder(item);
+                builder.build();
+            });
+        }
+        expect(expectError).toThrow("Wrong type of argument (formServiceName: )");
+    });
+
+    test("If the argument does not exist should throw an error", () => {
+        builder = new InputAttributesBuilder('test');
+        function expectError() {
+            if(!Object.keys(testFormServices).includes(builder.formServiceName)) {
+                builder.build();
+            }
+        }
+        expect(expectError).toThrow(new Error(`Argument ('${builder.formServiceName}') does not exist`));
     });
 });
