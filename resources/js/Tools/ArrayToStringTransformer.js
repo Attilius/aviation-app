@@ -4,6 +4,11 @@ export default class ArrayToStringTransformer {
         this.array = array;
     }
 
+    /**
+     * It transforms the content of array to string.
+     *
+     * @returns {string}
+     */
     transform() {
         let transformedResult = '';
 
@@ -14,12 +19,24 @@ export default class ArrayToStringTransformer {
         return transformedResult.trim();
     }
 
+    /**
+     * It investigates the type of attribute is an array and the content of array it type is string.
+     *
+     * @param array
+     * @returns {boolean}
+     * @private
+     */
     _arrayContentValidator(array) {
         let validResult = false;
 
         if(Array.isArray(array) && array.length > 0) {
             for (let i = 0; i < array.length; i++) {
-                typeof array[1] === 'string' ? validResult = true : validResult;
+                if(typeof array[i] === 'string') {
+                    validResult = true
+                } else {
+                    validResult = false;
+                    break;
+                }
             }
         }
         return validResult;
