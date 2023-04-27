@@ -8,7 +8,8 @@ defineProps({
 </script>
 
 <template>
-    <button :type="type"
+    <button data-testId="primary-button"
+            :type="type"
             class="rounded-full inline-flex items-center px-4 py-2 bg-rebecca_purple border
                    border-transparent font-semibold text-xs text-whitesmoke uppercase tracking-widest
                    hover:bg-whitesmoke hover:text-rebecca_purple hover:border-rebecca_purple active:bg-gray-900
