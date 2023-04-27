@@ -114,7 +114,8 @@ describe("Input attributes builder tests", () => {
             3.14,
             null,
             NaN,
-            () => {return 'formServiceName';}
+            () => {return 'formServiceName';},
+            [[false]]
         ];
         function expectError() {
             exceptionArguments.forEach((item) => {
@@ -122,15 +123,13 @@ describe("Input attributes builder tests", () => {
                 builder.build();
             });
         }
-        expect(expectError).toThrow("Wrong type of argument (formServiceName: )");
+        expect(expectError).toThrow(new Error("Wrong type of argument (formServiceName: )"));
     });
 
     test("If the argument does not exist should throw an error", () => {
         builder = new InputAttributesBuilder('test');
         function expectError() {
-            if(!Object.keys(testFormServices).includes(builder.formServiceName)) {
-                builder.build();
-            }
+            builder.build();
         }
         expect(expectError).toThrow(new Error(`Argument ('${builder.formServiceName}') does not exist`));
     });
