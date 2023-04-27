@@ -10,21 +10,28 @@ export default class InputAttributesBuilder {
     }
 
     /**
-     * Specify the input fields of a given form service in an array.
+     * Specify the name of input fields of a given form service in an array.
+     *
      * @returns array
+     * @private
      */
     _getServiceParameters() {
         return this._formServices[this.formServiceName];
     }
 
+    /**
+     * It builds an object from attributes for an input field.
+     *
+     * @returns {{}}
+     */
     build() {
-        let materialUiInputAttributes = {};
+        let resultInputAttributes = {};
 
         if(this.formServiceName !== '' && typeof this.formServiceName === 'string'
             && Object.keys(this._formServices).includes(this.formServiceName)) {
 
             this._getServiceParameters().forEach((item) => {
-                materialUiInputAttributes[item] = this._inputAttributes[item];
+                resultInputAttributes[item] = this._inputAttributes[item];
             });
 
         } else {
@@ -41,6 +48,6 @@ export default class InputAttributesBuilder {
             }
         }
 
-        return materialUiInputAttributes;
+        return resultInputAttributes;
     }
 }
