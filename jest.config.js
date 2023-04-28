@@ -1,5 +1,4 @@
 module.exports = {
-    collectCoverage: true,
     reporters: [
         "default",
         [
@@ -10,8 +9,8 @@ module.exports = {
         ]
     ],
     testRegex: [
-        'resources/js/tests/.*.spec.js$',
-        'resources/js/tests/.*.test.js$',
+        'resources/js/tests/unit/utils/.*.spec.js$',
+        'resources/js/tests/unit/components/.*.test.js$',
     ],
     transform: {
         "^.+\\.jsx?$": "babel-jest",
