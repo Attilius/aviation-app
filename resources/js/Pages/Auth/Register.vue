@@ -7,7 +7,7 @@ import InputError from '../../Components/InputError.vue';
 import InputLabel from '../../Components/InputLabel.vue';
 import PrimaryButton from '../../Components/PrimaryButton.vue';
 import MaterialUiInput from '../../Components/MaterialUiInput.vue';
-import InputAttributesBuilder from '../../Tools/InputAttributesBuilder.js';
+import InputAttributesBuilder from '../../Utils/InputAttributesBuilder.js';
 
 const form = useForm({
     name: '',
