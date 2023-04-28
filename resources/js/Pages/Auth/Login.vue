@@ -6,7 +6,7 @@ import Checkbox from '../../Components/Checkbox.vue';
 import InputError from '../../Components/InputError.vue';
 import PrimaryButton from '../../Components/PrimaryButton.vue';
 import MaterialUiInput from '../../Components/MaterialUiInput.vue';
-import InputAttributesBuilder from '../../Tools/InputAttributesBuilder.js';
+import InputAttributesBuilder from '../../Utils/InputAttributesBuilder.js';
 
 defineProps({
     canResetPassword: Boolean,
