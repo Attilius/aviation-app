@@ -1,6 +1,6 @@
 <script setup xmlns="http://www.w3.org/1999/html">
 import { onMounted, ref } from 'vue';
-import ArrayToStringTransformer from '../Tools/ArrayToStringTransformer.js';
+import ArrayToStringTransformer from '../Utils/ArrayToStringTransformer.js';
 
 defineProps({
     modelValue: String,
@@ -22,9 +22,9 @@ let labelBaseCssClasses = `absolute left-2 -top-0.5 text-md cursor-text peer-foc
     transition-all duration-500 peer-focus:px-2`;
 
 onMounted(() => {
-    if (input.value.hasAttribute('autofocus')) {
+   /* if (input.value.hasAttribute('autofocus')) {
         input.value.focus();
-    }
+    }*/
     setLabelPositionAndSize();
 });
 
@@ -65,7 +65,8 @@ defineExpose({ focus: () => input.value.focus() });
 
 <template>
     <div class="relative p-0 bg-transparent border-none">
-        <input :type="type"
+        <input data-testId="mui-input"
+               :type="type"
                :id="id"
                ref="input"
                :class="classAttributeExpander(inputBaseCssClasses, customClasses)"
@@ -74,6 +75,7 @@ defineExpose({ focus: () => input.value.focus() });
                :value="modelValue"
                @input="$emit('update:modelValue', $event.target.value); setLabelPositionAndSize()">
         <label :for="label._for_"
+               data-testId="mui-label"
                :class="classAttributeExpander(labelBaseCssClasses, label.customClasses)">
                {{ label.textValue }}
         </label>
