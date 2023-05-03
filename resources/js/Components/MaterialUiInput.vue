@@ -8,7 +8,6 @@ defineProps({
     type: String,
     label: Object,
     customClasses: Array,
-    basicValue: String
 });
 
 defineEmits(['update:modelValue']);
@@ -22,9 +21,9 @@ let labelBaseCssClasses = `absolute left-2 -top-0.5 text-md cursor-text peer-foc
     transition-all duration-500 peer-focus:px-2`;
 
 onMounted(() => {
-   /* if (input.value.hasAttribute('autofocus')) {
+    if (input.value.hasAttribute('autofocus')) {
         input.value.focus();
-    }*/
+    }
     setLabelPositionAndSize();
 });
 
@@ -40,11 +39,11 @@ const setLabelPositionAndSize = () => {
             if (input_item.value && input_item.id === label_item.htmlFor) {
                 label_item.classList.add('px-2');
                 label_item.classList.replace('text-md', 'text-sm');
-                label_item.classList.replace('top-2', '-top-4');
+                label_item.classList.replace('-top-0.5', '-top-4');
             } else if (!input_item.value && input_item.id === label_item.htmlFor) {
                 label_item.classList.remove('px-2');
                 label_item.classList.replace('text-sm', 'text-md');
-                label_item.classList.replace('-top-4', 'top-2');
+                label_item.classList.replace('-top-4', '-top-0.5');
             }
         }
     }
@@ -73,9 +72,9 @@ defineExpose({ focus: () => input.value.focus() });
                required
                autocomplete="off"
                :value="modelValue"
-               @input="$emit('update:modelValue', $event.target.value); setLabelPositionAndSize()">
-        <label :for="label._for_"
-               data-testId="mui-label"
+               @input="$emit('update:modelValue', $event.target.value); setLabelPositionAndSize();">
+        <label data-testId="mui-label"
+               :for="label._for_"
                :class="classAttributeExpander(labelBaseCssClasses, label.customClasses)">
                {{ label.textValue }}
         </label>
