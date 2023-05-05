@@ -217,7 +217,7 @@ body {
 input[type=date]:required:invalid::-webkit-datetime-edit {
     color: transparent;
 }
-input[type=date]:focus::-webkit-datetime-edit {
+input[type=date]:focus {
     color: black !important;
 }
 
