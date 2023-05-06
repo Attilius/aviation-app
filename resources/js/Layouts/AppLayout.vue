@@ -53,6 +53,7 @@ const logout = () => {
                     <div class="flex justify-between h-16">
 
                         <!-- Logo -->
+
                         <div class="shrink-0 flex items-center">
 
                             <!--TODO fixing routing with or without authentication!!!-->
