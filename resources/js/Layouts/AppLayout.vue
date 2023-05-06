@@ -56,8 +56,6 @@ const logout = () => {
 
                         <div class="shrink-0 flex items-center">
 
-                            <!--TODO fixing routing with or without authentication!!!-->
-
                             <Link :href="route('home')">
                                 <ApplicationLogo class="block h-12 w-auto" />
                             </Link>
