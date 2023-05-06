@@ -97,6 +97,7 @@ const logout = () => {
                                         <div class="w-60">
 
                                             <!-- Team Management -->
+
                                             <template v-if="$page.props.jetstream.hasTeamFeatures">
                                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                                     Manage Team
