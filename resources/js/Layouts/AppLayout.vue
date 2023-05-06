@@ -73,6 +73,7 @@ const logout = () => {
                             </div>
 
                             <!-- Teams Dropdown -->
+
                             <div v-if="!canLogin" >
                                 <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
                                     <template #trigger>
