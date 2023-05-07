@@ -299,6 +299,7 @@ const logout = () => {
                             </form>
 
                             <!-- Team Management -->
+
                             <template v-if="$page.props.jetstream.hasTeamFeatures">
                                 <div class="border-t border-gray-200" />
 
