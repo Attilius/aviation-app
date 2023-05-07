@@ -250,6 +250,7 @@ const logout = () => {
                 </div>
 
                 <!-- Responsive Navigation Menu -->
+
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div v-for="value in mainNavLinkAttributes" class="pt-1 pb-1">
                         <ResponsiveNavLink :href="value.href" :active="value.active">
