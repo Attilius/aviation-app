@@ -217,6 +217,7 @@ const logout = () => {
                         </div>
 
                         <!-- Hamburger -->
+
                         <div class="-mr-2 flex items-center sm:hidden">
                             <button class="inline-flex items-center justify-center p-2 rounded-md text-white
                                            hover:text-lightskyblue hover:bg-gray-100 focus:outline-none
