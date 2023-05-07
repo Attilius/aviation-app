@@ -168,7 +168,6 @@ const logout = () => {
 
                                                 <i class="material-icons prefix mr-1">account_circle</i>
                                                 {{ $page.props.user.name }}
-
                                             </button>
                                         </span>
                                         </template>
