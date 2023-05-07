@@ -192,6 +192,7 @@ const logout = () => {
                                             <div class="border-t border-gray-100" />
 
                                             <!-- Authentication -->
+
                                             <form @submit.prevent="logout">
                                                 <DropdownLink as="button">
                                                     Logout
