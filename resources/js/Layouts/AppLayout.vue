@@ -169,9 +169,8 @@ const logout = () => {
                                                 <i class="material-icons prefix mr-1">account_circle</i>
                                                 {{ $page.props.user.name }}
 
-                                                <!-- <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                                 </svg> -->
                                             </button>
                                         </span>
                                         </template>
