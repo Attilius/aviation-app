@@ -308,6 +308,7 @@ const logout = () => {
                                 </div>
 
                                 <!-- Team Settings -->
+
                                 <ResponsiveNavLink :href="route('teams.show', $page.props.user.current_team)"
                                                    :active="route().current('teams.show')">
                                     Team Settings
