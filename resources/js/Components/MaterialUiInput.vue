@@ -17,7 +17,7 @@ const input = ref(null);
 let inputBaseCssClasses = `relative h-full w-full border-t-0 border-l-0 border-r-0 input-border-outline
     bg-transparent py-1 focus:ring-transparent transition-colors z-10 peer duration-500`;
 
-let labelBaseCssClasses = `absolute left-2 -top-0.5 text-md cursor-text peer-focus:text-sm peer-focus:-top-4
+let labelBaseCssClasses = `absolute left-2 -top-0.5 text-md cursor-text peer-focus:text-xs peer-focus:-top-4
     transition-all duration-500 peer-focus:px-2`;
 
 onMounted(() => {
@@ -38,11 +38,11 @@ const setLabelPositionAndSize = () => {
         for (let label_item of labels) {
             if (input_item.value && input_item.id === label_item.htmlFor) {
                 label_item.classList.add('px-2');
-                label_item.classList.replace('text-md', 'text-sm');
+                label_item.classList.replace('text-md', 'text-xs');
                 label_item.classList.replace('-top-0.5', '-top-4');
             } else if (!input_item.value && input_item.id === label_item.htmlFor) {
                 label_item.classList.remove('px-2');
-                label_item.classList.replace('text-sm', 'text-md');
+                label_item.classList.replace('text-xs', 'text-md');
                 label_item.classList.replace('-top-4', '-top-0.5');
             }
         }
