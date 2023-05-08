@@ -39,12 +39,12 @@ const submit = () => {
         <form @submit.prevent="submit">
             <div>
                 <MaterialUiInput
-                    :id="builder.full_name.id"
+                    :id="builder.name.id"
                     v-model="form.name"
-                    :type="builder.full_name.type"
+                    :type="builder.name.type"
                     class="mt-1 block w-full"
-                    :customClasses="builder.full_name.customClasses"
-                    :label="builder.full_name.label"
+                    :customClasses="builder.name.customClasses"
+                    :label="builder.name.label"
                 />
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
