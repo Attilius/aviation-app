@@ -14,7 +14,7 @@ defineEmits(['update:modelValue']);
 
 const input = ref(null);
 
-let inputBaseCssClasses = `relative h-full w-full border-t-0 border-l-0 border-r-0 input-border-outline
+let inputBaseCssClasses = `relative h-8 w-full border-t-0 border-l-0 border-r-0 input-border-outline
     bg-transparent focus:ring-transparent transition-colors z-10 peer duration-500`;
 
 let labelBaseCssClasses = `absolute left-2 px-1 -top-0.5 text-md cursor-text peer-focus:text-xs peer-focus:-top-4
