@@ -2,11 +2,11 @@
  * Contain input items and his attributes.
  */
 const inputAttributes = {
-    full_name: {
-        id: 'full_name',
+    name: {
+        id: 'name',
         type: 'text',
         label: {
-            _for_: 'full_name',
+            _for_: 'name',
             textValue: 'Name',
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
