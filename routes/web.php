@@ -28,6 +28,6 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/home', function () {
-        return Inertia::render('Home');
+        return Inertia::render('Welcome');
     })->name('home');
 });
