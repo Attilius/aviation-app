@@ -146,7 +146,6 @@ const logout = () => {
                                     </template>
                                 </Dropdown>
 
-
                                 <!-- Settings Dropdown -->
 
                                 <div class="text-whitesmoke sm:-my-px sm:ml-0 sm:flex h-full menu-item">
