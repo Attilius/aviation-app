@@ -37,11 +37,9 @@ const setLabelPositionAndSize = () => {
     for (let input_item of inputs) {
         for (let label_item of labels) {
             if (input_item.value && input_item.id === label_item.htmlFor) {
-                label_item.classList.add('px-2');
                 label_item.classList.replace('text-md', 'text-xs');
                 label_item.classList.replace('-top-0.5', '-top-4');
             } else if (!input_item.value && input_item.id === label_item.htmlFor) {
-                label_item.classList.remove('px-2');
                 label_item.classList.replace('text-xs', 'text-md');
                 label_item.classList.replace('-top-4', '-top-0.5');
             }
