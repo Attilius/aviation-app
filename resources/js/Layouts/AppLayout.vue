@@ -149,7 +149,7 @@ const logout = () => {
 
                                 <!-- Settings Dropdown -->
 
-                                <div class="relative">
+                                <div class="text-whitesmoke sm:-my-px sm:ml-0 sm:flex h-full menu-item">
                                     <Dropdown align="right" width="48">
                                         <template #trigger>
                                             <button v-if="$page.props.jetstream.managesProfilePhotos"
@@ -157,17 +157,17 @@ const logout = () => {
                                                       focus:outline-none focus:border-gray-300 transition">
                                                 <img class="h-8 w-8 rounded-full object-cover"
                                                      :src="$page.props.user.profile_photo_url"
-                                                     :alt="$page.props.user.name">
+                                                     :alt="$page.props.auth.user.name">
                                             </button>
 
                                             <span v-else class="hidden sm:-my-px sm:ml-0 sm:flex h-66">
                                             <button type="button"
-                                                    class="inline-flex items-center text-base font-semi-bold
-                                                           text-whitesmoke focus:outline-none transition menu-item
-                                                           hover:text-whitesmoke leading-5 py-auto h-full">
+                                                    class="inline-flex items-center text-sm font-medium
+                                                           text-whitesmoke focus:outline-none transition
+                                                           hover:text-whitesmoke leading-5 py-auto mt-1">
 
                                                 <i class="material-icons prefix mr-1">account_circle</i>
-                                                {{ $page.props.user.name }}
+                                                {{ $page.props.auth.user.name }}
                                             </button>
                                         </span>
                                         </template>
@@ -176,7 +176,7 @@ const logout = () => {
 
                                             <!-- Account Management -->
 
-                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                            <div class="block px-4 py-2 text-xs text-custom_blue border-b border-gray-200">
                                                 Manage Account
                                             </div>
 
@@ -265,15 +265,15 @@ const logout = () => {
                             <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 mr-3">
                                 <img class="h-10 w-10 rounded-full object-cover"
                                      :src="$page.props.user.profile_photo_url"
-                                     :alt="$page.props.user.name">
+                                     :alt="$page.props.auth.user.name">
                             </div>
 
                             <div>
                                 <div class="font-semi-bold text-base text-white">
-                                    {{ $page.props.user.name }}
+                                    {{ $page.props.auth.user.name }}
                                 </div>
                                 <div class="font-semi-bold text-sm text-white">
-                                    {{ $page.props.user.email }}
+                                    {{ $page.props.auth.user.email }}
                                 </div>
                             </div>
                         </div>
@@ -294,7 +294,7 @@ const logout = () => {
 
                             <form method="POST" @submit.prevent="logout">
                                 <ResponsiveNavLink as="button">
-                                    Log Out
+                                    Logout
                                 </ResponsiveNavLink>
                             </form>
 
