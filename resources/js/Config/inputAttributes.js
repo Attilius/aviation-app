@@ -157,7 +157,7 @@ const inputAttributes = {
         label: {
             _for_: 'cabin_class',
             textValue: 'Cabin',
-            customClasses: ['text-custom_blue', 'peer-focus:text-lightskyblue']
+            customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
     },
@@ -166,7 +166,7 @@ const inputAttributes = {
         label: {
             _for_: 'travel_type',
             textValue: 'Travel type',
-            customClasses: ['text-custom_blue', 'peer-focus:text-lightskyblue']
+            customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
     },
