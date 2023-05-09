@@ -55,11 +55,9 @@ const logout = () => {
                         <!-- Logo -->
 
                         <div class="shrink-0 flex items-center">
-
-                            <Link :href="route('home')">
-                                <ApplicationLogo class="block h-12 w-auto" />
-                            </Link>
+                            <ApplicationLogo class="block h-12 w-auto" />
                         </div>
+
                         <div class="flex">
 
                             <!-- Navigation Links -->
