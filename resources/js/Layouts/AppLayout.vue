@@ -354,6 +354,7 @@ const logout = () => {
             </nav>
 
             <!-- Page Content -->
+
             <main>
                 <slot />
             </main>
