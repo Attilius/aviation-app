@@ -360,6 +360,7 @@ const logout = () => {
             </main>
 
             <!-- Page Footer -->
+
             <footer class="text-center lg:text-left bg-custom_blue">
                 <div class="flex justify-center items-center p-6">
                     <div class="mr-12 hidden lg:block text-info">
