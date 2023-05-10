@@ -61,6 +61,7 @@ const send = () => {
             </div>
 
             <!-- Departure -->
+
             <div class="flex col-span-5 sm:col-span-5">
                 <i class="material-icons prefix mr-1 relative top-3 text-2xl">flight_takeoff</i>
                 <MaterialUiInput
