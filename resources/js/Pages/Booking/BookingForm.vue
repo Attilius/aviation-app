@@ -122,6 +122,7 @@ const send = () => {
             </div>
 
             <!-- Passengers -->
+
             <div class="flex col-span-3 sm:col-span-3">
                 <i class="material-icons prefix mr-1 relative top-3 text-2xl">hail</i>
                 <MaterialUiInput
