@@ -30,4 +30,8 @@ Route::middleware([
     Route::get('/home', function () {
         return Inertia::render('Welcome');
     })->name('home');
+
+    Route::get('/about', function () {
+        return Inertia::render('About');
+    })->name('about');
 });
