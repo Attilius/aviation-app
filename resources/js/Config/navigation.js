@@ -11,22 +11,22 @@
 const mainNavLinkAttributes = {
     home: {
         href: route('home'),
-        active: route().current('home'),
+        active: true,
         name: 'Home'
     },
     about: {
-        href: route('home'),
-        active: route().current('about'),
+        href: route('about'),
+        active: false,
         name: 'About'
     },
     services: {
         href: route('home'),
-        active: route().current('services'),
+        active: false,
         name: 'Services'
     },
     contact: {
         href: route('home'),
-        active: route().current('contact'),
+        active: false,
         name: 'Contact'
     },
  /*   dashboard: {
