@@ -46,6 +46,7 @@ const send = () => {
         <template #form>
 
             <!-- Travel type -->
+
             <div class="col-span-2 sm:col-span-2">
                 <MaterialUiSelect
                     :id="inputAttributes.travel_type.id"
