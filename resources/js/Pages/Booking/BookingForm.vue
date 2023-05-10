@@ -1,6 +1,6 @@
 <script setup>
 import { watch } from 'vue';
-import { Link, router, useForm } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import FormTemplate from '../../Components/FormTemplate.vue';
 import InputError from '../../Components/InputError.vue';
 import PrimaryButton from '../../Components/PrimaryButton.vue';
