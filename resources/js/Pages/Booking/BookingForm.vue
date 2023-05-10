@@ -93,6 +93,7 @@ const send = () => {
 
 
             <!-- Departure date -->
+
             <div class="col-span-3 sm:col-span-3">
                 <MaterialUiInput
                     :id="inputAttributes.departure_date.id"
