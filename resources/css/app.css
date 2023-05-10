@@ -176,10 +176,10 @@ body {
 }
 
 .book-form {
-    width: 130%;
+    width: 140%;
     height: 205px;
     position: relative;
-    left: -180px;
+    left: -210px;
     top: 50px;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
