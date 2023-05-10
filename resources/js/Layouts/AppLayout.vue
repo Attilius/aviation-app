@@ -39,11 +39,22 @@ const switchToTeam = (team) => {
 const logout = () => {
     router.post(route('logout'));
 };
+
+
+Object.entries(mainNavLinkAttributes).forEach((item) => {
+    const menuItemName = item[0];
+    const pageLocationName = location.href.split('/')[3];
+
+    (menuItemName === pageLocationName) ? item[1].active = true : item[1].active = false;
+});
+
 </script>
 
 <template>
     <div>
-        <Head :title="title" />
+        <Head>
+            <title>{{ title }}</title>
+        </Head>
         <div class="max-h-screen">
             <nav class="bg-custom_blue fixed top-0 left-0 right-0 z-20">
 
