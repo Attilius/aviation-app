@@ -28,7 +28,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/home', function () {
-        return Inertia::render('Welcome');
+        return Inertia::render('Home');
     })->name('home');
 
     Route::get('/about', function () {
