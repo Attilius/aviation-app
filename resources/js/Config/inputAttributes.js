@@ -110,7 +110,7 @@ const inputAttributes = {
             textValue: 'Departure from*',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
         },
-        customClasses: ['border-b-baseGray', 'focus:border-b-lightskyblue', 'text-baseGray']
+        customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
     },
     arriving_at: {
         id: 'arriving_at',
