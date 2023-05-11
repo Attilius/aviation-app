@@ -14,8 +14,8 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
-    password: '',
+    email: import.meta.env.VITE_DEMO_USER_EMAIL,
+    password: import.meta.env.VITE_DEMO_USER_PASSWORD,
     remember: false,
 });
 
@@ -41,7 +41,7 @@ const submit = () => {
             <AuthenticationCardLogo />
         </template>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 font-medium text-sm text-success text-center">
             {{ status }}
         </div>
 
