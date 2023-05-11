@@ -27,6 +27,7 @@ module.exports = {
             'red': '#f00',
             'danger': '#DC2626',
             'baseGray': '#9c9c9c',
+            'success' : '#16a34a'
         },
         fontFamily: {
             sans: ['Poppins', ...defaultTheme.fontFamily.sans],
@@ -34,7 +35,8 @@ module.exports = {
         backgroundImage: {
             'auth': "url('/img/backgrounds/auth-bg.jpg')",
             'profileHeader': "url('/img/profile-header.jpg')",
-            'welcomeHeader': "url('/img/backgrounds/welcome-header-bg.jpg')"
+            'homeHeader': "url('/img/backgrounds/home-header-bg.jpg')",
+            'welcome': "url(/img/backgrounds/welcome-bg.jpg)"
         },
     },
 
