@@ -3,7 +3,7 @@
  */
 const formServices = {
     login: ['email', 'password'],
-    register: ['full_name', 'email', 'password', 'password_confirmation'],
+    register: ['name', 'email', 'password', 'password_confirmation'],
     confirmPassword: ['password'],
     twoFactorChallenge: ['code', 'recovery_code'],
     forgotPassword: ['email'],
