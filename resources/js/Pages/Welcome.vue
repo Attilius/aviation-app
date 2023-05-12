@@ -1,6 +1,5 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
-//import AppLayout from '../Layouts/AppLayout.vue';
 import ApplicationLogo from '../Components/ApplicationLogo.vue';
 import NavLink from '../Components/NavLink.vue';
 import { authNavLinkAttributes }  from '../Config/navigation.js';
