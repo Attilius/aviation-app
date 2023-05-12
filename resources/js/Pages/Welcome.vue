@@ -59,7 +59,6 @@ defineProps({
         </div>
     </div>
 
- <AppLayout :canLogin="canLogin" :canRegister="canRegister" title="Welcome">
         <div class="content pt-16">
             Welcome
             <Welcome />
