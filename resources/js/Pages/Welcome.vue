@@ -2,7 +2,6 @@
 import { Head } from '@inertiajs/vue3';
 //import AppLayout from '../Layouts/AppLayout.vue';
 //import HomeHeader from '../Components/HomeHeader.vue';
-//import HomeContent from './Content/HomeContent.vue';
 import ApplicationLogo from '../Components/ApplicationLogo.vue';
 import NavLink from '../Components/NavLink.vue';
 import { authNavLinkAttributes }  from '../Config/navigation.js';
