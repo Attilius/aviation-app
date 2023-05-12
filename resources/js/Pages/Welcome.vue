@@ -62,7 +62,6 @@ defineProps({
         <div class="content pt-16">
             Welcome
             <Welcome />
-            <HomeContent />
         </div>
 </template>
 
