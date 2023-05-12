@@ -59,13 +59,12 @@ defineProps({
         </div>
     </div>
 
-   <!-- <AppLayout :canLogin="canLogin" :canRegister="canRegister" title="Welcome">
+ <AppLayout :canLogin="canLogin" :canRegister="canRegister" title="Welcome">
         <div class="content pt-16">
             Welcome
             <Welcome />
             <HomeContent />
         </div>
-    </AppLayout> -->
 </template>
 
 <style scoped>
