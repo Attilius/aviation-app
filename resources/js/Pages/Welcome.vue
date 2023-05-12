@@ -60,7 +60,6 @@ defineProps({
     </div>
 
         <div class="content pt-16">
-        </div>
 </template>
 
 <style scoped>
