@@ -58,7 +58,9 @@ defineProps({
 
                 <!-- Newsletter -->
 
-            <p class="text-whitesmoke">Subscribe to our newsletter to receive our latest offers</p>
+            <p class="text-whitesmoke lg:text-xl md:text-md sm:text-sm">
+                Subscribe to our newsletter to receive our latest offers
+            </p>
         </div>
     </div>
 
