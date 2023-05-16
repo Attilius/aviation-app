@@ -1,8 +1,12 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import ApplicationLogo from '../Components/ApplicationLogo.vue';
 import NavLink from '../Components/NavLink.vue';
 import { authNavLinkAttributes }  from '../Config/navigation.js';
+import InputError from '../Components/InputError.vue';
+import MaterialUiInput from '../Components/MaterialUiInput.vue';
+import InputAttributesBuilder from '../Utils/InputAttributesBuilder.js';
+import PrimaryButton from '../Components/PrimaryButton.vue';
 
 defineProps({
     canLogin: Boolean,
@@ -10,6 +14,13 @@ defineProps({
     laravelVersion: String,
     phpVersion: String,
 });
+
+const form = useForm({
+    email: ''
+});
+
+const inputAttributes = new InputAttributesBuilder('subscribe').build();
+
 </script>
 
 <template>
@@ -61,6 +72,25 @@ defineProps({
             <p class="text-whitesmoke lg:text-xl md:text-md sm:text-sm">
                 Subscribe to our newsletter to receive our latest offers
             </p>
+
+            <form @submit.prevent="submit">
+                <div class="flex mt-10">
+                    <MaterialUiInput
+                        :id="inputAttributes.email.id"
+                        v-model="form.email"
+                        :type="inputAttributes.email.type"
+                        class="mt-1 block w-full"
+                        :customClasses="inputAttributes.email.customClasses"
+                        :label="inputAttributes.email.label"
+                    />
+                    <InputError class="mt-2" :message="form.errors.email" />
+
+                    <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        Subscribe
+                    </PrimaryButton>
+                </div>
+            </form>
+
         </div>
     </div>
 
