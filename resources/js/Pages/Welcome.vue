@@ -21,6 +21,10 @@ const form = useForm({
 
 const inputAttributes = new InputAttributesBuilder('subscribe').build();
 
+const submit = () => {
+    form.post(route('subscribe.email'));
+};
+
 </script>
 
 <template>
