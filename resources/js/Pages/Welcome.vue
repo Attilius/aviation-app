@@ -8,13 +8,6 @@ import MaterialUiInput from '../Components/MaterialUiInput.vue';
 import InputAttributesBuilder from '../Utils/InputAttributesBuilder.js';
 import PrimaryButton from '../Components/PrimaryButton.vue';
 
-defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
-});
-
 const form = useForm({
     email: ''
 });
