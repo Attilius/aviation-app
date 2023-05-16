@@ -69,12 +69,13 @@ const inputAttributes = new InputAttributesBuilder('subscribe').build();
 
                 <!-- Newsletter -->
 
-            <p class="text-whitesmoke lg:text-xl md:text-md sm:text-sm">
+            <p class="text-whitesmoke lg:text-sm xs:text-xs">
                 Subscribe to our newsletter to receive our latest offers
             </p>
 
             <form @submit.prevent="submit">
-                <div class="flex mt-10">
+                <div  class="flex w-full sm:max-w-md px-6 py-4 shadow-md overflow-hidden sm:rounded-lg
+                        auth-card-bg">
                     <MaterialUiInput
                         :id="inputAttributes.email.id"
                         v-model="form.email"
