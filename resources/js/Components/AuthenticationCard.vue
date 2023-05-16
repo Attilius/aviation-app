@@ -12,21 +12,3 @@
         </div>
     </div>
 </template>
-
-<style scoped>
-
-.auth-card-bg {
-    background: rgba(5, 55, 115, 0.7);
-}
-
-.skin {
-    height: 100vh;
-    width: 100%;
-    background: rgba(1, 1, 1, 0.6);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-</style>
