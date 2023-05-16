@@ -55,6 +55,10 @@ defineProps({
                     Lorem Airlines
                 </h3>
             </div>
+
+                <!-- Newsletter -->
+
+            <p class="text-whitesmoke">Subscribe to our newsletter to receive our latest offers</p>
         </div>
     </div>
 
