@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\SubscriberController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Laravel\Fortify\RoutePath;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +18,11 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register')
-    ]);
+    return Inertia::render('Welcome');
 });
+
+Route::post(RoutePath::for('subscribed.email', '/subscriber'), [SubscriberController::class, 'store'])
+    ->name('subscribed.email');
 
 Route::middleware([
     'auth:sanctum',
