@@ -15,7 +15,7 @@ const form = useForm({
 const inputAttributes = new InputAttributesBuilder('subscribe').build();
 
 const submit = () => {
-    form.post(route('subscribe.email'));
+    form.post(route('subscribed.email'));
 };
 
 </script>
@@ -59,7 +59,7 @@ const submit = () => {
             <div>
                 <h2 class="text-whitesmoke lg:text-9xl md:text-6xl sm:text-3xl">~Welcome~</h2>
                 <h3 class="text-whitesmoke lg:text-6xl md:text-3xl sm:text-xl mb-40 text-center">
-                    <span class="text-custom_blue font-medium">to</span>
+                    <span class="text-lightskyblue font-medium">to</span>
                     Lorem Airlines
                 </h3>
             </div>
