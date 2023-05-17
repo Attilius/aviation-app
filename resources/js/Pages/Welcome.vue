@@ -21,9 +21,11 @@ const submit = () => {
 </script>
 
 <template>
+
     <Head>
         <title>Welcome</title>
     </Head>
+
     <div class="max-h-screen hw-100 flex items-center bg-welcome bg-cover bg-center">
         <div class="skin">
             <div class="max-h-screen">
