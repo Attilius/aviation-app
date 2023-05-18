@@ -11,7 +11,7 @@ trait MustSendEmail
      *
      * @return void
      */
-    public function sendEmailSubscribeNotification()
+    public function sendEmailSubscribeNotification(): void
     {
         $details = [
             'greeting' => 'Hello Test',
