@@ -4,19 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Events\Subscribed;
 use Illuminate\Http\Request;
-//use App\Models\Subscriber;
-//use App\Contracts\CreatesNewSubscribers;
-use Laravel\Fortify\Contracts\RegisterResponse;
-use App\Actions\Subscriber\CreateNewSubscriber;
+use App\Contracts\SubscriberRepositoryInterface;
 
 class SubscriberController extends Controller
 {
 
-    public function store(Request $request, CreateNewSubscriber $subscribers): RegisterResponse
-    {
-        dd($request);
-        event(new Subscribed($subscribers->create($request->all())));
+    protected SubscriberRepositoryInterface $subscriberRepository;
 
-        return app(RegisterResponse::class);
+    public function __construct(SubscriberRepositoryInterface $subscriberRepository)
+    {
+        $this->subscriberRepository = $subscriberRepository;
+    }
+
+    public function subscribe(Request $request)
+    {
+        $status = event(new Subscribed($this->subscriberRepository->store($request->all())));
+        dd($status);
     }
 }
