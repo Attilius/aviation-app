@@ -21,8 +21,9 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
-Route::post(RoutePath::for('subscribed.email', '/subscriber'), [SubscriberController::class, 'store'])
-    ->name('subscribed.email');
+Route::post(RoutePath::for('register.subscriber', '/subscribe_news_letter'),
+    [SubscriberController::class, 'subscribe'])
+    ->name('register.subscriber');
 
 Route::middleware([
     'auth:sanctum',
