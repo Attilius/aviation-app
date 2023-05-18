@@ -9,5 +9,5 @@ interface MustSendEmail
      *
      * @return void
      */
-    public function sendEmailSubscribeNotification();
+    public function sendEmailSubscribeNotification(): void;
 }
