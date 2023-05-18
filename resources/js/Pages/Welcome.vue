@@ -8,6 +8,10 @@ import MaterialUiInput from '../Components/MaterialUiInput.vue';
 import InputAttributesBuilder from '../Utils/InputAttributesBuilder.js';
 import PrimaryButton from '../Components/PrimaryButton.vue';
 
+defineProps({
+    status: String,
+});
+
 const form = useForm({
     email: ''
 });
@@ -15,7 +19,7 @@ const form = useForm({
 const inputAttributes = new InputAttributesBuilder('subscribe').build();
 
 const submit = () => {
-    form.post(route('subscribed.email'));
+    form.post(route('register.subscriber'));
 };
 
 </script>
@@ -73,21 +77,32 @@ const submit = () => {
             </p>
 
             <form @submit.prevent="submit">
-                <div  class="flex w-full sm:max-w-md px-6 py-4 shadow-md overflow-hidden sm:rounded-lg
+                <div  class="flex flex-col w-full sm:max-w-md px-6 py-4 shadow-md overflow-hidden sm:rounded-lg
                         auth-card-bg">
-                    <MaterialUiInput
-                        :id="inputAttributes.email.id"
-                        v-model="form.email"
-                        :type="inputAttributes.email.type"
-                        class="mt-1 block w-full"
-                        :customClasses="inputAttributes.email.customClasses"
-                        :label="inputAttributes.email.label"
-                    />
+
+                    <div v-if="status" class="mb-4 font-medium text-sm text-success text-center">
+                        {{ status }}
+                    </div>
+
+                    <div class="flex">
+                        <MaterialUiInput
+                            :id="inputAttributes.email.id"
+                            v-model="form.email"
+                            :type="inputAttributes.email.type"
+                            class="mt-1 block w-full"
+                            :customClasses="inputAttributes.email.customClasses"
+                            :label="inputAttributes.email.label"
+                        />
+
+                        <PrimaryButton class="ml-4"
+                                       :class="{ 'opacity-25': form.processing }"
+                                       :disabled="form.processing">
+                            Subscribe
+                        </PrimaryButton>
+                    </div>
+
                     <InputError class="mt-2" :message="form.errors.email" />
 
-                    <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Subscribe
-                    </PrimaryButton>
                 </div>
             </form>
 
