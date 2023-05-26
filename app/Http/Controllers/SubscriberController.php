@@ -23,11 +23,11 @@ class SubscriberController extends Controller
 
     public function subscribe(Request $request)
     {
-        event(new Subscribed($this->subscriberRepository->store($request->all())));
-
         $status = $this->broker()->sendGreetingEmail(
             $request->only(Fortify::email())
         );
+
+        //event(new Subscribed($this->subscriberRepository->store($request->all())));
 
         return $status == Subscriber::SUBSCRIBED_EMAIL_SENT
             ? app(SuccessfulSubscribeResponseInterface::class, ['status' => $status])
