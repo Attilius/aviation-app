@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Contracts\SubscriberRepositoryInterface;
 use App\Models\Subscriber;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -28,11 +29,12 @@ class SubscriberRepository implements SubscriberRepositoryInterface
     public function store(array $data): Subscriber
     {
         Validator::make($data, [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:subscribers']
+            'email' => ['required', 'string', 'email', 'max:255']
         ])->validate();
 
         return Subscriber::create([
-            'email' => $data['email']
+            'email' => $data['email'],
+            'role' => $this->isRegisteredUser($data['email']) ? 'user' : 'guest'
         ]);
     }
 
@@ -43,11 +45,24 @@ class SubscriberRepository implements SubscriberRepositoryInterface
      */
     public function update($id, array $data = []): Subscriber
     {
-        return Subscriber::update([]);
+        //Todo return Subscriber::update([]);
     }
 
     public function destroy($id): void
     {
         // TODO: Implement destroy() method.
+    }
+
+    /**
+     * Find subscribed email in user table
+     *
+     * @param string $email
+     * @return bool
+     */
+    private function isRegisteredUser(string $email): bool
+    {
+        $user = User::where('email', $email)->get();
+
+        return count($user) > 0;
     }
 }
