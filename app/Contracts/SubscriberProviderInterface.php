@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-use App\Models\Subscriber;
+use Illuminate\Database\Eloquent\Model;
 
 interface SubscriberProviderInterface
 {
@@ -10,15 +10,15 @@ interface SubscriberProviderInterface
      * Retrieve a subscriber by their unique identifier.
      *
      * @param int $identifier
-     * @return Subscriber|null
+     * @return Model|null
      */
-    public function retrieveById(int $identifier): Subscriber|null;
+    public function retrieveById(int $identifier): Model|null;
 
     /**
      * Retrieve a user by the given credentials.
      *
      * @param array $credentials
-     * @return Subscriber|null
+     * @return Model|null
      */
-    public function retrieveByCredentials(array $credentials): Subscriber|null;
+    public function retrieveByCredentials(array $credentials): Model|null;
 }
