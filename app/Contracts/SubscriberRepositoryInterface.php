@@ -2,37 +2,39 @@
 
 namespace App\Contracts;
 
-use App\Models\Subscriber;
+//use App\Models\Subscriber;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 interface SubscriberRepositoryInterface
 {
     /**
-     * List all subscriber
+     * Get all subscriber.
      *
-     * @return mixed
+     * @return Collection
      */
-    public function findAll();
+    public function findAll(): Collection;
 
     /**
-     * Get only subscriber with id
+     * Get only subscriber with id.
      *
      * @param $id
-     * @return mixed
+     * @return Model
      */
-    public function findByOne($id);
+    public function findById($id): Model;
 
     /**
      * @param array $data
-     * @return Subscriber
+     * @return Model
      */
-    public function store(array $data): Subscriber;
+    public function store(array $data): Model;
 
     /**
      * @param $id
      * @param array $data
-     * @return Subscriber
+     * @return Model
      */
-    public function update($id, array $data = []): Subscriber;
+    public function update($id, array $data = []): Model;
 
     /**
      * Remove subscriber
