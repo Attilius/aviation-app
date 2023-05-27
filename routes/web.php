@@ -18,10 +18,10 @@ use Laravel\Fortify\RoutePath;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome');
+    return Inertia::render('Welcome', ['status' => session('status')]);
 });
 
-Route::post(RoutePath::for('register.subscriber', '/subscribe_news_letter'),
+Route::post(RoutePath::for('register.subscriber', '/'),
     [SubscriberController::class, 'subscribe'])
     ->name('register.subscriber');
 
