@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @method static create(array $array)
+ * @method static where(string $string, string $email)
+ */
 class Subscriber extends Model implements CanSendNewsletterInterface
 {
     use HasFactory;
