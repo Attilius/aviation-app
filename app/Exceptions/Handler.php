@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -48,8 +49,11 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function report(Throwable $exception) {
+    /**
+     * @param Throwable $exception
+     */
+    #[NoReturn] public function report(Throwable $exception)
+    {
         dd($exception);
-
     }
 }
