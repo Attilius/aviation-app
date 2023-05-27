@@ -2,6 +2,8 @@
 
 namespace App\Actions\Fortify;
 
+use App\Contracts\SubscriberRepositoryInterface;
+use App\Models\Subscriber;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -25,6 +27,15 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
+
+        if (count(Subscriber::where('email', $input['email'])->get()) > 0){
+            $subscriber = Subscriber::where('email', $input['email'])->get();
+
+            Subscriber::where('id', $subscriber[0]['id'])->update([
+                'email' => $input['email'],
+                'role' => 'user'
+            ]);
+        }
 
         return User::create([
             'name' => $input['name'],
