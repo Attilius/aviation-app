@@ -2,6 +2,8 @@
 
 namespace App\Actions\Fortify;
 
+use App\Contracts\SubscriberRepositoryInterface;
+use App\Models\Subscriber;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
@@ -27,6 +29,15 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->updateProfilePhoto($input['photo']);
         }
 
+        if (count(Subscriber::where('email', $user->email)->get()) > 0){
+            $subscriber = Subscriber::where('email', $user->email)->get();
+
+            Subscriber::where('id', $subscriber[0]['id'])->update([
+                'email' => $input['email'],
+                'role' => 'user'
+            ]);
+        }
+
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
@@ -45,6 +56,15 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     protected function updateVerifiedUser(User $user, array $input): void
     {
+        if (count(Subscriber::where('email', $user->email)->get()) > 0){
+            $subscriber = Subscriber::where('email', $user->email)->get();
+
+            Subscriber::where('id', $subscriber[0]['id'])->update([
+                'email' => $input['email'],
+                'role' => 'user'
+            ]);
+        }
+
         $user->forceFill([
             'name' => $input['name'],
             'email' => $input['email'],
