@@ -7,26 +7,41 @@ use App\Models\Subscriber;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class SubscriberRepository implements SubscriberRepositoryInterface
 {
 
-    public function findAll()
+    /**
+     * Get all subscriber.
+     *
+     * @return Collection
+     */
+    public function findAll(): Collection
     {
-        // TODO: Implement findAll() method.
-    }
-
-    public function findByOne($id)
-    {
-        // TODO: Implement findByOne() method.
+        return Subscriber::all();
     }
 
     /**
+     * Get only subscriber with id.
+     *
+     * @param $id
+     * @return Model
+     */
+    public function findById($id): Model
+    {
+        return Subscriber::where('id', $id)->get();
+    }
+
+    /**
+     * Store subscriber in subscribers table.
+     *
      * @param array $data
-     * @return Subscriber
+     * @return Model
      * @throws ValidationException
      */
-    public function store(array $data): Subscriber
+    public function store(array $data): Model
     {
         Validator::make($data, [
             'email' => ['required', 'string', 'email', 'max:255']
@@ -41,11 +56,30 @@ class SubscriberRepository implements SubscriberRepositoryInterface
     /**
      * @param $id
      * @param array $data
-     * @return Subscriber
+     * @return Model
+     * @throws ValidationException
      */
-    public function update($id, array $data = []): Subscriber
+    public function update($id, array $data = []): Model
     {
-        //Todo return Subscriber::update([]);
+       /* Validator::make($data, [
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:subscribers']
+        ])->validate(); */
+
+       /* $subsciber = $this->findById($id);
+
+        return $subsciber::edit([
+            'email' => $data['email'],
+            'role' => $data['role'] ?? 'guest'
+        ]); */
+
+        if (count(Subscriber::where('email', $user->email)->get()) > 0){
+            $subscriber = Subscriber::where('email', $user->email)->get();
+
+            Subscriber::where('id', $subscriber[0]['id'])->update([
+                'email' => $input['email'],
+                'role' => 'user'
+            ]);
+        }
     }
 
     public function destroy($id): void
@@ -54,7 +88,7 @@ class SubscriberRepository implements SubscriberRepositoryInterface
     }
 
     /**
-     * Find subscribed email in user table
+     * Find subscribed email in users table
      *
      * @param string $email
      * @return bool
