@@ -48,6 +48,8 @@ interface SubscriberRepositoryInterface
     public function destroy($id, string $email): void;
 
     /**
+     * Check if subscriber existing.
+     *
      * @param string $email
      * @return bool
      */
