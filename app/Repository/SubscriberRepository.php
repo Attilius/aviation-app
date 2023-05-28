@@ -54,37 +54,38 @@ class SubscriberRepository implements SubscriberRepositoryInterface
     }
 
     /**
-     * @param $id
+     * Update subscriber role and|or email.
+     *
      * @param array $data
-     * @return Model
+     * @return void
      * @throws ValidationException
      */
-    public function update($id, array $data = []): Model
+    public function update(array $data = ['new_email' => null]): void
     {
-       /* Validator::make($data, [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:subscribers']
-        ])->validate(); */
-
-       /* $subsciber = $this->findById($id);
-
-        return $subsciber::edit([
-            'email' => $data['email'],
-            'role' => $data['role'] ?? 'guest'
-        ]); */
-
-        if (count(Subscriber::where('email', $user->email)->get()) > 0){
-            $subscriber = Subscriber::where('email', $user->email)->get();
+        if (count(Subscriber::where('email', $data['old_email'])->get()) > 0){
+            $subscriber = Subscriber::where('email', $data['old_email'])->get();
 
             Subscriber::where('id', $subscriber[0]['id'])->update([
-                'email' => $input['email'],
-                'role' => 'user'
+                'email' => $data['new_email'] ?? $subscriber[0]['email'],
+                'role' => $data['role'] ?? 'user'
             ]);
         }
     }
 
-    public function destroy($id): void
+    /**
+     * Remove subscriber from subscribers table.
+     *
+     * @param $id
+     * @param string $email
+     * @return void
+     */
+    public function destroy($id, string $email): void
     {
-        // TODO: Implement destroy() method.
+        if ($id == null) {
+            $id = Subscriber::where('email', $email)->get()[0]['id'];
+        }
+
+        Subscriber::where('id', $id)->delete();
     }
 
     /**
@@ -98,5 +99,18 @@ class SubscriberRepository implements SubscriberRepositoryInterface
         $user = User::where('email', $email)->get();
 
         return count($user) > 0;
+    }
+
+    /**
+     * Check if subscriber existing.
+     *
+     * @param string $email
+     * @return bool
+     */
+    public function isSubscriberExist(string $email): bool
+    {
+        $subscriber = Subscriber::where('email', $email)->get();
+
+        return count($subscriber) > 1;
     }
 }
