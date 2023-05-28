@@ -2,7 +2,6 @@
 
 namespace App\Contracts;
 
-//use App\Models\Subscriber;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,23 +23,33 @@ interface SubscriberRepositoryInterface
     public function findById($id): Model;
 
     /**
+     * Store subscriber in subscribers table.
+     *
      * @param array $data
      * @return Model
      */
     public function store(array $data): Model;
 
     /**
-     * @param $id
-     * @param array $data
-     * @return Model
-     */
-    public function update($id, array $data = []): Model;
-
-    /**
-     * Remove subscriber
+     * Update subscriber role and|or email.
      *
-     * @param $id
+     * @param array $data
      * @return void
      */
-    public function destroy($id): void;
+    public function update(array $data = []): void;
+
+    /**
+     * Remove subscriber.
+     *
+     * @param $id
+     * @param string $email
+     * @return void
+     */
+    public function destroy($id, string $email): void;
+
+    /**
+     * @param string $email
+     * @return bool
+     */
+    public function isSubscriberExist(string $email): bool;
 }
