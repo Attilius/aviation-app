@@ -3,21 +3,40 @@
 namespace App\Actions\Fortify;
 
 use App\Contracts\SubscriberRepositoryInterface;
-use App\Models\Subscriber;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Validation\ValidationException;
 
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
 
     /**
+     * The subscriber repository implementation.
+     *
+     * @var SubscriberRepositoryInterface
+     */
+    private SubscriberRepositoryInterface $subscriberRepository;
+
+    /**
+     * Create a new subscriber repository instance.
+     *
+     * @param SubscriberRepositoryInterface $subscriberRepository
+     * @return void
+     */
+    public function __construct(SubscriberRepositoryInterface $subscriberRepository)
+    {
+        $this->subscriberRepository = $subscriberRepository;
+    }
+
+    /**
      * Validate and create a newly registered user.
      *
-     * @param  array<string, string>  $input
+     * @param array<string, string> $input
+     * @throws ValidationException
      */
     public function create(array $input): User
     {
@@ -28,14 +47,11 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        if (count(Subscriber::where('email', $input['email'])->get()) > 0){
-            $subscriber = Subscriber::where('email', $input['email'])->get();
-
-            Subscriber::where('id', $subscriber[0]['id'])->update([
-                'email' => $input['email'],
-                'role' => 'user'
+        // Update subscriber role if already subscribe before register
+        $this->subscriberRepository->update([
+            'old_email' => $input['email'],
+            'role' => 'user'
             ]);
-        }
 
         return User::create([
             'name' => $input['name'],
