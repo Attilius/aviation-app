@@ -9,6 +9,7 @@ module.exports = {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.js',
         './resources/js/**/*.vue',
+        "./node_modules/flowbite/**/*.js",
     ],
 
     theme: {
@@ -35,9 +36,11 @@ module.exports = {
             'auth': "url('/img/backgrounds/auth-bg.jpg')",
             'profileHeader': "url('/img/profile-header.jpg')",
             'homeHeader': "url('/img/backgrounds/home-header-bg.jpg')",
-            'welcome': "url(/img/backgrounds/welcome-bg.jpg)"
+            'welcome': "url(/img/backgrounds/welcome-bg.jpg)",
+            'aboutImageBox': "url(/img/backgrounds/plane-front.jpg)",
+            'aboutBottomBox': "url(/img/backgrounds/sky.jpg)"
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require('flowbite/plugin')],
 };
