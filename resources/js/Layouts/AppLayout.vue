@@ -25,7 +25,7 @@ const showingNavigationDropdown = ref(false);
 
 const actualYear = new Date().getFullYear();
 const inputAttributes = new InputAttributesBuilder('subscribe').build();
-const dataProvider = new JsonDataProvider('name').getData();
+const dataProvider = new JsonDataProvider('partners', 'name').getData();
 
 
 const switchToTeam = (team) => {
@@ -74,7 +74,7 @@ Object.entries(mainNavLinkAttributes).forEach((item) => {
                             <!-- Navigation Links -->
 
                             <div v-for="value in mainNavLinkAttributes"
-                                 class="text-whitesmoke sm:-my-px sm:ml-0 sm:flex menu-item"
+                                 class="text-whitesmoke hover:text-whitesmoke sm:-my-px sm:ml-0 sm:flex menu-item"
                             >
                                 <NavLink :href="value.href" :active="value.active">
                                     {{ value.name }}
