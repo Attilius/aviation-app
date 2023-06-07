@@ -7,12 +7,14 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faStar, faQuoteRight, faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faQuoteRight, faQuoteLeft, faPlane, faUsers, faMapLocationDot,
+         faHandshake } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarStroke, faStarHalfStroke } from '@fortawesome/free-regular-svg-icons'
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-library.add(faStar, faStarHalfStroke, faStarStroke, faQuoteLeft, faQuoteRight);
+library.add(faStar, faStarHalfStroke, faStarStroke, faQuoteLeft, faQuoteRight, faPlane, faUsers, faMapLocationDot,
+            faHandshake);
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
