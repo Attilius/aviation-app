@@ -1,9 +1,7 @@
-import feedbacks from '../../data/feedbacks.json'
-
 export default class JsonToArrayTransformer {
 
-    constructor(file = null) {
-        file ? this.file = feedbacks : file;
+    constructor(file) {
+        this.file = file;
     }
 
     transform() {
