@@ -1,5 +1,4 @@
 <script setup>
-
 import Vue3autocounter from 'vue3-autocounter';
 
 const props = defineProps({
@@ -7,47 +6,6 @@ const props = defineProps({
     title: String,
     target: Number
 });
-
-
-
-/*
-const speed = 200;
-let number = ref(0);
-/*
-const intval = setInterval(() => {
-    for (let i = 0; i < number.value; i++) {
-        count(i, result, intval);
-    }
-}, 10);
-
-const count = (index, item, intval) => {
-    const counters_container = document.getElementById(
-        "counters-container"
-    );
-    let inc = props.target / speed;
-    if (counters_container.classList.contains("enter")) {
-        console.log(result)
-        if (result < props.target) {
-            console.log(result , inc)
-        } else {
-            clearInterval(intval);
-        }
-    }
-}
-
-const result = computed({
-    get() {
-        return number.value
-    },
-    set(val) {
-        number.value = val;
-    }
-});
-
-onMounted(() => {
-    count();
-}); */
-
 
 </script>
 
