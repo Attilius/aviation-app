@@ -464,11 +464,6 @@ article {
     width: 20%;
 }
 
-.award {
-    height: 150px;
-    width: 150px;
-}
-
 .before-enter {
     opacity: 0;
     transform: translateY(100px);
