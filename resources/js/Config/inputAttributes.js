@@ -170,6 +170,26 @@ const inputAttributes = {
         },
         customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
     },
+    subject: {
+        id: 'subject',
+        type: 'text',
+        label: {
+            _for_: 'subject',
+            textValue: 'Subject',
+            customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
+        },
+        customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
+    },
+    message: {
+        id: 'message',
+        type: 'text',
+        label: {
+            _for_: 'message',
+            textValue: 'Message',
+            customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
+        },
+        customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
+    }
 };
 
 export default inputAttributes;
