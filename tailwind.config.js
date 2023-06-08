@@ -38,7 +38,8 @@ module.exports = {
             'homeHeader': "url('/img/backgrounds/home-header-bg.jpg')",
             'welcome': "url(/img/backgrounds/welcome-bg.jpg)",
             'aboutImageBox': "url(/img/backgrounds/plane-front.jpg)",
-            'aboutBottomBox': "url(/img/backgrounds/sky.jpg)"
+            'aboutBottomBox': "url(/img/backgrounds/sky.jpg)",
+            'contact': "url(/img/backgrounds/contact-bg.jpg)"
         },
     },
 
