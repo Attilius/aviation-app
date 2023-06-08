@@ -2,6 +2,9 @@
 import FeedbacksCarousel from "./FeedbacksCarousel.vue";
 import CounterContainer from '../Components/CounterContainer.vue';
 import counterData from '../Config/counterData.js';
+import JsonDataProvider from "../Utils/JsonDataProvider";
+
+const partnerImages = new JsonDataProvider('partners', 'img').getData();
 
 </script>
 
@@ -81,12 +84,25 @@ import counterData from '../Config/counterData.js';
         </div>
 
         <div class="img-box bg-aboutImageBox bg-cover bg-fixed bg-center">
-            <div class="about-skin"></div>
+            <div class="about-skin">
+                <h3 class="text-3xl text-whitesmoke">Our partners</h3>
+                <div class="slider_">
+                    <div class="slide-track">
+                        <div v-for="data in partnerImages" class="slide_">
+                            <img class="img" :src="data" alt="partner-logo" />
+                        </div>
+                        <div v-for="data in partnerImages" class="slide_">
+                            <img class="img" :src="data" alt="partner-logo" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="bottom-box bg-aboutBottomBox bg-cover bg-no-repeat bg-center">
             <div class="about-skin pb-20">
                 <section class="counters py-10">
-                    <h3 class="text-5xl">More than...</h3>
+                    <h3 class="text-3xl">More than...</h3>
                    <div
                         id="counters-container"
                         class="container"
@@ -106,3 +122,42 @@ import counterData from '../Config/counterData.js';
         </div>
     </div>
 </template>
+
+<style>
+.slider_ {
+    height: 100px;
+    position: relative;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.slide-track {
+    display: flex;
+    width: calc(250px * 24);
+    animation: scroll 40s linear infinite;
+}
+
+.slide_ {
+    height: 100px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.img {
+    width: 100%;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-250px * 12));
+    }
+}
+</style>
