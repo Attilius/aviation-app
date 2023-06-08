@@ -25,7 +25,7 @@ const mainNavLinkAttributes = {
         name: 'Services'
     },
     contact: {
-        href: route('home'),
+        href: route('contact'),
         active: false,
         name: 'Contact'
     },
