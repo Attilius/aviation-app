@@ -37,4 +37,8 @@ Route::middleware([
     Route::get('/about', function () {
         return Inertia::render('About');
     })->name('about');
+
+    Route::get('/contact', function () {
+        return Inertia::render('Contact');
+    })->name('contact');
 });
