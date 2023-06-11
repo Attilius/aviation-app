@@ -182,7 +182,10 @@ const inputAttributes = {
     },
     message: {
         id: 'message',
-        type: 'text',
+        name: 'message',
+        rows: '50',
+        cols: '50',
+        maxlength: '200',
         label: {
             _for_: 'message',
             textValue: 'Message',
