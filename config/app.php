@@ -196,7 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
-        App\Mail\Subscribers\SubscriberServiceProvider::class,
+        App\Providers\SubscriberServiceProvider::class,
 
     ],
 
