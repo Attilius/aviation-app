@@ -20,6 +20,7 @@ const inputAttributes = new InputAttributesBuilder('subscribe').build();
 
 const submit = () => {
     form.post(route('register.subscriber'));
+    form.reset();
 };
 
 </script>
@@ -92,6 +93,7 @@ const submit = () => {
                             class="mt-1 block w-full"
                             :customClasses="inputAttributes.email.customClasses"
                             :label="inputAttributes.email.label"
+                            :status="status"
                         />
 
                         <PrimaryButton class="ml-4"
