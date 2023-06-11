@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SubscriberController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\RoutePath;
@@ -25,6 +25,11 @@ Route::post(RoutePath::for('register.subscriber', '/'),
     [SubscriberController::class, 'subscribe'])
     ->name('register.subscriber');
 
+Route::post(RoutePath::for('contactMessage.store', '/contact'),
+    [ContactController::class, 'store'])
+    ->name('contactMessage.store');
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -39,6 +44,6 @@ Route::middleware([
     })->name('about');
 
     Route::get('/contact', function () {
-        return Inertia::render('Contact');
+        return Inertia::render('Contact', ['status' => session('status')]);
     })->name('contact');
 });
