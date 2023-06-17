@@ -16,7 +16,8 @@ module.exports = {
         extend: {
             spacing: {
                 '600': '60vh',
-                '1/8': '12%'
+                '1/8': '12%',
+                '1/20': '5%'
             },
             animation: {
                 'slider-1': 'slider-1 12s linear infinite',
@@ -82,10 +83,6 @@ module.exports = {
             'aboutBottomBox': "url('/img/backgrounds/sky.jpg')",
             'services': "url('/img/backgrounds/services-bg.jpg')",
             'contact': "url('/img/backgrounds/contact-bg.jpg')",
-            'travel-1': "url('/img/services/headers/travel-1.jpg')",
-            'travel-2': "url('/img/services/headers/travel-2.jpg')",
-            'travel-3': "url('/img/services/headers/travel-3.jpg')",
-            'travel-4': "url('/img/services/headers/travel-4.jpg')",
         },
     },
 
