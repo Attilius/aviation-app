@@ -20,7 +20,7 @@ const mainNavLinkAttributes = {
         name: 'About'
     },
     services: {
-        href: route('home'),
+        href: route('services'),
         active: false,
         name: 'Services'
     },
@@ -28,12 +28,7 @@ const mainNavLinkAttributes = {
         href: route('contact'),
         active: false,
         name: 'Contact'
-    },
- /*   dashboard: {
-        href: route('dashboard'),
-        active: route().current(''),
-        name: 'Dashboard'
-    } */
+    }
 };
 
 /**
