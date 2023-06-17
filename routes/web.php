@@ -5,6 +5,7 @@ use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\RoutePath;
+use App\Http\Controllers\Services\TravelInsuranceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,13 @@ Route::middleware([
     Route::get('/about', function () {
         return Inertia::render('About');
     })->name('about');
+
+    Route::get('/services', function () {
+        return Inertia::render('Services');
+    })->name('services');
+
+    Route::get('/services/travel-insurance',
+        [TravelInsuranceController::class, 'index'])->name('travel-insurance');
 
     Route::get('/contact', function () {
         return Inertia::render('Contact', ['status' => session('status')]);
