@@ -493,11 +493,7 @@ Object.entries(mainNavLinkAttributes).forEach((item) => {
                                 also offer a range of services.
                             </p>
                             <PrimaryButton class="mt-4">
-
-                                <!--TODO fixing routing with or without authentication!!!-->
-
-                                <a v-if="canLogin" :href="route('home')">Booking now</a>
-                                <a v-else :href="'/'">Booking now</a>
+                                <a :href="route('home')">Booking now</a>
                             </PrimaryButton>
                             <p class="mt-3 text-whitesmoke">Payment options</p>
                             <img class="mt-4 w-40 mx-auto md:mx-0" src="/img/payment/pay.png" alt="payment cards">
