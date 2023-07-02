@@ -95,16 +95,17 @@ const submit = () => {
                         </div>
 
                         <div class="xs:flex-col sm:flex">
-                            <MaterialUiInput
-                                :id="inputAttributes.email.id"
-                                v-model="form.email"
-                                :type="inputAttributes.email.type"
-                                class="mt-1 block w-full"
-                                :customClasses="inputAttributes.email.customClasses"
-                                :label="inputAttributes.email.label"
-                                :status="status"
-                            />
-
+                            <div class="w-full border-b-2 pb-0.25">
+                                <MaterialUiInput
+                                    :id="inputAttributes.email.id"
+                                    v-model="form.email"
+                                    :type="inputAttributes.email.type"
+                                    class="mt-1 block w-full"
+                                    :customClasses="inputAttributes.email.customClasses"
+                                    :label="inputAttributes.email.label"
+                                    :status="status"
+                                />
+                            </div>
                             <div class="flex justify-center">
                                 <PrimaryButton class="mt-5 sm:ml-4 sm:mt-0"
                                                :class="{ 'opacity-25': form.processing }"
@@ -127,3 +128,4 @@ const submit = () => {
     </div>
 
 </template>
+
