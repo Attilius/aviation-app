@@ -23,6 +23,7 @@ class ServicesController extends Controller
 
         return Inertia::render('Services', [
             'title' => $page->title,
+            'headerImage' => $page->headerImage,
             'cards' => $page->cards,
             'banner' => $page->banner
         ]);
