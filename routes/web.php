@@ -1,11 +1,19 @@
 <?php
 
-use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Checkout\PassengerController;
+use App\Http\Controllers\Pages\ContactController;
+use App\Http\Controllers\Pages\ServicesController;
+use App\Http\Controllers\Pages\WelcomeController;
+use App\Http\Controllers\Services\BookingCancellationController;
+use App\Http\Controllers\Services\GroupDiscountController;
+use App\Http\Controllers\Services\LuggageInsuranceController;
+use App\Http\Controllers\Services\PremiumComfortController;
+use App\Http\Controllers\Services\PrivateJetRentController;
+use App\Http\Controllers\Services\TravelInsuranceController;
 use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\RoutePath;
-use App\Http\Controllers\Services\TravelInsuranceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +26,7 @@ use App\Http\Controllers\Services\TravelInsuranceController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', ['status' => session('status')]);
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::post(RoutePath::for('register.subscriber', '/'),
     [SubscriberController::class, 'subscribe'])
@@ -44,14 +50,32 @@ Route::middleware([
         return Inertia::render('About');
     })->name('about');
 
-    Route::get('/services', function () {
-        return Inertia::render('Services');
-    })->name('services');
+    Route::get('/services', [ServicesController::class, 'index'])->name('services');
 
     Route::get('/services/travel-insurance',
         [TravelInsuranceController::class, 'index'])->name('travel-insurance');
 
-    Route::get('/contact', function () {
-        return Inertia::render('Contact', ['status' => session('status')]);
-    })->name('contact');
+    Route::get('/services/luggage-insurance',
+        [LuggageInsuranceController::class, 'index'])->name('luggage-insurance');
+
+    Route::get('/services/premium-comfort',
+        [PremiumComfortController::class, 'index'])->name('premium-comfort');
+
+    Route::get('/services/private-jet-rent',
+        [PrivateJetRentController::class, 'index'])->name('private-jet-rent');
+
+    Route::get('/services/group-discount',
+        [GroupDiscountController::class, 'index'])->name('group-discount');
+
+    Route::get('/services/booking-cancellation',
+        [BookingCancellationController::class, 'index'])->name('booking-cancellation');
+
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+    /* Booking progress endpoints */
+
+    Route::post('/checkout/passenger-details',
+        [PassengerController::class, 'index'])->name('create-passenger');
 });
+
+require 'api.php';
