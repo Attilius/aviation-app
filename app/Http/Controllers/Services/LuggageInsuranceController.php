@@ -26,6 +26,7 @@ class LuggageInsuranceController extends Controller
             'headerImageTitles' => $service->headerImageTitles,
             'styles' => $service->styles,
             'description' => $service->description,
+            'tableHeadFields' => $service->tableHeadFields,
             'categories' => $service->categories
         ]);
     }
