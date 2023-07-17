@@ -17,20 +17,20 @@ const inputAttributes = {
         type: 'text',
         label: {
             _for_: 'first_name',
-            textValue: 'First Name',
-            customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
+            textValue: 'First Name*',
+            customClasses: ['text-custom_blue', 'peer-focus:text-lightskyblue']
         },
-        customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
+        customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-custom_blue']
     },
     last_name: {
         id: 'last_name',
         type: 'text',
         label: {
             _for_: 'last_name',
-            textValue: 'Last Name',
-            customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
+            textValue: 'Last Name*',
+            customClasses: ['text-custom_blue', 'peer-focus:text-lightskyblue']
         },
-        customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
+        customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-custom_blue']
     },
     email: {
         id: 'email',
@@ -106,6 +106,7 @@ const inputAttributes = {
         id: 'departure_from',
         type: 'text',
         label: {
+            id: 'departure_from_label',
             _for_: 'departure_from',
             textValue: 'Departure from*',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
@@ -116,6 +117,7 @@ const inputAttributes = {
         id: 'arriving_at',
         type: 'text',
         label: {
+            id: 'arriving_at_label',
             _for_: 'arriving_at',
             textValue: 'Arriving at*',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
@@ -126,6 +128,7 @@ const inputAttributes = {
         id: 'departure_date',
         type: 'date',
         label: {
+            id: 'departure_date_label',
             _for_: 'departure_date',
             textValue: 'Departure date*',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
@@ -136,6 +139,7 @@ const inputAttributes = {
         id: 'return_date',
         type: 'date',
         label: {
+            id: 'return_date_label',
             _for_: 'return_date',
             textValue: 'Return date*',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
@@ -146,6 +150,7 @@ const inputAttributes = {
         id: 'passengers',
         type: 'text',
         label: {
+            id: 'passengers_label',
             _for_: 'passengers',
             textValue: 'Passengers',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
@@ -155,6 +160,7 @@ const inputAttributes = {
     cabin_class: {
         id: 'cabin_class',
         label: {
+            id: 'cabin_class_label',
             _for_: 'cabin_class',
             textValue: 'Cabin',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
@@ -164,8 +170,9 @@ const inputAttributes = {
     travel_type: {
         id: 'travel_type',
         label: {
+            id: 'travel_type_label',
             _for_: 'travel_type',
-            textValue: 'Travel type',
+            textValue: 'Travel type*',
             customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
@@ -192,7 +199,17 @@ const inputAttributes = {
             customClasses: ['text-whitesmoke', 'peer-focus:text-lightskyblue']
         },
         customClasses: ['border-b-whitesmoke', 'focus:border-b-lightskyblue', 'text-whitesmoke']
-    }
+    },
+    passenger: {
+        id: 'passenger',
+        label: {
+            id: 'passenger_label',
+            _for_: 'passenger',
+            textValue: 'Passenger',
+            customClasses: ['text-baseGray', 'peer-focus:text-lightskyblue']
+        },
+        customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
+    },
 };
 
 export default inputAttributes;
