@@ -14,10 +14,45 @@ module.exports = {
 
     theme: {
         extend: {
+            aspectRatio: {
+                '1/3': '1 / 3',
+            },
             spacing: {
+                '1300': '130vh',
                 '600': '60vh',
+                '500': '50vh',
+                '1/11': '95%',
+                '9/1': '90%',
+                '4/5.2': '82%',
+                '1/13.5': '79%',
+                '1/13': '77%',
+                '1/19': '48.5%',
+                '1/15': '45%',
+                '1/3.3': '30%',
+                '1/5': '20%',
                 '1/8': '12%',
-                '1/20': '5%'
+                '1/10.5': '10.5%',
+                '1/10': '10%',
+                '1/24': '6%',
+                '1/20': '5%',
+                '1/33': '3%',
+                '16.5': '66px',
+                '137.5': '550px',
+                '133': '532px',
+                '130': '520px',
+                '125': '500px',
+                '120': '480px',
+                '110': '440px',
+                '38': '152px',
+                '30': '120px',
+                '29.5': '118px',
+                '26': '104px',
+                '22': '88px',
+                '18': '69px',
+                '0.25': '1px'
+            },
+            boxShadow: {
+                '3xl': '2px 2px 5px rgba(0, 0, 0, 1)',
             },
             animation: {
                 'slider-1': 'slider-1 12s linear infinite',
@@ -59,6 +94,7 @@ module.exports = {
         colors: {
             'custom_blue': '#093773',
             'lightskyblue': '#87cefa',
+            'dirtiLightBlue': '#8bc5e8',
             'info': '#11cdef',
             'dark': '#344767',
             'rebecca_purple': '#663399',
@@ -69,7 +105,14 @@ module.exports = {
             'white': '#fff',
             'danger': '#DC2626',
             'baseGray': '#9c9c9c',
-            'success' : '#16a34a'
+            'textGray': '#ced4da',
+            'linghtGray': '#ececec',
+            'success' : '#16a34a',
+            'shadow-skin': 'rgba(1, 1, 1, 0.6)',
+            'custom-blue-alfa-8': 'rgba(9, 55, 115, .8)',
+            'custom-blue-alfa-9': 'rgba(9, 55, 115, .9)',
+            'white-alfa-8': 'rgba(255, 255, 255, .8)',
+            'white-alfa-6': 'rgba(255, 255, 255, .6)',
         },
         fontFamily: {
             sans: ['Poppins', ...defaultTheme.fontFamily.sans],
@@ -83,6 +126,7 @@ module.exports = {
             'aboutBottomBox': "url('/img/backgrounds/sky.jpg')",
             'services': "url('/img/backgrounds/services-bg.jpg')",
             'contact': "url('/img/backgrounds/contact-bg.jpg')",
+            'booking': "url('/img/backgrounds/airport.jpg')"
         },
     },
 
