@@ -9,15 +9,19 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar, faQuoteRight, faQuoteLeft, faPlane, faUsers, faMapLocationDot,
          faHandshake, faPhone, faEnvelope, faLocationDot, faClock, faHouse, faFax,
-         faPassport, faSuitcaseRolling, faMugHot, faBan } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faStarStroke, faStarHalfStroke } from '@fortawesome/free-regular-svg-icons';
+         faPassport, faSuitcaseRolling, faMugHot, faBan, faMagnifyingGlass, faXmark,
+         faCircleExclamation, faCircleUser, faPencil, faCaretDown, faCircle, faAngleRight
+        } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarStroke, faStarHalfStroke, faCreditCard,
+        faClock as faClockRegular } from '@fortawesome/free-regular-svg-icons';
 import { faAvianex } from '@fortawesome/free-brands-svg-icons';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 library.add(faStar, faStarHalfStroke, faStarStroke, faQuoteLeft, faQuoteRight, faPlane, faUsers, faMapLocationDot,
             faHandshake, faPhone, faEnvelope, faLocationDot, faClock, faHouse, faFax, faPassport, faSuitcaseRolling,
-            faMugHot, faAvianex, faBan);
+            faMugHot, faAvianex, faBan, faMagnifyingGlass, faCreditCard, faXmark, faCircleExclamation, faCircleUser,
+            faPencil, faCaretDown, faCircle, faClockRegular, faAngleRight);
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
