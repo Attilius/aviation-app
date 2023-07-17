@@ -6,6 +6,11 @@ body {
     background: whitesmoke;
 }
 
+img {
+    max-width: 100%;
+    display: block;
+}
+
 .smooth-transition {
     transition: all 0.3s ease;
 }
@@ -175,7 +180,7 @@ body {
     }
 }
 
-.book-form {
+.book-form-public {
     width: 140%;
     height: 205px;
     position: relative;
@@ -184,6 +189,13 @@ body {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     box-shadow: 2px 2px 5px #ced4da;
+    background: whitesmoke;
+}
+
+.book-form-private {
+    height: auto;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
     background: whitesmoke;
 }
 
@@ -527,13 +539,29 @@ article {
     background: rgba(0, 0, 0, 0.3);
 }
 
-/* Contact */
-.content_ {
-    width: 100%;
-    background-position: center;
-    background-size: cover;
+/*************** Custom classes ********************/
+
+.text-shadow {
+    text-shadow: 2px 2px 5px black;
+}
+
+.flex-center {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+@media(max-width: 400px){
+    .nano-text {
+        font-size: 10px;
+        line-height: 14px;
+
+    }
+}
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
 }
