@@ -12,7 +12,9 @@ const formServices = {
     updateUserProfileInformation: ['name', 'email'],
     updatePassword: ['current_password', 'new_password', 'password_confirmation'],
     bookFlight: ['departure_from', 'arriving_at', 'departure_date', 'return_date', 'passengers', 'cabin_class', 'travel_type'],
-    contact: ['name', 'email', 'subject', 'message']
+    contact: ['name', 'email', 'subject', 'message'],
+    addPassenger: ['passenger'],
+    setPassenger: ['first_name', 'last_name']
 };
 
 export default formServices;
