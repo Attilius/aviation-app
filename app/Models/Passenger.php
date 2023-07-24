@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @method static find()
+ */
 class Passenger extends Model
 {
     public $timestamps = false;
@@ -15,8 +18,8 @@ class Passenger extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'firstName',
-        'lastName',
+        'first_name',
+        'last_name',
     ];
 
     /**
