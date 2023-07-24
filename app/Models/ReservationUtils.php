@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @method static find()
+ * @method static where(string $string, string $id)
+ */
 class ReservationUtils extends Model
 {
     public $timestamps = false;
@@ -16,7 +20,7 @@ class ReservationUtils extends Model
      */
     protected $fillable = [
         'pax',
-        'targetOfPlaneChoosing',
+        'target_of_plane_choosing',
     ];
 
     /**
