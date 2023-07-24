@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @method static create(string[] $array)
  * @method static find(int $int)
+ * @method static where(string $string, $flight_details_id)
  */
 class FlightDetails extends Model
 {
