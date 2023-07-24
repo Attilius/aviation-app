@@ -20,5 +20,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 }); */
 
 Route::get('/search/offers', [PrivateJetRentController::class, 'index'])->name('plane-choosing');
-Route::post('/search/offers/create_flight', [PrivateJetRentController::class, 'storeFlightDetails'])
-    ->name('create-flight');
