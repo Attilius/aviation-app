@@ -74,8 +74,11 @@ Route::middleware([
 
     /* Booking progress endpoints */
 
-    Route::post('/checkout/passenger-details',
+    Route::get('/checkout/passenger-details',
         [PassengerController::class, 'index'])->name('create-passenger');
+
+    Route::post('/checkout/passenger-details/cretate-flight-cost',
+        [PassengerController::class, 'createFlightCost'])->name('create-flight-cost');
 });
 
 require 'api.php';
