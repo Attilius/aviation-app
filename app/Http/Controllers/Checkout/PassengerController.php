@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Checkout;
 use App\Http\Controllers\Controller;
 use App\Models\FlightCost;
 use App\Models\FlightDetails;
+use App\Models\Passenger;
 use App\Models\Reservation;
 use App\Models\ReservationUtils;
 use Illuminate\Http\RedirectResponse;
@@ -129,23 +130,22 @@ class PassengerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
-    public function store(Request $request)
+    public function storePassenger(Request $request): void
     {
-        //
-    }
+        foreach ($request->get('passengers') as $passenger) {
+            $_passenger = new Passenger();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+            $_passenger->first_name = $passenger['first_name'];
+            $_passenger->last_name = $passenger['last_name'];
+
+            $_passenger->save();
+
+            $reservation = Reservation::find($request->session()->getId());
+            $_passenger->reservations()->attach($reservation);
+        }
     }
 
     /**
