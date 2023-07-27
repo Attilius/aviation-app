@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static find(int $id)
+ * @method static where(string $string, string $getId)
  */
 class Reservation extends Model
 {
