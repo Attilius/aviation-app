@@ -82,6 +82,9 @@ Route::middleware([
 
     Route::post('/checkout/passenger-details/cretate-passenger',
         [PassengerController::class, 'storePassenger'])->name('store-passenger');
+
+    Route::post('/checkout/passenger-details/cretate-reservation-contact',
+        [PassengerController::class, 'storeReservationContact'])->name('store-reservation-contact');
 });
 
 require 'api.php';
