@@ -210,6 +210,25 @@ const inputAttributes = {
         },
         customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
     },
+    country_code: {
+        id: 'country_code',
+        label: {
+            _for_: 'country_code',
+            textValue: 'Country Code*',
+            customClasses: ['text-custom_blue', 'peer-focus:text-lightskyblue']
+        },
+        customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
+    },
+    phone_number: {
+        id: 'phone_number',
+        type: 'text',
+        label: {
+            _for_: 'phone_number',
+            textValue: 'Phone Number*',
+            customClasses: ['text-custom_blue', 'peer-focus:text-lightskyblue']
+        },
+        customClasses: ['border-b-custom_blue', 'focus:border-b-lightskyblue', 'text-custom_blue']
+    },
 };
 
 export default inputAttributes;
