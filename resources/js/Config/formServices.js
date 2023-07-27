@@ -14,7 +14,8 @@ const formServices = {
     bookFlight: ['departure_from', 'arriving_at', 'departure_date', 'return_date', 'passengers', 'cabin_class', 'travel_type'],
     contact: ['name', 'email', 'subject', 'message'],
     addPassenger: ['passenger'],
-    setPassenger: ['first_name', 'last_name']
+    setPassenger: ['first_name', 'last_name'],
+    setContactPerson: ['country_code', 'phone_number', 'email']
 };
 
 export default formServices;
