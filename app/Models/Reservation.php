@@ -71,6 +71,14 @@ class Reservation extends Model
     }
 
     /**
+     * Get the payment status associated with the reservation.
+     */
+    public function reservationContact(): BelongsTo
+    {
+        return $this->belongsTo(ReservationContact::class);
+    }
+
+    /**
      * Get the flight details that owns the reservation.
      */
     public function flightDetails(): BelongsTo
@@ -83,6 +91,6 @@ class Reservation extends Model
      */
     public function passengers(): BelongsToMany
     {
-        return $this->belongsToMany(Passenger::class);
+        return $this->belongsToMany(Passenger::class, 'reservation_passengers');
     }
 }
