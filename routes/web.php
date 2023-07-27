@@ -79,6 +79,9 @@ Route::middleware([
 
     Route::post('/checkout/passenger-details/cretate-flight-cost',
         [PassengerController::class, 'createFlightCost'])->name('create-flight-cost');
+
+    Route::post('/checkout/passenger-details/cretate-passenger',
+        [PassengerController::class, 'storePassenger'])->name('store-passenger');
 });
 
 require 'api.php';
