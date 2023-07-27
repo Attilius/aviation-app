@@ -71,7 +71,7 @@ class Reservation extends Model
     }
 
     /**
-     * Get the payment status associated with the reservation.
+     * Get the reservation contact associated with the reservation.
      */
     public function reservationContact(): BelongsTo
     {
