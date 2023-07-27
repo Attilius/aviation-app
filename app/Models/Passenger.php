@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static find()
+ * @property mixed $first_name
+ * @property mixed $last_name
  */
 class Passenger extends Model
 {
@@ -27,6 +29,6 @@ class Passenger extends Model
      */
     public function reservations(): BelongsToMany
     {
-        return $this->belongsToMany(Reservation::class);
+        return $this->belongsToMany(Reservation::class, 'reservation_passengers');
     }
 }
