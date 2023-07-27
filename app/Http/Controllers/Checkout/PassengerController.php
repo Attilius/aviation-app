@@ -7,6 +7,7 @@ use App\Models\FlightCost;
 use App\Models\FlightDetails;
 use App\Models\Passenger;
 use App\Models\Reservation;
+use App\Models\ReservationContact;
 use App\Models\ReservationUtils;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -149,6 +150,26 @@ class PassengerController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function storeReservationContact(Request $request): RedirectResponse
+    {
+        $reservationContact = ReservationContact::create([
+            'phone_number' => $request->get('country_code') . $request->get('phone_number'),
+            'email_address' => $request->get('email_address')
+        ]);
+
+        Reservation::where('id', $request->session()->getId())->update([
+            'reservation_contact_id' => $reservationContact->id
+        ]);
+
+        return redirect(route('create-ancillaries'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -226,4 +247,6 @@ class PassengerController extends Controller
     {
         return !is_null(FlightCost::where('reservation_id', $request->session()->getId())->first());
     }
+
+
 }
