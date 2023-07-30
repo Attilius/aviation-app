@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Checkout\AncillariesController;
 use App\Http\Controllers\Checkout\PassengerController;
 use App\Http\Controllers\Pages\ContactController;
 use App\Http\Controllers\Pages\ServicesController;
@@ -85,6 +86,9 @@ Route::middleware([
 
     Route::post('/checkout/passenger-details/cretate-reservation-contact',
         [PassengerController::class, 'storeReservationContact'])->name('store-reservation-contact');
+
+    Route::get('/checkout/ancillaries',
+        [AncillariesController::class, 'index'])->name('create-ancillaries');
 });
 
 require 'api.php';
