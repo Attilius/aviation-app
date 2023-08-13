@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * @method static find()
+ * @method static find($id)
+ * @method static where(string $string, int $id)
  * @property mixed $first_name
  * @property mixed $last_name
  */
