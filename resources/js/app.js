@@ -11,17 +11,19 @@ import { faStar, faQuoteRight, faQuoteLeft, faPlane, faUsers, faMapLocationDot,
          faHandshake, faPhone, faEnvelope, faLocationDot, faClock, faHouse, faFax,
          faPassport, faSuitcaseRolling, faMugHot, faBan, faMagnifyingGlass, faXmark,
          faCircleExclamation, faCircleUser, faPencil, faCaretDown, faCircle, faAngleRight,
-         faCheck, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+         faCheck, faAngleDown, faBriefcase, faSuitcase, faCartFlatbedSuitcase, faMinus, faPlus,
+         faPhoneVolume, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarStroke, faStarHalfStroke, faCreditCard,
-        faClock as faClockRegular } from '@fortawesome/free-regular-svg-icons';
+        faClock as faClockRegular, faCircle as faCircleRefular } from '@fortawesome/free-regular-svg-icons';
 import { faAvianex } from '@fortawesome/free-brands-svg-icons';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-library.add(faStar, faStarHalfStroke, faStarStroke, faQuoteLeft, faQuoteRight, faPlane, faUsers, faMapLocationDot,
-            faHandshake, faPhone, faEnvelope, faLocationDot, faClock, faHouse, faFax, faPassport, faSuitcaseRolling,
-            faMugHot, faAvianex, faBan, faMagnifyingGlass, faCreditCard, faXmark, faCircleExclamation, faCircleUser,
-            faPencil, faCaretDown, faCircle, faClockRegular, faAngleRight, faCheck, faAngleDown);
+library.add( faStar, faStarHalfStroke, faStarStroke, faQuoteLeft, faQuoteRight, faPlane, faUsers, faMapLocationDot,
+             faHandshake, faPhone, faEnvelope, faLocationDot, faClock, faHouse, faFax, faPassport, faSuitcaseRolling,
+             faMugHot, faAvianex, faBan, faMagnifyingGlass, faCreditCard, faXmark, faCircleExclamation, faCircleUser,
+             faPencil, faCaretDown, faCircle, faClockRegular, faAngleRight, faCheck, faAngleDown, faBriefcase,
+             faSuitcase, faCartFlatbedSuitcase, faMinus, faPlus, faPhoneVolume, faCircleRefular, faCircleInfo );
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
