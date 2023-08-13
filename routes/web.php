@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Checkout\AncillariesController;
 use App\Http\Controllers\Checkout\PassengerController;
+use App\Http\Controllers\Checkout\PaymentController;
 use App\Http\Controllers\Pages\ContactController;
 use App\Http\Controllers\Pages\ServicesController;
 use App\Http\Controllers\Pages\WelcomeController;
@@ -78,8 +79,8 @@ Route::middleware([
     Route::get('/checkout/passenger-details',
         [PassengerController::class, 'index'])->name('create-passenger');
 
-    Route::post('/checkout/passenger-details/cretate-flight-cost',
-        [PassengerController::class, 'createFlightCost'])->name('create-flight-cost');
+    Route::post('/checkout/passenger-details/cretate-reservation-cost',
+        [PassengerController::class, 'createReservationCost'])->name('create-reservation-cost');
 
     Route::post('/checkout/passenger-details/cretate-passenger',
         [PassengerController::class, 'storePassenger'])->name('store-passenger');
@@ -89,6 +90,12 @@ Route::middleware([
 
     Route::get('/checkout/ancillaries',
         [AncillariesController::class, 'index'])->name('create-ancillaries');
+
+    Route::post('/checkout/ancillaries/create-reservation-cost',
+        [AncillariesController::class, 'crateReservationCost'])->name('create-new-reservation-cost');
+
+    Route::get('/checkout/payment',
+        [PaymentController::class, 'index'])->name('summary-before-payment');
 });
 
 require 'api.php';
