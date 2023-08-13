@@ -56,7 +56,7 @@ class PrivateJetRentController extends Controller
      */
     public function storeFlightDetails(Request $request): void
     {
-        if($this->reservationIsAlreadyExist($request)){
+        if($this->isReservationAlreadyExist($request)){
             $this->updateFlightDetails($request);
         } else {
             $airports = $this->getAirports($request);
@@ -253,7 +253,7 @@ class PrivateJetRentController extends Controller
      * @param Request $request
      * @return bool
      */
-    private function reservationIsAlreadyExist(Request $request): bool
+    private function isReservationAlreadyExist(Request $request): bool
     {
         return !is_null(Reservation::find($request->session()->getId()));
     }
