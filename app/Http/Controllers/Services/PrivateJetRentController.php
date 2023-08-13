@@ -13,7 +13,7 @@ use App\Models\Airport;
 class PrivateJetRentController extends Controller
 {
     /**
-     * Service page render.
+     * Private jet rent service page render.
      *
      * @param Request $request
      * @return Response
@@ -31,7 +31,8 @@ class PrivateJetRentController extends Controller
             'styles' => $service->styles,
             'description' => $service->description,
             'categories' => $service->categories,
-            'airports' => $airports
+            'airports' => $airports,
+            'isPrivate' => true
         ]);
     }
 }
