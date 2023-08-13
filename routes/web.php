@@ -96,6 +96,15 @@ Route::middleware([
 
     Route::get('/checkout/payment',
         [PaymentController::class, 'index'])->name('summary-before-payment');
+
+    Route::post('/checkout/paypal-payment',
+        [PaymentController::class, 'handlePayment'])->name('handle-payment');
+
+    Route::get('/checkout/payment-success',
+        [PaymentController::class, 'paymentSuccess'])->name('payment-success');
+
+    Route::get('/checkout/cancel-payment',
+        [PaymentController::class, 'paymentCancel'])->name('cancel-payment');
 });
 
 require 'api.php';
