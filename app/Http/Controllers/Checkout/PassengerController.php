@@ -3,21 +3,23 @@
 namespace App\Http\Controllers\Checkout;
 
 use App\Http\Controllers\Controller;
-use App\Models\FlightCost;
 use App\Models\FlightDetails;
 use App\Models\Passenger;
 use App\Models\Reservation;
 use App\Models\ReservationContact;
+use App\Models\ReservationCost;
 use App\Models\ReservationUtils;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use JetBrains\PhpStorm\NoReturn;
+use Illuminate\Support\Collection;
 
 class PassengerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display create passenger resource page.
      *
      * @param Request $request
      * @return Response
@@ -94,18 +96,17 @@ class PassengerController extends Controller
                 default:{}
             }
         }
-
-        return Inertia::render('Booking/Passengers/CreatePassenger', [
+        return Inertia::render('Booking/CreatePassenger', [
             'title' => 'Set passengers',
             'progressId' => '3',
-            'cost' => strval($reservation->flightCost->cost),
+            'cost' => strval($reservation->reservationCosts[0]->price),
             'targetOfPlaneChoosing' => $reservationUtils->target_of_plane_choosing,
             'passengers' => $passengers
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created flight cost resource in storage.
      *
      * @param Request $request
      * @return RedirectResponse
@@ -129,28 +130,69 @@ class PassengerController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Creating a new reservation resource.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function createReservationCost(Request $request): RedirectResponse
+    {
+        /*$reservation = Reservation::find($request->session()->getId());
+        $reservation->reservationCosts()->create([
+            'item_name' => 'flight cost',
+            'price' => $request->get('cost')
+        ]);*/
+        if($this->isReservationCostAlreadyExist($request)){
+            $this->updateReservationCost($request);
+        } else {
+            $reservation = Reservation::find($request->session()->getId());
+            $reservationCosts = $reservation->reservationCosts()->create([
+                'item_name' => 'Flight cost',
+                'price' => $request->get('cost')
+            ]);
+
+            Reservation::where('id', $request->session()->getId())->update([
+                'reservation_costs_id' => $reservationCosts->id
+            ]);
+
+            $this->updateReservationUtils($request, $reservation->id);
+        }
+
+        $this->updateFlightDetails($request);
+
+        return redirect()->route('create-passenger');
+    }
+
+    /**
+     * Store a newly created passenger resource in storage.
      *
      * @param Request $request
      * @return void
      */
     public function storePassenger(Request $request): void
     {
-        foreach ($request->get('passengers') as $passenger) {
-            $_passenger = new Passenger();
+        $reservation = Reservation::find($request->session()->getId());
+        $passengersId = $reservation->passengers->pluck('id');
 
-            $_passenger->first_name = $passenger['first_name'];
-            $_passenger->last_name = $passenger['last_name'];
+        if(count($passengersId) < 1) {
+            foreach ($request->get('passengers') as $passenger)
+            {
+                $_passenger = new Passenger();
 
-            $_passenger->save();
+                $_passenger->first_name = $passenger['first_name'];
+                $_passenger->last_name = $passenger['last_name'];
 
-            $reservation = Reservation::find($request->session()->getId());
-            $_passenger->reservations()->attach($reservation);
+                $_passenger->save();
+
+                $_passenger->reservations()->attach($reservation);
+            }
+        } else {
+            $this->updatePassenger($request, $passengersId);
         }
     }
 
     /**
-     * Display the specified resource.
+     * Store a newly created reservation contact resource in storage.
      *
      * @param Request $request
      * @return RedirectResponse
@@ -170,34 +212,53 @@ class PassengerController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the passenger resource in storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Collection $passengersId
+     * @param Request $request
+     * @return void
      */
-    public function edit($id)
+    #[NoReturn] public function updatePassenger(Request $request, Collection $passengersId): void
     {
-        //
+        $reservation = Reservation::find($request->session()->getId());
+
+        foreach ($passengersId as $id) {
+            Passenger::find($id)->reservations()->detach($reservation);
+        }
+
+        foreach ($request->get('passengers') as $passenger)
+        {
+            $_passenger = new Passenger();
+
+            $_passenger->first_name = $passenger['first_name'];
+            $_passenger->last_name = $passenger['last_name'];
+
+            $_passenger->save();
+
+            $_passenger->reservations()->attach($reservation);
+        }
+
+        $this->isHaveReservation($passengersId);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the flight cost resource in storage.
      *
      * @param  Request  $request
      * @return void
      */
-    public function updateFlightCost(Request $request): void
+    public function updateReservationCost(Request $request): void
     {
         $reservation = Reservation::find($request->session()->getId());
-        $reservation->flightCost()->update([
-            'cost' => $request->get('cost')
+        $reservation->reservationCosts()->where('item_name', 'Flight cost')->update([
+            'price' => $request->get('cost')
         ]);
 
         $this->updateReservationUtils($request, $reservation->id);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the flight details resource in storage.
      *
      * @param  Request  $request
      * @return void
@@ -213,18 +274,18 @@ class PassengerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the passenger resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
-    public function destroy($id)
+    public function destroyPassenger(int $id): void
     {
-        //
+        Passenger::where('id', $id)->delete();
     }
 
     /**
-     * Update the specified resource in reservation utils.
+     * Update the reservation utils resource.
      *
      * @param string $id
      * @param Request $request
@@ -238,15 +299,37 @@ class PassengerController extends Controller
     }
 
     /**
-     * Checking the reservation is exists.
+     * Checking the reservation cost is exists.
      *
      * @param Request $request
      * @return bool
      */
-    private function flightCostIsAlreadyExist(Request $request): bool
+    private function isReservationCostAlreadyExist(Request $request): bool
     {
-        return !is_null(FlightCost::where('reservation_id', $request->session()->getId())->first());
+        return !is_null(ReservationCost::where('reservation_id', $request->session()->getId())->first());
     }
 
+    /**
+     * When updating it checks whether the passenger also belongs to another reservation.
+     * If not it passes it to the delete method.
+     *
+     * @param Collection $passengersId
+     * @return void
+     */
+    #[NoReturn] private function isHaveReservation(Collection $passengersId): void
+    {
+        $reservations = Reservation::all();
 
+        foreach($reservations as $reservation){
+            $activePassengersId = $reservation->passengers->pluck('id');
+
+            foreach ($activePassengersId as $activeId){
+                foreach ($passengersId as $passengerId){
+                    if($passengerId !== $activeId){
+                        $this->destroyPassenger($passengerId);
+                    }
+                }
+            }
+        }
+    }
 }
