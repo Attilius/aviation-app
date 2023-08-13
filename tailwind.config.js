@@ -53,12 +53,14 @@ module.exports = {
             },
             boxShadow: {
                 '3xl': '2px 2px 5px rgba(0, 0, 0, 1)',
+                'danger': ''
             },
             animation: {
                 'slider-1': 'slider-1 12s linear infinite',
                 'slider-2': 'slider-2 12s linear infinite',
                 'slider-3': 'slider-3 12s linear infinite',
                 'slider-4': 'slider-4 12s linear infinite',
+                'spin': 'spin 1s linear infinite',
                 'zoom-out': 'zoom-out 3s linear infinite',
                 'zoom-in': 'zoom-in 3s linear infinite'
             },
@@ -78,6 +80,10 @@ module.exports = {
                 'slider-4': {
                     '100%': {visibility: 'visible'},
                     '0%, 25%, 50%, 75%': {visibility: 'hidden'}
+                },
+                spin: {
+                    'from': { transform: 'rotate(0deg)' },
+                    'to': { transform: 'rotate(360deg)' },
                 },
                 'zoom-in': {
                     '100%': {
@@ -109,10 +115,12 @@ module.exports = {
             'linghtGray': '#ececec',
             'success' : '#16a34a',
             'shadow-skin': 'rgba(1, 1, 1, 0.6)',
+            'custom-blue-alfa-2': 'rgba(9, 55, 115, .1)',
             'custom-blue-alfa-8': 'rgba(9, 55, 115, .8)',
             'custom-blue-alfa-9': 'rgba(9, 55, 115, .9)',
             'white-alfa-8': 'rgba(255, 255, 255, .8)',
             'white-alfa-6': 'rgba(255, 255, 255, .6)',
+            'black-alfa-6': 'rgba(0, 0, 0, .3)'
         },
         fontFamily: {
             sans: ['Poppins', ...defaultTheme.fontFamily.sans],
@@ -122,11 +130,14 @@ module.exports = {
             'profileHeader': "url('/img/profile-header.jpg')",
             'homeHeader': "url('/img/backgrounds/home-header-bg.jpg')",
             'welcome': "url('/img/backgrounds/welcome-bg.jpg')",
+            'userProfileImage': "url('/img/persons/demo_user.jpg')",
             'aboutImageBox': "url('/img/backgrounds/plane-front.jpg')",
             'aboutBottomBox': "url('/img/backgrounds/sky.jpg')",
             'services': "url('/img/backgrounds/services-bg.jpg')",
             'contact': "url('/img/backgrounds/contact-bg.jpg')",
-            'booking': "url('/img/backgrounds/airport.jpg')"
+            'booking': "url('/img/backgrounds/airport.jpg')",
+            'ancillariesHeader': "url('/img/header/airport.jpg')",
+            'payment': "url('/img/payment/online-payments.jpg')"
         },
     },
 
