@@ -6,12 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
-        "guzzlehttp/guzzle": "^7.2",
+        "barryvdh/laravel-dompdf": "^2.0",
+        "guzzlehttp/guzzle": "*",
         "inertiajs/inertia-laravel": "^0.6.8",
         "laravel/framework": "^9.19",
         "laravel/jetstream": "^3.0",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "mike182uk/paypal-ipn-listener": "^9.0",
+        "srmklive/paypal": "~3.0",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
