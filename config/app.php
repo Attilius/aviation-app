@@ -198,6 +198,7 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\SubscriberServiceProvider::class,
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -214,7 +215,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'PayPal' => Srmklive\PayPal\Facades\PayPal::class
+        'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
+        'PDF' => Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 
 ];
