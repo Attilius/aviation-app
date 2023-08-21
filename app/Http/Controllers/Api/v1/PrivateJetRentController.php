@@ -37,6 +37,7 @@ class PrivateJetRentController extends Controller
         $airplanes = Airplanes::findByDistanceAndPassengers($distanceInKilometer, $passengers);
         $airplanesWithTripDuration = $this->addTripDuration($distanceInKilometer, $airplanes);
         $this->updateReservationUtils($request);
+        $this->updatePaymentStatus($request);
 
         return Inertia::render('API/PrivateJetRent', [
             'title' => 'Jet Rent',
@@ -121,6 +122,21 @@ class PrivateJetRentController extends Controller
      * @param Request $request
      * @return void
      */
+    private function updatePaymentStatus(Request $request): void
+    {
+        $reservation = Reservation::find($request->session()->getId());
+        $reservation->paymentStatus()->update([
+            'payment_due_date' => Date::now(),
+            'payment_amount' => 0,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in reservation utils.
+     *
+     * @param Request $request
+     * @return void
+     */
     private function updateFlightDetails(Request $request): void
     {
         $reservation = Reservation::find($request->session()->getId());
@@ -156,6 +172,7 @@ class PrivateJetRentController extends Controller
         ]);
 
         $this->createReservationUtils($reservation->id);
+        $this->createPaymentStatus($reservation->id);
     }
 
     /**
@@ -185,6 +202,21 @@ class PrivateJetRentController extends Controller
         $reservation->reservationUtils()->create([
             'pax' => '*',
             'target_of_plane_choosing' => '*'
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param string $id
+     * @return void
+     */
+    private function createPaymentStatus(string $id): void
+    {
+        $reservation = Reservation::find($id);
+        $reservation->paymentStatus()->create([
+            'payment_due_date' => Date::now(),
+            'payment_amount' => 0
         ]);
     }
 
