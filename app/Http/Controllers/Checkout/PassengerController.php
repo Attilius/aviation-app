@@ -106,30 +106,6 @@ class PassengerController extends Controller
     }
 
     /**
-     * Store a newly created flight cost resource in storage.
-     *
-     * @param Request $request
-     * @return RedirectResponse
-     */
-    public function createFlightCost(Request $request): RedirectResponse
-    {
-        if($this->flightCostIsAlreadyExist($request)){
-            $this->updateFlightCost($request);
-        } else {
-            $reservation = Reservation::find($request->session()->getId());
-            $reservation->flightCost()->create([
-                'cost' => $request->get('cost')
-            ]);
-
-            $this->updateReservationUtils($request, $reservation->id);
-        }
-
-        $this->updateFlightDetails($request);
-
-        return redirect()->route('create-passenger');
-    }
-
-    /**
      * Creating a new reservation resource.
      *
      * @param Request $request
@@ -144,6 +120,7 @@ class PassengerController extends Controller
         ]);*/
         if($this->isReservationCostAlreadyExist($request)){
             $this->updateReservationCost($request);
+            $this->updatePaymentStatus($request);
         } else {
             $reservation = Reservation::find($request->session()->getId());
             $reservationCosts = $reservation->reservationCosts()->create([
@@ -156,6 +133,7 @@ class PassengerController extends Controller
             ]);
 
             $this->updateReservationUtils($request, $reservation->id);
+            $this->updatePaymentStatus($request);
         }
 
         $this->updateFlightDetails($request);
@@ -270,6 +248,20 @@ class PassengerController extends Controller
         FlightDetails::where('id', $reservation->flight_details_id)->update([
             'flight_number' => $request->get('flightNumber'),
             'airplane_type' => $request->get('airplaneType')
+        ]);
+    }
+
+    /**
+     * Update the specified resource in payment status.
+     *
+     * @param Request $request
+     * @return void
+     */
+    private function updatePaymentStatus(Request $request): void
+    {
+        $reservation = Reservation::find($request->session()->getId());
+        $reservation->paymentStatus()->update([
+            'payment_amount' => $request->get('cost')
         ]);
     }
 
