@@ -15,8 +15,9 @@ class PaymentStatus extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'paymentDueDate',
-        'paymentAmount',
+        'payment_status',
+        'payment_due_date',
+        'payment_amount',
     ];
 
     /**
