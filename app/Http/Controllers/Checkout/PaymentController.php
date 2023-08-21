@@ -9,9 +9,12 @@ use App\Models\Passenger;
 use App\Models\Reservation;
 use App\Models\ReservationCost;
 use App\Models\ReservationUtils;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Throwable;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PaymentController extends Controller
 {
@@ -35,7 +38,7 @@ class PaymentController extends Controller
         $passengers = array();
         $reference = [];
 
-        $reference['paypalClientId'] = env('PAYPAL_CLIENT_ID');
+        $reference['paypalClientId'] = env('PAYPAL_SANDBOX_CLIENT_ID');
         $reference['price'] = $totalCost;
 
         $flightDetails['flight_number'] = FlightDetails::where('id', $flightDetailsId)->get()[0]['flight_number'];
@@ -124,8 +127,89 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function payment()
+    /**
+     * @param Request $request
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws Throwable
+     */
+    public function paymentHandle(Request $request): RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $provider->getAccessToken();
 
+        $response = $provider->createOrder(
+            [
+                "intent" => "CAPTURE",
+                'application_context' => [
+                    'return_url' => route('payment-success'),
+                    'cancel_url' => route('payment-cancel')
+                ],
+                "purchase_units" => [
+                    [
+                        "amount" => [
+                            "currency_code" => "USD",
+                            "value" => $request->get('price')
+                        ]
+                    ]
+                ]
+            ]
+        );
+
+        if(isset($response['id']) && $response['id'] != null){
+            foreach ($response['links'] as $link){
+                if($link['rel'] == 'approve'){
+                    //return redirect()->away($link['href']);
+                    /*return response('', 409)
+                        ->header('X-Inertia-Location', $link['href']);*/
+                    return Inertia::location($link['href']);
+                }
+            }
+        }
+
+        return redirect(route('payment-cancel'));
+    }
+
+    /**
+     * @param Request $request
+     * @throws Throwable
+     * @return RedirectResponse
+     */
+    public function paymentSuccess(Request $request): RedirectResponse
+    {
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $provider->getAccessToken();
+        $response = $provider->capturePaymentOrder($request->get('token'));
+
+        if($response['status'] == 'COMPLETED'){
+            $reservation = Reservation::find($request->session()->getId());
+            $reservation->paymentStatus()->update([
+                'payment_status' => 'payed'
+            ]);
+        }
+        return redirect(route('successfull-payment'));
+    }
+
+    /**
+     * @return Response
+     */
+    public function paymentCancel(): Response
+    {
+        return Inertia::render('Payment/Cancel',[
+            'title' => 'Payment Cancel',
+            'text' => 'Your payment has been declend.'
+        ]);
+    }
+
+    /**
+     * @return Response
+     */
+    public function successfullPayment(): Response
+    {
+        return Inertia::render('Payment/Success',[
+            'title' => 'Payment Success',
+            'text' => 'Thank you for choosing us. The invoice and tickets have been sent to the e-mail address provided. Have a good trip.'
+        ]);
     }
 }
