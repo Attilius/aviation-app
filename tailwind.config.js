@@ -137,7 +137,9 @@ module.exports = {
             'contact': "url('/img/backgrounds/contact-bg.jpg')",
             'booking': "url('/img/backgrounds/airport.jpg')",
             'ancillariesHeader': "url('/img/header/airport.jpg')",
-            'payment': "url('/img/payment/online-payments.jpg')"
+            'payment': "url('/img/payment/online-payments.jpg')",
+            'paymentSuccesfull': "url('/img/payment/payment-success.jpg')",
+            'paymentCancel': "url('/img/payment/payment-cancel.jpg')"
         },
     },
 
