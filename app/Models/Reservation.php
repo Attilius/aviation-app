@@ -57,14 +57,6 @@ class Reservation extends Model
     }
 
     /**
-     * Get the flight cost associated with the reservation.
-     */
-    public function flightCost(): HasOne
-    {
-        return $this->hasOne(FlightCost::class);
-    }
-
-    /**
      * Get the payment status associated with the reservation.
      */
     public function paymentStatus(): HasOne
