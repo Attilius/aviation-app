@@ -6,6 +6,7 @@ use App\Http\Controllers\Checkout\PaymentController;
 use App\Http\Controllers\Pages\ContactController;
 use App\Http\Controllers\Pages\ServicesController;
 use App\Http\Controllers\Pages\WelcomeController;
+use App\Http\Controllers\Paypal\PaypalWebhookController;
 use App\Http\Controllers\Services\BookingCancellationController;
 use App\Http\Controllers\Services\GroupDiscountController;
 use App\Http\Controllers\Services\LuggageInsuranceController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\RoutePath;
+use App\Http\Controllers\Invoice\InvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,11 @@ Route::post(RoutePath::for('contactMessage.store', '/contact'),
     [ContactController::class, 'store'])
     ->name('contactMessage.store');
 
+Route::post('/webhooks/paypal/ipn',
+    [PaypalWebhookController::class, 'verifyIPN'])->name('ipn-verify');
+
+
+Route::get('/invoice', [InvoiceController::class, 'index']);
 
 Route::middleware([
     'auth:sanctum',
@@ -98,13 +105,22 @@ Route::middleware([
         [PaymentController::class, 'index'])->name('summary-before-payment');
 
     Route::post('/checkout/paypal-payment',
-        [PaymentController::class, 'handlePayment'])->name('handle-payment');
+        [PaymentController::class, 'paymentHandle'])->name('payment-handle');
 
     Route::get('/checkout/payment-success',
         [PaymentController::class, 'paymentSuccess'])->name('payment-success');
 
-    Route::get('/checkout/cancel-payment',
-        [PaymentController::class, 'paymentCancel'])->name('cancel-payment');
+    Route::get('/checkout/payment/cancel',
+        [PaymentController::class, 'paymentCancel'])->name('payment-cancel');
+
+    Route::get('/checkout/payment/success',
+        [PaymentController::class, 'successfullPayment'])->name('successfull-payment');
 });
 
 require 'api.php';
+
+// 404 Page Not Found endpoints
+
+Route::get('/{any}', function () {
+    return view('errors.404');
+})->where('any', '.*');
