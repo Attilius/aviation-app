@@ -14,10 +14,11 @@
     @routes
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
+    <script>window.laravel = {csrftoken: '{{ csrf_token() }}'}</script>
 </head>
 <body class="font-sans antialiased">
 @inertia
-<script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+<!--<script src="../path/to/flowbite/dist/flowbite.min.js"></script>-->
 <script
     src="https://code.jquery.com/jquery-1.12.4.min.js"
     integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
