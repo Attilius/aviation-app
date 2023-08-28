@@ -23,6 +23,9 @@ class Passenger extends Model
     protected $fillable = [
         'first_name',
         'last_name',
+        'is_have_luggagge',
+        'amount_of_luggage',
+        'ticket_number'
     ];
 
     /**
