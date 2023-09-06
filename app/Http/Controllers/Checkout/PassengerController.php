@@ -113,11 +113,6 @@ class PassengerController extends Controller
      */
     public function createReservationCost(Request $request): RedirectResponse
     {
-        /*$reservation = Reservation::find($request->session()->getId());
-        $reservation->reservationCosts()->create([
-            'item_name' => 'flight cost',
-            'price' => $request->get('cost')
-        ]);*/
         if($this->isReservationCostAlreadyExist($request)){
             $this->updateReservationCost($request);
             $this->updatePaymentStatus($request);
