@@ -11,6 +11,12 @@ import axios from 'axios';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['x-csrf-token'] = window.laravel.csrftoken;
+window.axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+window.axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, PUT, POST, DELETE, OPTIONS';
+window.axios.defaults.headers.common['Access-Control-Max-Age'] ='3600';
+window.axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
+window.axios.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
