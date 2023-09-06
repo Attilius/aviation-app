@@ -10,5 +10,5 @@ interface KeyGeneratorInterface
      * @param int $keyLength
      * @return string
      */
-    public static function generate(int $keyLength = 2): string;
+    public function generate(int $keyLength = 2): string;
 }
