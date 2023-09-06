@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static where(string $string, string $getId)
+ * @method static select(string $string)
  */
 class ReservationCost extends Model
 {
