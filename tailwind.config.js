@@ -30,6 +30,7 @@ module.exports = {
                 '1/15': '45%',
                 '1/3.3': '30%',
                 '1/5': '20%',
+                '1/7': '16.7%',
                 '1/8': '12%',
                 '1/10.5': '10.5%',
                 '1/10': '10%',
@@ -115,7 +116,8 @@ module.exports = {
             'linghtGray': '#ececec',
             'success' : '#16a34a',
             'shadow-skin': 'rgba(1, 1, 1, 0.6)',
-            'custom-blue-alfa-2': 'rgba(9, 55, 115, .1)',
+            'custom-blue-alfa-1': 'rgba(9, 55, 115, .1)',
+            'custom-blue-alfa-5': 'rgba(9, 55, 115, .5)',
             'custom-blue-alfa-8': 'rgba(9, 55, 115, .8)',
             'custom-blue-alfa-9': 'rgba(9, 55, 115, .9)',
             'white-alfa-8': 'rgba(255, 255, 255, .8)',
@@ -139,7 +141,8 @@ module.exports = {
             'ancillariesHeader': "url('/img/header/airport.jpg')",
             'payment': "url('/img/payment/online-payments.jpg')",
             'paymentSuccesfull': "url('/img/payment/payment-success.jpg')",
-            'paymentCancel': "url('/img/payment/payment-cancel.jpg')"
+            'paymentCancel': "url('/img/payment/payment-cancel.jpg')",
+            'tripSummaryHeader': "url('/img/header/trip-summary.jpg')"
         },
     },
 
