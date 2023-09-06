@@ -15,6 +15,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use App\Utils\TravelDaysCalculator;
 
 class PaymentController extends Controller
 {
@@ -32,6 +33,10 @@ class PaymentController extends Controller
         $targetUrlOfPlaneChoosing = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['target_of_plane_choosing'];
         $passengersId = $reservation->passengers->pluck('id');
         $totalCost = ReservationCost::where('reservation_id', $request->session()->getId())->sum('price');
+        $insuranceCost = ReservationCost::select('price')
+                            ->where('reservation_id', $request->session()->getId())
+                            ->where('item_name', 'Insurance cost')
+                            ->first();
         $flightDetailsId = $reservation->flight_details_id;
         $airplaneType = FlightDetails::where('id', $flightDetailsId)->get()[0]['airplane_type'];
         $flightDetails = array();
@@ -47,12 +52,16 @@ class PaymentController extends Controller
         $flightDetails['airplane_type'] = $airplaneType;
         $flightDetails['source_city'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['source_airport'])[0];
         $flightDetails['destination_city'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['destination_airport'])[0];
+        $flightDetails['source_airport'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['source_airport'])[1];
+        $flightDetails['destination_airport'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['destination_airport'])[1];
         $flightDetails['source_iata'] = explode('%3E', explode('-', explode('connections=', $targetUrlOfPlaneChoosing)[1])[0])[0];
         $flightDetails['destination_iata'] = explode('%3E', explode('-', explode('connections=', $targetUrlOfPlaneChoosing)[1])[0])[1];
         $flightDetails['departure_date'] = explode(' ', FlightDetails::where('id', $flightDetailsId)->get()[0]['departure_date'])[0];
         $flightDetails['return_date'] = explode(' ', FlightDetails::where('id', $flightDetailsId)->get()[0]['return_date'])[0];
-
+        $flightDetails['flight_cost'] = ReservationCost::where('item_name','Flight cost')->where('reservation_id', $reservation->id)->first()->price;
         $incrementKey = 1;
+
+        $travelType = explode('&', explode('travel_type=', $targetUrlOfPlaneChoosing)[1])[0];
 
         foreach ($passengersId as $id){
             $passenger = Passenger::where('id', $id)->get();
@@ -60,6 +69,7 @@ class PaymentController extends Controller
 
             $passengers[$incrementKey]['serialNumber'] = $incrementKey;
             $passengers[$incrementKey]['name'] = $passenger[0]->first_name. ' ' .$passenger[0]->last_name;
+            $passengers[$incrementKey]['checkedBaggages'] = $passenger[0]->amount_of_luggage;
 
             for($i = 0; $i < count($pax); $i++) {
                 switch($i) {
@@ -123,7 +133,13 @@ class PaymentController extends Controller
             'baggages' => $baggages,
             'flightDetails' => $flightDetails,
             'passengers' => $passengers,
-            'reference' => $reference
+            'reference' => $reference,
+            'amountTravelDays' => TravelDaysCalculator::calculate(
+                                    $flightDetails['departure_date'],
+                                    $flightDetails['return_date']
+                                  ),
+            'travelType' => $travelType,
+            'insuranceCost' => $insuranceCost->price
         ]);
     }
 
