@@ -12,7 +12,7 @@ import { faStar, faQuoteRight, faQuoteLeft, faPlane, faUsers, faMapLocationDot,
          faPassport, faSuitcaseRolling, faMugHot, faBan, faMagnifyingGlass, faXmark,
          faCircleExclamation, faCircleUser, faPencil, faCaretDown, faCircle, faAngleRight,
          faCheck, faAngleDown, faBriefcase, faSuitcase, faCartFlatbedSuitcase, faMinus, faPlus,
-         faPhoneVolume, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+         faPhoneVolume, faCircleInfo, faAngleUp, faUserShield, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarStroke, faStarHalfStroke, faCreditCard,
         faClock as faClockRegular, faCircle as faCircleRefular } from '@fortawesome/free-regular-svg-icons';
 import { faAvianex } from '@fortawesome/free-brands-svg-icons';
@@ -23,7 +23,8 @@ library.add( faStar, faStarHalfStroke, faStarStroke, faQuoteLeft, faQuoteRight, 
              faHandshake, faPhone, faEnvelope, faLocationDot, faClock, faHouse, faFax, faPassport, faSuitcaseRolling,
              faMugHot, faAvianex, faBan, faMagnifyingGlass, faCreditCard, faXmark, faCircleExclamation, faCircleUser,
              faPencil, faCaretDown, faCircle, faClockRegular, faAngleRight, faCheck, faAngleDown, faBriefcase,
-             faSuitcase, faCartFlatbedSuitcase, faMinus, faPlus, faPhoneVolume, faCircleRefular, faCircleInfo );
+             faSuitcase, faCartFlatbedSuitcase, faMinus, faPlus, faPhoneVolume, faCircleRefular, faCircleInfo,
+             faAngleUp, faUserShield, faArrowRight );
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
