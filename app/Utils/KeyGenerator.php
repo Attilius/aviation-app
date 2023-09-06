@@ -32,21 +32,91 @@ class KeyGenerator implements KeyGeneratorInterface
     private static string $key = '';
 
     /**
-     * Generate an unique key in different length.
+     * Generate a unique key in different type and length.
+     *
+     * @param int $keyLength
+     * @param string $type
+     * @return string
+     */
+    public function generate(int $keyLength = 2, string $type = ''): string
+    {
+        if($type === '') {
+            for ($i = 0; $i < $keyLength; $i++) {
+                if($i == 0 || $i % 2 == 0) {
+                   $charIndex = rand(0, count(self::$chars) - 1);
+                   self::$key .= self::$chars[$charIndex];
+                } else {
+                    $numberIndex = rand(0, count(self::$numbers) - 1);
+                    self::$key .= self::$numbers[$numberIndex];
+                }
+            }
+        }
+
+        switch ($type) {
+            case 'alpha': {
+                return $this->createOnlyAlphaNumericKey($keyLength);
+            }
+            case 'number': {
+                return $this->createOnlyNumericKey($keyLength);
+            }
+            case 'mix': {
+                return $this->createMixedNumericAndAlphaNumericKey($keyLength);
+            }
+        }
+
+        return self::$key;
+    }
+
+    /**
+     * Generate a random alphanumeric key.
      *
      * @param int $keyLength
      * @return string
      */
-    public static function generate(int $keyLength = 2): string
+    private static function createOnlyAlphaNumericKey(int $keyLength): string
     {
         for ($i = 0; $i < $keyLength; $i++) {
-            if($i == 0 || $i % 2 == 0) {
-               $charIndex = rand(0, count(self::$chars) - 1);
-               self::$key .= self::$chars[$charIndex];
-            } else {
-                $numberIndex = rand(0, count(self::$numbers) - 1);
-                self::$key .= self::$numbers[$numberIndex];
-            }
+            $charIndex = rand(0, count(self::$chars) - 1);
+            self::$key .= self::$chars[$charIndex];
+        }
+
+        return self::$key;
+    }
+
+    /**
+     * Generate a random numeric key.
+     *
+     * @param int $keyLength
+     * @return string
+     */
+    private function createOnlyNumericKey(int $keyLength): string
+    {
+        for ($i = 0; $i < $keyLength; $i++) {
+            $numberIndex = rand(0, count(self::$numbers) - 1);
+            self::$key .= self::$numbers[$numberIndex];
+        }
+
+        return self::$key;
+    }
+
+    /**
+     * Generate a random alphanumeric and numeric mixed key.
+     *
+     * @param int $keyLength
+     * @return string
+     */
+    private static function createMixedNumericAndAlphaNumericKey(int $keyLength): string
+    {
+        for ($i = 0; $i < $keyLength; $i++) {
+            $randomValue = rand(0, 99);
+
+            $index = $randomValue %5 === 0
+                ? rand(0, count(self::$numbers) - 1) . ' number'
+                : rand(0, count(self::$chars) - 1) . ' char';
+
+            explode(' ',$index)[1] === 'char'
+                ? self::$key .= self::$chars[explode(' ',$index)[0]]
+                : self::$key .= self::$numbers[explode(' ',$index)[0]];
         }
 
         return self::$key;
