@@ -164,10 +164,12 @@ class PrivateJetRentController extends Controller
      */
     private function createReservation(Request $request, int $id): void
     {
+        $keyGenerator = new KeyGenerator();
+
         $flight = FlightDetails::find($id);
         $reservation = $flight->reservations()->create([
             'id' => $request->session()->getId(),
-            'reservation_number' => $id . '-' . KeyGenerator::generate(5),
+            'reservation_number' => $id . '-' . $keyGenerator->generate(6, 'mix'),
             'date_of_reservation' => Date::now()
         ]);
 
@@ -183,9 +185,11 @@ class PrivateJetRentController extends Controller
      */
     private function updateReservation(int $id): void
     {
+        $keyGenerator = new KeyGenerator();
+
         $flight = FlightDetails::find($id);
         $flight->reservations()->update([
-            'reservation_number' => $id . '-' . KeyGenerator::generate(5),
+            'reservation_number' => $id . '-' . $keyGenerator->generate(6, 'mix'),
             'date_of_reservation' => Date::now()
         ]);
     }
