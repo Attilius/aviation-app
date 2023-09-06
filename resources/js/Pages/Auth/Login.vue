@@ -46,7 +46,7 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <div>
+            <div class="w-full border-b-2 pb-0.25">
                 <MaterialUiInput
                     :id="builder.email.id"
                     v-model="form.email"
@@ -58,7 +58,7 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="mt-6">
+            <div class="mt-6 w-full border-b-2 pb-0.25">
                 <MaterialUiInput
                     :id="builder.password.id"
                     v-model="form.password"
