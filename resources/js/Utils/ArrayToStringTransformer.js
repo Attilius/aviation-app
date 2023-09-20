@@ -7,7 +7,7 @@ export default class ArrayToStringTransformer {
     /**
      * It transforms the content of array to string.
      *
-     * @returns {string}
+     * @returns string
      */
     transform() {
         let transformedResult = '';
@@ -23,22 +23,22 @@ export default class ArrayToStringTransformer {
      * It investigates the type of attribute is an array and the content of array it type is string.
      *
      * @param array
-     * @returns {boolean}
+     * @returns boolean
      * @private
      */
     _arrayContentValidator(array) {
-        let validResult = false;
+        let isValidResult = false;
 
         if(Array.isArray(array) && array.length > 0) {
             for (let i = 0; i < array.length; i++) {
                 if(typeof array[i] === 'string') {
-                    validResult = true
+                    isValidResult = true
                 } else {
-                    validResult = false;
+                    isValidResult = false;
                     break;
                 }
             }
         }
-        return validResult;
+        return isValidResult;
     }
 }
