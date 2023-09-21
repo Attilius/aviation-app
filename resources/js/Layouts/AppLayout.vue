@@ -193,7 +193,13 @@ Object.entries(mainNavLinkAttributes).forEach((item) => {
                                                            text-whitesmoke focus:outline-none transition
                                                            hover:text-whitesmoke leading-5 py-auto mt-1">
 
-                                                <i class="material-icons prefix mr-1">account_circle</i>
+                                               <!-- <img v-if="$page.props.auth.user.name === 'Demo User'" class="h-8 w-8 rounded-full object-cover mr-2"
+                                                     src="/img/persons/demo_user.jpg"
+                                                     :alt="$page.props.auth.user.name"
+                                                > -->
+                                                <div v-if="$page.props.auth.user.name === 'Demo User'"
+                                                     class="h-8 w-8 bg-userProfileImage bg-cover rounded-full object-cover mr-2"></div>
+                                                <i v-else class="material-icons prefix mr-1">account_circle</i>
                                                 {{ $page.props.auth.user.name }}
                                             </button>
                                         </span>
