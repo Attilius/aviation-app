@@ -3,7 +3,7 @@ import BookingForm from "../Pages/Booking/BookingForm.vue";
 </script>
 
 <template>
-    <div class="content pt-16">
+    <div class="content pt-16 border-b-2">
         <div class="under-left">
             <div class="bg-homeHeader left">
                 <div class="cover-bg">
@@ -15,15 +15,16 @@ import BookingForm from "../Pages/Booking/BookingForm.vue";
                 </div>
             </div>
         </div>
-        <div class="pl-16 right">
+        <div class="right bg-transparent">
             <div class="open-page-content">
-                <h2 class="title-top leading-15">
+                <h2 class="title-top leading-15 pl-10 md:text-5xl 2xl:text-6xl">
                     Make your trip an <b>experience</b>
                 </h2>
-                <h2 class="title-bottom pt-5">fly with us</h2>
+                <h2 class="title-bottom pt-5 pl-10 md:text-5xl 2xl:text-6xl">fly with us</h2>
 
-                <BookingForm />
-
+                <BookingForm class="w-full relative top-1/2 bottom-5 shadow-3xl"
+                             class_="booking-form-public"
+                />
             </div>
         </div>
     </div>
