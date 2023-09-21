@@ -32,16 +32,16 @@ const submit = () => {
             <AuthenticationCardLogo />
         </template>
 
-        <div class="mb-4 text-sm text-whitesmoke ">
+        <div class="mb-6 text-sm text-whitesmoke ">
             Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
         </div>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-success text-center">
+        <div v-if="status" class="mb-6 font-medium text-sm text-success text-center">
             {{ status }}
         </div>
 
         <form @submit.prevent="submit">
-            <div>
+            <div class="w-full border-b-2 pb-0.25">
                 <MaterialUiInput
                     :id="builder.email.id"
                     v-model="form.email"
