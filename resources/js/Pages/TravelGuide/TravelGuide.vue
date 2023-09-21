@@ -11,7 +11,7 @@ const form = useForm({
 const headerTheme = ref({
         id: 10,
         country: 'france',
-        city: 'paris',
+        city: 'Paris',
         price: 100,
         image: ['bg-paris'],
         indicator: 'city of romance'
@@ -210,7 +210,7 @@ const width = 82 + '%';
                             <a @click="goDestination(getHeaderTheme.city)"
                                class="w-1/15 text-whitesmoke hover:text-info text-xs sm:text-base cursor-pointer"
                             >
-                                <strong class="uppercase">{{ getHeaderTheme.city }}</strong>,
+                                <strong class="uppercase">{{ getHeaderTheme.city.replace('-', ' ') }}</strong>,
                                 {{ getHeaderTheme.indicator }}
                             </a>
                             <div class="pointer" @click="goDown">
