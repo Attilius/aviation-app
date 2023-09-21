@@ -9,9 +9,9 @@ const props = defineProps({
 
 const classes = computed(() => {
     return props.active
-        ? 'inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 ' +
+        ? 'h-full w-full inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 ' +
           'text-lightskyblue hover:text-whitesmoke focus:outline-none transition duration-150 ease-in-out'
-        : 'inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 ' +
+        : 'h-full w-full inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 ' +
           'text-whitesmoke hover:text-whitesmoke focus:outline-none transition duration-150 ease-in-out';
 });
 </script>
