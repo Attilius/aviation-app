@@ -29,7 +29,7 @@ class FavoritePlacesController extends Controller
     }
 
     /**
-     * Store a new favorite place item.
+     * Store a new favorite place item(s).
      *
      * @param Request $request
      * @return void
@@ -71,7 +71,7 @@ class FavoritePlacesController extends Controller
     }
 
     /**
-     * Remove favorite place item.
+     * Remove favorite place item(s).
      *
      * @param Request $request
      * @return void
@@ -90,10 +90,10 @@ class FavoritePlacesController extends Controller
      * Set data object which will have been pass to the Favorite Place repository.
      *
      * @param array $data
-     * @param $serviceItem
+     * @param object $serviceItem
      * @return array
      */
-    private function setServiceData(array $data, $serviceItem): array
+    private function setServiceData(array $data, object $serviceItem): array
     {
         $data['serviceName'] = $serviceItem->name;
         $data['serviceType'] = $serviceItem->label;
