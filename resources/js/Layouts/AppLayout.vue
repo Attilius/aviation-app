@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
-import {Head, Link, router, useForm} from '@inertiajs/vue3';
+import { Head, router, useForm } from '@inertiajs/vue3';
+import { mainNavLinkAttributes, authNavLinkAttributes }  from '../Config/navigation.js';
 import ApplicationLogo from '../Components/ApplicationLogo.vue';
 import Dropdown from '../Components/Dropdown.vue';
 import DropdownLink from '../Components/DropdownLink.vue';
@@ -9,11 +10,8 @@ import ResponsiveNavLink from '../Components/ResponsiveNavLink.vue';
 import InputAttributesBuilder from "../Utils/InputAttributesBuilder";
 import JsonDataProvider from "../Utils/JsonDataProvider";
 import PrimaryButton from '../Components/PrimaryButton.vue';
-import { mainNavLinkAttributes, authNavLinkAttributes }  from '../Config/navigation.js';
-import JsonToArrayTransformer from "../Utils/JsonToArrayTransformer.js";
-import contact from '../../data/contact.json';
 
-defineProps({
+const props = defineProps({
     title: String,
     canLogin: Boolean,
     canRegister: Boolean
@@ -154,7 +152,7 @@ Object.entries(mainNavLinkAttributes).forEach((item) => {
                                                     <form @submit.prevent="switchToTeam(team)">
                                                         <DropdownLink as="button">
                                                             <div class="flex items-center">
-                                                                <svg v-if="team.id == $page.props.user.current_team_id"
+                                                                <svg v-if="team.id === $page.props.user.current_team_id"
                                                                      class="mr-2 h-5 w-5 text-green-400"
                                                                      xmlns="http://www.w3.org/2000/svg"
                                                                      fill="none" viewBox="0 0 24 24"
@@ -212,6 +210,14 @@ Object.entries(mainNavLinkAttributes).forEach((item) => {
                                             <div class="block px-4 py-2 text-xs text-custom_blue border-b border-gray-200">
                                                 Manage Account
                                             </div>
+
+                                            <DropdownLink :href="route('home')">
+                                                Bookings
+                                            </DropdownLink>
+
+                                            <DropdownLink :href="route('get-favorites')">
+                                                Favorite Places
+                                            </DropdownLink>
 
                                             <DropdownLink :href="route('profile.show')">
                                                 Profile
@@ -365,7 +371,7 @@ Object.entries(mainNavLinkAttributes).forEach((item) => {
                                     <form @submit.prevent="switchToTeam(team)">
                                         <ResponsiveNavLink as="button">
                                             <div class="flex items-center">
-                                                <svg v-if="team.id == $page.props.user.current_team_id" class="mr-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <svg v-if="team.id === $page.props.user.current_team_id" class="mr-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                 </svg>
                                                 <div>{{ team.name }}</div>
