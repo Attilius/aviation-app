@@ -12,16 +12,6 @@ const form = useForm({
     city: props.addressesPageContent.cityName.replace(' ', '-')
 });
 
-const form2 = useForm({});
-
-const backToHome = () => {
-    form2.get(route('home'));
-}
-
-const backToTravelGuide = () => {
-    form2.get(route('travel-guide'));
-}
-
 const backToDestination = () => {
     form.get(route('show-city'));
 }
@@ -61,10 +51,10 @@ const backToDestination = () => {
 
                     <p class="my-5 text-rebecca_purple text-center lg:text-start font-bold italic">
                         <a class="text-info hover:text-custom_blue cursor-pointer"
-                           @click="backToHome"
+                           :href="route('home')"
                         >Lorem Airlines</a> >
                         <a class="text-info hover:text-custom_blue cursor-pointer"
-                           @click="backToTravelGuide"
+                           :href="route('travel-guide')"
                         >Travel Guide</a> >
                         <a class="text-info hover:text-custom_blue cursor-pointer"
                            @click="backToDestination"
