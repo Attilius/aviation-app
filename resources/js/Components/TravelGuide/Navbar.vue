@@ -3,7 +3,9 @@ import { onMounted, ref } from "vue";
 import SideMenu from './SideMenu.vue';
 
 const props = defineProps({
-    width: String
+    width: String,
+    addFavoritePlace: Array,
+    removeFavoritePlace: Array
 });
 
 let windowTop = ref(0);
@@ -30,7 +32,10 @@ const openMenu = () => {
                 <font-awesome-icon id="icon-menu" class="icon" :icon="['fas', 'bars']" @click="openMenu" />
 
                 <!-- Side bar menu -->
-                <SideMenu />
+                <SideMenu
+                    :addFavoritePlace="addFavoritePlace"
+                    :removeFavoritePlace="removeFavoritePlace"
+                />
             </div>
 
             <div class="w-full sm:w-1/2 text-sm sm:text-base flex justify-center items-center text-whitesmoke">
