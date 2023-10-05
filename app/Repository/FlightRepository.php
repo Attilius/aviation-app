@@ -7,6 +7,9 @@ use App\Models\Flight;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method where(string $string, string $string1)
+ */
 class FlightRepository implements FlightRepositoryInterface
 {
     /**
@@ -45,7 +48,7 @@ class FlightRepository implements FlightRepositoryInterface
             'carrier_name' => $data['carrierName'],
             'airplane_type' => $data['airplaneType'],
             'departure_date' => $data['departureDate'],
-            'arriving_date' => $data['arrivingDate'],
+            'direction' => $data['direction'],
             'departure_time' => $data['departureTime'],
             'arriving_time' => $data['arrivingTime'],
             'free_seats' => rand(1,22)
@@ -64,14 +67,13 @@ class FlightRepository implements FlightRepositoryInterface
         $flight = Flight::find($id)->get()->first();
 
         $flight->update([
-                'departure_place' => $data['departurePlace'],
-                'arriving_place' => $data['arrivingPlace'],
-                'departure_date' => $data['departureDate'],
-                'arriving_date' => $data['arrivingDate'],
+                'departure_place' => $data['departurePlace'] ?? '*',
+                'arriving_place' => $data['arrivingPlace'] ?? '*',
+                'departure_date' => $data['departureDate'] ?? '2023-01-02',
                 'arriving_time' => date("H:i",
                     strtotime($flight['departure_time'].'+'.explode(':',
-                            $data['arrivingTime'])[0].' hour'.explode(':',
-                            $data['arrivingTime'])[1].' minutes'
+                            $data['arrivingTime'])[0] ?? '00'.' hour'.explode(':',
+                            $data['arrivingTime'])[1] ?? '00'.' minutes'
                     )
                 ),
                 'free_seats' => rand(1,11)
