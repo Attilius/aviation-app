@@ -8,42 +8,42 @@ use Illuminate\Database\Eloquent\Model;
 interface CrudInterface
 {
     /**
-     * Get all subscriber.
+     * Get all element of specify model.
      *
      * @return Collection
      */
     public function findAll(): Collection;
 
     /**
-     * Get only subscriber with id.
+     * Get one element of specify model by id.
      *
-     * @param $id
+     * @param int $id
      * @return Model
      */
-    public function findById($id): Model;
+    public function findById(int $id): Model;
 
     /**
-     * Store subscriber in subscribers table.
-     *
-     * @param array $data
-     * @return Model
-     */
-    public function store(array $data): Model;
-
-    /**
-     * Update subscriber role and|or email.
+     * Create a new model element.
      *
      * @param array $data
      * @return void
      */
-    public function update(array $data = []): void;
+    public function store(array $data): void;
 
     /**
-     * Remove subscriber.
+     * Update one specify element of model.
      *
-     * @param $id
-     * @param string $email
+     * @param int $id
+     * @param array $data
      * @return void
      */
-    public function destroy($id, string $email): void;
+    public function update(int $id, array $data): void;
+
+    /**
+     * Remove one specify element of model.
+     *
+     * @param int $id
+     * @return void
+     */
+    public function destroy(int $id): void;
 }
