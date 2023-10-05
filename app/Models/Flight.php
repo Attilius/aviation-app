@@ -28,7 +28,7 @@ class Flight extends Model
         'carrier_name',
         'airplane_type',
         'departure_date',
-        'arriving_date',
+        'direction',
         'departure_time',
         'arriving_time',
         'free_seats'
