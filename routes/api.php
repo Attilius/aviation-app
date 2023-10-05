@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\v1\CurrentTimeController;
+use App\Http\Controllers\Api\v1\DestinationServiceController;
+use App\Http\Controllers\Api\v1\FlightServiceController;
 use App\Http\Controllers\Api\v1\PrivateJetRentController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +16,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-/*
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-}); */
 
 Route::get('/search/offers', [PrivateJetRentController::class, 'index'])->name('plane-choosing');
+Route::get('/time', CurrentTimeController::class);
+Route::get('/{cityName}', DestinationServiceController::class);
+
+Route::get('/flight/all', [FlightServiceController::class, 'index']);
+Route::get('/flight/{id}', [FlightServiceController::class, 'getOnlyFlight']);
+Route::post('/flight/create', [FlightServiceController::class, 'storeFlight']);
+Route::patch('/flight/edit/{id}', [FlightServiceController::class, 'updateFlight']);
+Route::delete('/flight/remove/{id}', [FlightServiceController::class, 'removeFlight']);
