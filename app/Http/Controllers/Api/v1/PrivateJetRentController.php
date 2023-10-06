@@ -9,7 +9,7 @@ use App\Models\FlightDetails;
 use App\Models\Passenger;
 use App\Models\Reservation;
 use App\Models\ReservationUtils;
-use App\Utils\DistanceCalculator;
+//use App\Utils\DistanceCalculator;
 use App\Utils\TripDurationCalculator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,9 +18,17 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Airport;
 use App\Utils\KeyGenerator;
+use App\Utils\TravelDistanceAndDurationHandler;
 
 class PrivateJetRentController extends Controller
 {
+    private TravelDistanceAndDurationHandler $travelHandler;
+
+    public function __construct( TravelDistanceAndDurationHandler $travelHandler )
+    {
+        $this->travelHandler = $travelHandler;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,21 +39,21 @@ class PrivateJetRentController extends Controller
     {
         $this->storeFlightDetails($request);
 
-        $airports = $this->getAirports($request);
-        $distanceInKilometer = $this->calculateTravelDistance($airports);
+        $airports = $this->travelHandler->getAirports($request);
+        $distanceInKilometer = $this->travelHandler->calculateTravelDistance($airports);
         $passengers = array_sum(explode('-',$request->query->get('pax')));
         $airplanes = Airplanes::findByDistanceAndPassengers($distanceInKilometer, $passengers);
-        $airplanesWithTripDuration = $this->addTripDuration($distanceInKilometer, $airplanes);
+        $airplanesWithTripDuration = $this->travelHandler->addTripDuration($distanceInKilometer, $airplanes);
         $this->updateReservationUtils($request);
         $this->updatePaymentStatus($request);
-
         return Inertia::render('API/PrivateJetRent', [
             'title' => 'Jet Rent',
             'progressId' => '2',
             'departure' => $airports[0]->municipality,
             'arriving' => $airports[1]->municipality,
             'passengers' => strval($passengers),
-            'airplanes' => $airplanesWithTripDuration
+            'airplanes' => $airplanesWithTripDuration,
+            'isPrivate' => boolval($request->query->get('private'))
         ]);
     }
 
@@ -60,7 +68,7 @@ class PrivateJetRentController extends Controller
         if($this->isReservationAlreadyExist($request)){
             $this->updateFlightDetails($request);
         } else {
-            $airports = $this->getAirports($request);
+            $airports = $this->travelHandler->getAirports($request);
 
             $flight = FlightDetails::create([
                 'flight_number' => '*',
@@ -140,7 +148,7 @@ class PrivateJetRentController extends Controller
     private function updateFlightDetails(Request $request): void
     {
         $reservation = Reservation::find($request->session()->getId());
-        $airports = $this->getAirports($request);
+        $airports = $this->travelHandler->getAirports($request);
 
         FlightDetails::where('id', $reservation->flight_details_id)->update([
             'flight_number' => '*',
@@ -222,65 +230,6 @@ class PrivateJetRentController extends Controller
             'payment_due_date' => Date::now(),
             'payment_amount' => 0
         ]);
-    }
-
-    /**
-     * Return source and destination airports from json file.
-     *
-     * @param Request $request
-     * @return array
-     */
-    private function getAirports(Request $request): array
-    {
-        $airport = new Airport();
-
-        if($request->query->get('travel_type') == 'ROUNDTRIP'){
-            $departure_iata = explode('-', explode('>', $request->query->get('connections'))[0])[0];
-            $arriving_iata = explode('-', explode('>', $request->query->get('connections'))[1])[0];
-        } else {
-            $departure_iata = explode('>', $request->query->get('connections'))[0];
-            $arriving_iata = explode('>', $request->query->get('connections'))[1];
-        }
-
-        return $airport->FindByIata([$departure_iata, $arriving_iata]);
-    }
-
-    /**
-     * Calculate distance of trip. Result get in specify unit of measurement. Option unit of measurements are
-     * [kilometer, miles] or empty parameter is equals meter.
-     *
-     * @param array $airports
-     * @return float|int
-     */
-    private function calculateTravelDistance(array $airports): float|int
-    {
-        $calculator = new DistanceCalculator(
-            $airports[0]->latitude_deg,
-            $airports[0]->longitude_deg,
-            $airports[1]->latitude_deg,
-            $airports[1]->longitude_deg
-        );
-
-        return $calculator->calculate('kilometer');
-    }
-
-    /**
-     * Expand airplanes array with value of trip duration finally return the expanded airplanes array.
-     *
-     * @param float|int $distanceInKilometer
-     * @param array $airplanes
-     * @return array
-     */
-    private function addTripDuration(float|int $distanceInKilometer, array $airplanes): array
-    {
-       return array_map(function ($airplane) use ($distanceInKilometer) {
-            $tripDurationCalculator = new TripDurationCalculator($airplane->travel_speed , $distanceInKilometer);
-            $airplane = (array)$airplane;
-            $airplane['trip_duration'] = $tripDurationCalculator->calculate();
-
-            return $airplane;
-
-        },$airplanes);
     }
 
     /**
