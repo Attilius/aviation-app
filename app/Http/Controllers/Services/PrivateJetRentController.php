@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Services;
 
 use App\Http\Controllers\Controller;
-use App\Models\Reservation;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
