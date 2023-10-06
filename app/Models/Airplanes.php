@@ -26,7 +26,7 @@ class Airplanes
     }
 
     /**
-     * Return all airplanes which is inside range of distance and passenger capacity.
+     * Return one airplane by type.
      *
      * @param string $type
      * @return object
