@@ -3,8 +3,14 @@
 use App\Http\Controllers\Checkout\AncillariesController;
 use App\Http\Controllers\Checkout\PassengerController;
 use App\Http\Controllers\Checkout\PaymentController;
+use App\Http\Controllers\Invoice\InvoiceController;
+use App\Http\Controllers\Pages\AboutController;
 use App\Http\Controllers\Pages\ContactController;
+use App\Http\Controllers\Pages\HomeController;
 use App\Http\Controllers\Pages\ServicesController;
+use App\Http\Controllers\Pages\TravelGuide\DestinationController;
+use App\Http\Controllers\Pages\TravelGuide\FavoritePlacesController;
+use App\Http\Controllers\Pages\TravelGuide\TravelGuideController;
 use App\Http\Controllers\Pages\WelcomeController;
 use App\Http\Controllers\Paypal\PaypalWebhookController;
 use App\Http\Controllers\Services\BookingCancellationController;
@@ -14,10 +20,9 @@ use App\Http\Controllers\Services\PremiumComfortController;
 use App\Http\Controllers\Services\PrivateJetRentController;
 use App\Http\Controllers\Services\TravelInsuranceController;
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\Ticket\TicketController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use Laravel\Fortify\RoutePath;
-use App\Http\Controllers\Invoice\InvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,21 +48,21 @@ Route::post(RoutePath::for('contactMessage.store', '/contact'),
 Route::post('/webhooks/paypal/ipn',
     [PaypalWebhookController::class, 'verifyIPN'])->name('ipn-verify');
 
+Route::get('/use-ipn',
+    [PaypalWebhookController::class, 'useIpnMessage'])->name('use-ipn');
+
 
 Route::get('/invoice', [InvoiceController::class, 'index']);
+Route::get('/ticket', [TicketController::class, 'index']);
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/home', function () {
-        return Inertia::render('Home');
-    })->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/about', function () {
-        return Inertia::render('About');
-    })->name('about');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
 
     Route::get('/services', [ServicesController::class, 'index'])->name('services');
 
@@ -115,6 +120,16 @@ Route::middleware([
 
     Route::get('/checkout/payment/success',
         [PaymentController::class, 'successfullPayment'])->name('successfull-payment');
+
+    Route::get('/travel-guide', [TravelGuideController::class, 'index'])->name('travel-guide');
+
+
+    Route::get('/travel-guide/destination', [DestinationController::class, 'index'])->name('show-city');
+    Route::post('/travel-guide/destination/{city}/{service}/{place}', [DestinationController::class, 'showService'])->name('show-service');
+
+    Route::get('/user/favorites', [FavoritePlacesController::class, 'index'])->name('get-favorites');
+    Route::post('/travel-guide/favorite/store', [FavoritePlacesController::class, 'addFavoritePlace'])->name('add-favorite');
+    Route::post('/travel-guide/favorite/remove', [FavoritePlacesController::class, 'deleteFavoritePlace'])->name('remove-favorite');
 });
 
 require 'api.php';
