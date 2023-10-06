@@ -21,7 +21,7 @@ Route::get('/search/offers', [PrivateJetRentController::class, 'index'])->name('
 Route::get('/time', CurrentTimeController::class);
 Route::get('/{cityName}', DestinationServiceController::class);
 
-Route::get('/flight/all', [FlightServiceController::class, 'index']);
+Route::get('/search/offers', [FlightServiceController::class, 'index'])->name('flight-choosing');
 Route::get('/flight/{id}', [FlightServiceController::class, 'getOnlyFlight']);
 Route::post('/flight/create', [FlightServiceController::class, 'storeFlight']);
 Route::patch('/flight/edit/{id}', [FlightServiceController::class, 'updateFlight']);
