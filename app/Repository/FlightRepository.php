@@ -7,9 +7,6 @@ use App\Models\Flight;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * @method where(string $string, string $string1)
- */
 class FlightRepository implements FlightRepositoryInterface
 {
     /**
@@ -64,7 +61,7 @@ class FlightRepository implements FlightRepositoryInterface
      */
     public function update(int $id, array $data = []): void
     {
-        $flight = Flight::find($id)->get()->first();
+        $flight = Flight::where('id', $id)->get()->first();
 
         $flight->update([
                 'departure_place' => $data['departurePlace'] ?? '*',
@@ -72,13 +69,12 @@ class FlightRepository implements FlightRepositoryInterface
                 'departure_date' => $data['departureDate'] ?? '2023-01-02',
                 'arriving_time' => date("H:i",
                     strtotime($flight['departure_time'].'+'.explode(':',
-                            $data['arrivingTime'])[0] ?? '00'.' hour'.explode(':',
-                            $data['arrivingTime'])[1] ?? '00'.' minutes'
+                            $data['arrivingTime'] ?? '00:00')[0].' hour'.explode(':',
+                            $data['arrivingTime'] ?? '00:00')[1].' minutes'
                     )
                 ),
                 'free_seats' => rand(1,11)
             ]);
-
     }
 
     /**
