@@ -38,14 +38,14 @@ class ContactMessageRepository implements ContactMessageRepositoryInterface
         ]);
     }
 
-    public function update(array $data = []): void
+    public function update(int $id, array $data = []): Model
     {
-        ContactMessage::where('id', $data['id'])->update([
+        return ContactMessage::where('id', $data['id'])->update([
             'is_had_answer' => true
         ]);
     }
 
-    public function destroy($id, string $email): void
+    public function destroy($id): void
     {
         // TODO: Implement destroy() method.
     }
