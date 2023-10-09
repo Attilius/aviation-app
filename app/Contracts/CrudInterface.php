@@ -26,18 +26,18 @@ interface CrudInterface
      * Create a new model element.
      *
      * @param array $data
-     * @return void
+     * @return Model
      */
-    public function store(array $data): void;
+    public function store(array $data): Model;
 
     /**
      * Update one specify element of model.
      *
      * @param int $id
      * @param array $data
-     * @return void
+     * @return Model
      */
-    public function update(int $id, array $data): void;
+    public function update(int $id, array $data): Model;
 
     /**
      * Remove one specify element of model.
