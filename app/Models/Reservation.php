@@ -95,4 +95,12 @@ class Reservation extends Model
     {
         return $this->hasMany(ReservationCost::class);
     }
+
+    /**
+     * Get the user details that owns the reservation.
+     */
+    public function user(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class,'user_reservations');
+    }
 }
