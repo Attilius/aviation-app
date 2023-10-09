@@ -9,24 +9,33 @@ use App\Models\FlightDetails;
 use App\Models\Passenger;
 use App\Models\Reservation;
 use App\Models\ReservationUtils;
-//use App\Utils\DistanceCalculator;
-use App\Utils\TripDurationCalculator;
+use App\Models\User;
+use App\Repository\FlightDetailsRepository;
+use App\Repository\ReservationRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Models\Airport;
 use App\Utils\KeyGenerator;
 use App\Utils\TravelDistanceAndDurationHandler;
 
 class PrivateJetRentController extends Controller
 {
     private TravelDistanceAndDurationHandler $travelHandler;
+    private FlightDetailsRepository $flightDetailsRepository;
+    private ReservationRepository $reservationRepository;
 
-    public function __construct( TravelDistanceAndDurationHandler $travelHandler )
+    public function __construct(
+        TravelDistanceAndDurationHandler $travelHandler,
+        FlightDetailsRepository $flightDetailsRepository,
+        ReservationRepository $reservationRepository
+    )
     {
         $this->travelHandler = $travelHandler;
+        $this->flightDetailsRepository = $flightDetailsRepository;
+        $this->reservationRepository = $reservationRepository;
     }
 
     /**
@@ -53,7 +62,7 @@ class PrivateJetRentController extends Controller
             'arriving' => $airports[1]->municipality,
             'passengers' => strval($passengers),
             'airplanes' => $airplanesWithTripDuration,
-            'isPrivate' => boolval($request->query->get('private'))
+            'isPrivate' => true
         ]);
     }
 
@@ -70,17 +79,19 @@ class PrivateJetRentController extends Controller
         } else {
             $airports = $this->travelHandler->getAirports($request);
 
-            $flight = FlightDetails::create([
-                'flight_number' => '*',
+            $flightDetails = $this->flightDetailsRepository->store([
+                'flightNumber' => '*',
                 'airline' => 'Lorem Airlines',
-                'airplane_type' => '*',
-                'source_airport' => $airports[0]->municipality . ',' . $airports[0]->name,
-                'destination_airport' => $airports[1]->municipality . ',' . $airports[1]->name,
-                'departure_date' => $request->query->get('departure_date'),
-                'return_date' => $request->query->get('return_date') ? $request->query->get('return_date') : null
+                'airplaneType' => '*',
+                'cabinClass' => $request->query->get('cabin_class'),
+                'sourceAirport' => $airports[0]->municipality . ',' . $airports[0]->name,
+                'destinationAirport' => $airports[1]->municipality . ',' . $airports[1]->name,
+                'departureDate' => explode('T', $request->query->get('departure_date'))[0],
+                'departureTime' => explode('T', $request->query->get('departure_date'))[1],
+                'returnDate' => $request->query->get('return_date') ?? null
             ]);
 
-            $this->createReservation($request, $flight->id);
+            $this->createReservation($flightDetails->getAttributeValue('id'));
         }
     }
 
@@ -149,15 +160,18 @@ class PrivateJetRentController extends Controller
     {
         $reservation = Reservation::find($request->session()->getId());
         $airports = $this->travelHandler->getAirports($request);
+        $id = $reservation->flight_details_id;
 
-        FlightDetails::where('id', $reservation->flight_details_id)->update([
-            'flight_number' => '*',
+        $this->flightDetailsRepository->update($id, [
+            'flightNumber' => '*',
             'airline' => 'Lorem Airlines',
-            'airplane_type' => '*',
-            'source_airport' => $airports[0]->municipality . ',' . $airports[0]->name,
-            'destination_airport' => $airports[1]->municipality . ',' . $airports[1]->name,
-            'departure_date' => $request->query->get('departure_date'),
-            'return_date' => $request->query->get('return_date') ? $request->query->get('return_date') : null
+            'airplaneType' => '*',
+            'cabinClass' => $request->query->get('cabin_class'),
+            'sourceAirport' => $airports[0]->municipality . ',' . $airports[0]->name,
+            'destinationAirport' => $airports[1]->municipality . ',' . $airports[1]->name,
+            'departureDate' => explode('T', $request->query->get('departure_date'))[0],
+            'departureTime' => explode('T', $request->query->get('departure_date'))[1],
+            'returnDate' => $request->query->get('return_date') ?? null
         ]);
 
         $this->updateReservation($reservation->flight_details_id);
@@ -166,20 +180,23 @@ class PrivateJetRentController extends Controller
     /**
      * Creating a new reservation resource.
      *
-     * @param Request $request
      * @param int $id
      * @return void
      */
-    private function createReservation(Request $request, int $id): void
+    private function createReservation(int $id): void
     {
+        $authUser = Auth::user();
         $keyGenerator = new KeyGenerator();
+        $user = User::find($authUser->getAuthIdentifier());
 
-        $flight = FlightDetails::find($id);
-        $reservation = $flight->reservations()->create([
-            'id' => $request->session()->getId(),
+        $flightDeatils = FlightDetails::find($id);
+        $reservation = $flightDeatils->reservations()->create([
+            'id' => $keyGenerator->generate(40, 'mix'),
             'reservation_number' => $id . '-' . $keyGenerator->generate(6, 'mix'),
             'date_of_reservation' => Date::now()
         ]);
+
+        $user->reservations()->attach($reservation->id);
 
         $this->createReservationUtils($reservation->id);
         $this->createPaymentStatus($reservation->id);
