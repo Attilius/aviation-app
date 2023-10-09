@@ -40,6 +40,8 @@ class KeyGenerator implements KeyGeneratorInterface
      */
     public function generate(int $keyLength = 2, string $type = ''): string
     {
+        self::reset();
+
         if($type === '') {
             for ($i = 0; $i < $keyLength; $i++) {
                 if($i == 0 || $i % 2 == 0) {
@@ -75,6 +77,8 @@ class KeyGenerator implements KeyGeneratorInterface
      */
     private static function createOnlyAlphaNumericKey(int $keyLength): string
     {
+        self::reset();
+
         for ($i = 0; $i < $keyLength; $i++) {
             $charIndex = rand(0, count(self::$chars) - 1);
             self::$key .= self::$chars[$charIndex];
@@ -91,6 +95,8 @@ class KeyGenerator implements KeyGeneratorInterface
      */
     private function createOnlyNumericKey(int $keyLength): string
     {
+        self::reset();
+
         for ($i = 0; $i < $keyLength; $i++) {
             $numberIndex = rand(0, count(self::$numbers) - 1);
             self::$key .= self::$numbers[$numberIndex];
@@ -107,6 +113,8 @@ class KeyGenerator implements KeyGeneratorInterface
      */
     private static function createMixedNumericAndAlphaNumericKey(int $keyLength): string
     {
+        self::reset();
+
         for ($i = 0; $i < $keyLength; $i++) {
             $randomValue = rand(0, 99);
 
@@ -120,5 +128,15 @@ class KeyGenerator implements KeyGeneratorInterface
         }
 
         return self::$key;
+    }
+
+    /**
+     * Setting base value for key.
+     *
+     * @return void
+     */
+    private static function reset(): void
+    {
+        self::$key = '';
     }
 }
