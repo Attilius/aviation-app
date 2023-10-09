@@ -23,9 +23,11 @@ class FlightDetails extends Model
         'flight_number',
         'airline',
         'airplane_type',
+        'cabin_class',
         'source_airport',
         'destination_airport',
         'departure_date',
+        'departure_time',
         'return_date',
     ];
 
