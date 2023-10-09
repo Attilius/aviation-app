@@ -34,11 +34,11 @@ class FlightRepository implements FlightRepositoryInterface
      * Create a new flight model element.
      *
      * @param array $data
-     * @return void
+     * @return Model
      */
-    public function store(array $data): void
+    public function store(array $data): Model
     {
-        Flight::create([
+        return Flight::create([
             'departure_place' => $data['departurePlace'],
             'arriving_place' => $data['arrivingPlace'],
             'flight_number' => 'LA'. rand(1000,1999),
@@ -57,13 +57,13 @@ class FlightRepository implements FlightRepositoryInterface
      *
      * @param int $id
      * @param array $data
-     * @return void
+     * @return Model
      */
-    public function update(int $id, array $data = []): void
+    public function update(int $id, array $data = []): Model
     {
         $flight = Flight::where('id', $id)->get()->first();
 
-        $flight->update([
+        return $flight->update([
                 'departure_place' => $data['departurePlace'] ?? '*',
                 'arriving_place' => $data['arrivingPlace'] ?? '*',
                 'departure_date' => $data['departureDate'] ?? '2023-01-02',
