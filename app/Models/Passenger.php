@@ -25,6 +25,10 @@ class Passenger extends Model
         'last_name',
         'is_have_luggagge',
         'amount_of_luggage',
+        'amount_of_awaying_luggage',
+        'amount_of_return_luggage',
+        'price_of_awaying_luggage',
+        'price_of_return_luggage',
         'ticket_number'
     ];
 
