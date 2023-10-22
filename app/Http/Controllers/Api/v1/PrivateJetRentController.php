@@ -38,21 +38,28 @@ class PrivateJetRentController extends Controller
         $this->reservationRepository = $reservationRepository;
     }
 
-    /**
+    /*/**
      * Display a listing of the resource.
      *
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request): Response
+    /*public function index(Request $request): Response
     {
-        $this->storeFlightDetails($request);
+        //Store flight details in db
+        //$this->storeFlightDetails($request);
 
-        $airports = $this->travelHandler->getAirports($request);
-        $distanceInKilometer = $this->travelHandler->calculateTravelDistance($airports);
-        $passengers = array_sum(explode('-',$request->query->get('pax')));
-        $airplanes = Airplanes::findByDistanceAndPassengers($distanceInKilometer, $passengers);
-        $airplanesWithTripDuration = $this->travelHandler->addTripDuration($distanceInKilometer, $airplanes);
+        //Get airports and work with
+        //$airports = $this->travelHandler->getAirports($request);
+        //$distanceInKilometer = $this->travelHandler->calculateTravelDistance($airports);
+
+        //Get passengers from request and work with
+        //$passengers = array_sum(explode('-',$request->query->get('pax')));
+
+        //Get airplanes and work with
+        //$airplanes = Airplanes::findByDistanceAndPassengers($distanceInKilometer, $passengers);
+        //$airplanesWithTripDuration = $this->travelHandler->addTripDuration($distanceInKilometer, $airplanes);
+
         $this->updateReservationUtils($request);
         $this->updatePaymentStatus($request);
         return Inertia::render('API/PrivateJetRent', [
@@ -64,15 +71,15 @@ class PrivateJetRentController extends Controller
             'airplanes' => $airplanesWithTripDuration,
             'isPrivate' => true
         ]);
-    }
+    }*/
 
-    /**
+    /*/**
      * Store a newly created resource in storage.
      *
      * @param Request $request
      * @return void
      */
-    public function storeFlightDetails(Request $request): void
+    /*public function storeFlightDetails(Request $request): void
     {
         if($this->isReservationAlreadyExist($request)){
             $this->updateFlightDetails($request);
@@ -93,7 +100,7 @@ class PrivateJetRentController extends Controller
 
             $this->createReservation($flightDetails->getAttributeValue('id'));
         }
-    }
+    }*/
 
     /**
      * Remove the specified resource from storage.
@@ -126,36 +133,6 @@ class PrivateJetRentController extends Controller
      * @param Request $request
      * @return void
      */
-    private function updateReservationUtils(Request $request): void
-    {
-        $reservation = Reservation::find($request->session()->getId());
-        $reservation->reservationUtils()->update([
-            'pax' => $request->query->get('pax'),
-            'target_of_plane_choosing' => '*'
-        ]);
-    }
-
-    /**
-     * Update the specified resource in reservation utils.
-     *
-     * @param Request $request
-     * @return void
-     */
-    private function updatePaymentStatus(Request $request): void
-    {
-        $reservation = Reservation::find($request->session()->getId());
-        $reservation->paymentStatus()->update([
-            'payment_due_date' => Date::now(),
-            'payment_amount' => 0,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in reservation utils.
-     *
-     * @param Request $request
-     * @return void
-     */
     private function updateFlightDetails(Request $request): void
     {
         $reservation = Reservation::find($request->session()->getId());
@@ -177,86 +154,5 @@ class PrivateJetRentController extends Controller
         $this->updateReservation($reservation->flight_details_id);
     }
 
-    /**
-     * Creating a new reservation resource.
-     *
-     * @param int $id
-     * @return void
-     */
-    private function createReservation(int $id): void
-    {
-        $authUser = Auth::user();
-        $keyGenerator = new KeyGenerator();
-        $user = User::find($authUser->getAuthIdentifier());
 
-        $flightDeatils = FlightDetails::find($id);
-        $reservation = $flightDeatils->reservations()->create([
-            'id' => $keyGenerator->generate(40, 'mix'),
-            'reservation_number' => $id . '-' . $keyGenerator->generate(6, 'mix'),
-            'date_of_reservation' => Date::now()
-        ]);
-
-        $user->reservations()->attach($reservation->id);
-
-        $this->createReservationUtils($reservation->id);
-        $this->createPaymentStatus($reservation->id);
-    }
-
-    /**
-     * Creating a new reservation resource.
-     *
-     * @param int $id
-     * @return void
-     */
-    private function updateReservation(int $id): void
-    {
-        $keyGenerator = new KeyGenerator();
-
-        $flight = FlightDetails::find($id);
-        $flight->reservations()->update([
-            'reservation_number' => $id . '-' . $keyGenerator->generate(6, 'mix'),
-            'date_of_reservation' => Date::now()
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param string $id
-     * @return void
-     */
-    private function createReservationUtils(string $id): void
-    {
-        $reservation = Reservation::find($id);
-        $reservation->reservationUtils()->create([
-            'pax' => '*',
-            'target_of_plane_choosing' => '*'
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param string $id
-     * @return void
-     */
-    private function createPaymentStatus(string $id): void
-    {
-        $reservation = Reservation::find($id);
-        $reservation->paymentStatus()->create([
-            'payment_due_date' => Date::now(),
-            'payment_amount' => 0
-        ]);
-    }
-
-    /**
-     * Checking the reservation is exists.
-     *
-     * @param Request $request
-     * @return bool
-     */
-    private function isReservationAlreadyExist(Request $request): bool
-    {
-        return !is_null(Reservation::find($request->session()->getId()));
-    }
 }
