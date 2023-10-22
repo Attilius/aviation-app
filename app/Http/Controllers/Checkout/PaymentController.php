@@ -9,6 +9,7 @@ use App\Models\Passenger;
 use App\Models\Reservation;
 use App\Models\ReservationCost;
 use App\Models\ReservationUtils;
+use App\Services\Reservation\ReservationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -22,23 +23,27 @@ class PaymentController extends Controller
     /**
      * Baggage adding and insurance page rendering.
      *
-     * @param Request $request
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(): Response
     {
-        $reservation = Reservation::find($request->session()->getId());
-        $baggages = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['checked_baggage_items'];
+        $reservationService = new ReservationService();
+        $reservation = Reservation::find($reservationService->getReservationId());
+        $reservationUtils = ReservationUtils::where('reservation_id', $reservation->id)->get();
+        //$baggages = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['checked_baggage_items'];
         $reservationUtilsPax = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['pax'];
         $targetUrlOfPlaneChoosing = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['target_of_plane_choosing'];
         $passengersId = $reservation->passengers->pluck('id');
-        $totalCost = ReservationCost::where('reservation_id', $request->session()->getId())->sum('price');
+        $totalCost = ReservationCost::where('reservation_id', $reservationService->getReservationId())->sum('price');
         $insuranceCost = ReservationCost::select('price')
-                            ->where('reservation_id', $request->session()->getId())
+                            ->where('reservation_id', $reservationService->getReservationId())
                             ->where('item_name', 'Insurance cost')
                             ->first();
         $flightDetailsId = $reservation->flight_details_id;
         $airplaneType = FlightDetails::where('id', $flightDetailsId)->get()[0]['airplane_type'];
+        $flightDetails_ = FlightDetails::find($flightDetailsId)->get()->last();
+        //$airplaneType = $flightDetails_->airplane_type;
+        $isPrivate = ($flightDetails_->cabin_class === 'individual');
         $flightDetails = array();
         $passengers = array();
         $reference = [];
@@ -48,7 +53,15 @@ class PaymentController extends Controller
 
         $flightDetails['flight_number'] = FlightDetails::where('id', $flightDetailsId)->get()[0]['flight_number'];
         $flightDetails['airline'] = FlightDetails::where('id', $flightDetailsId)->get()[0]['airline'];
-        $flightDetails['airplane_img'] = Airplanes::findByType($airplaneType)->img;
+        $flightDetails['cabin_class'] = FlightDetails::where('id', $flightDetailsId)->get()[0]['cabin_class'];
+
+        if ($isPrivate)
+        {
+            $baggages = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['checked_baggage_items'];
+            $flightDetails['airplane_img'] = Airplanes::findByType($airplaneType)->img;
+        }
+
+
         $flightDetails['airplane_type'] = $airplaneType;
         $flightDetails['source_city'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['source_airport'])[0];
         $flightDetails['destination_city'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['destination_airport'])[0];
@@ -58,7 +71,20 @@ class PaymentController extends Controller
         $flightDetails['destination_iata'] = explode('%3E', explode('-', explode('connections=', $targetUrlOfPlaneChoosing)[1])[0])[1];
         $flightDetails['departure_date'] = explode(' ', FlightDetails::where('id', $flightDetailsId)->get()[0]['departure_date'])[0];
         $flightDetails['return_date'] = explode(' ', FlightDetails::where('id', $flightDetailsId)->get()[0]['return_date'])[0];
-        $flightDetails['flight_cost'] = ReservationCost::where('item_name','Flight cost')->where('reservation_id', $reservation->id)->first()->price;
+
+        if ($isPrivate)
+        {
+            $flightDetails['flight_cost'] = ReservationCost::where('item_name','Flight cost')->where('reservation_id', $reservation->id)->first()->price;
+        } else {
+            if ($reservationUtils->first()->travel_type === 'ROUNDTRIP')
+            {
+                $flightDetails['flight_cost'] = ReservationCost::where('item_name','Departure fligt cost')->where('reservation_id', $reservation->id)->first()->price
+                    + ReservationCost::where('item_name','Return flight cost')->where('reservation_id', $reservation->id)->first()->price;
+            } else {
+                $flightDetails['flight_cost'] = ReservationCost::where('item_name','Departure fligt cost')->where('reservation_id', $reservation->id)->first()->price;
+            }
+        }
+
         $incrementKey = 1;
 
         $travelType = explode('&', explode('travel_type=', $targetUrlOfPlaneChoosing)[1])[0];
@@ -126,9 +152,9 @@ class PaymentController extends Controller
 
         return Inertia::render('Booking/Payment', [
             'title' => 'Trip summary',
-            'progressId' => '5',
+            'progressId' => $isPrivate || $reservationUtils->first()->travel_type === 'ONEWAY' ? '5' : '6',
             'cost' => $totalCost,
-            'isPrivate' => true,
+            'isPrivate' => $isPrivate,
             'reservationNumber' => explode('-', $reservation->reservation_number)[1],
             'baggages' => $baggages,
             'flightDetails' => $flightDetails,
@@ -139,7 +165,8 @@ class PaymentController extends Controller
                                     $flightDetails['return_date']
                                   ),
             'travelType' => $travelType,
-            'insuranceCost' => $insuranceCost->price
+            'insuranceCost' => $insuranceCost->price,
+            'isRoundTrip' => $reservationUtils->first()->travel_type === 'ROUNDTRIP'
         ]);
     }
 
@@ -193,13 +220,14 @@ class PaymentController extends Controller
      */
     public function paymentSuccess(Request $request): RedirectResponse
     {
+        $reservationService = new ReservationService();
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $provider->getAccessToken();
         $response = $provider->capturePaymentOrder($request->get('token'));
 
         if($response['status'] == 'COMPLETED'){
-            $reservation = Reservation::find($request->session()->getId());
+            $reservation = Reservation::find($reservationService->getReservationId());
             $reservation->paymentStatus()->update([
                 'payment_status' => 'payed'
             ]);
