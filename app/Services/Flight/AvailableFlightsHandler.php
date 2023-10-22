@@ -2,7 +2,9 @@
 
 namespace App\Services\Flight;
 
+use App\Models\Reservation;
 use App\Services\AbstractServiceHandler;
+use App\Services\Reservation\ReservationService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Services\Travel\TravelService;
@@ -21,6 +23,7 @@ class AvailableFlightsHandler extends AbstractServiceHandler
      */
     public function handle(Request $request, Model $model, Response $props): void
     {
+        $reservationService = new ReservationService();
         $travelService = new TravelService();
         $airports = $props->getProps()['airports'];
         $availableFlights = $props->getProps()['availableFlights'];
@@ -33,10 +36,16 @@ class AvailableFlightsHandler extends AbstractServiceHandler
             $flight['trip_duration'] = isset($travelService->calculateTravelTimeInterval($flight)->h)
                 ? $travelService->calculateTravelTimeInterval($flight)->h.'h'.$travelService->calculateTravelTimeInterval($flight)->i
                 : $travelService->calculateTravelTimeInterval($flight);
-            $flight['departure_iata'] = explode('>', (explode('-',$request->query->get('connections'))[0]))[0];
-            $flight['arriving_iata'] = explode('>', (explode('-',$request->query->get('connections'))[0]))[1];
-            $flight['departure_airport'] = $airports[0]->name;
-            $flight['arriving_airport'] = $airports[1]->name;
+            $flight['departure_iata'] = $request->query->get('direction') === 'departure'
+                ? explode('>', (explode('-',$request->query->get('connections'))[0]))[0]
+                : explode('>', (explode('-',$request->query->get('connections'))[0]))[1];
+            $flight['arriving_iata'] = $request->query->get('direction') === 'departure'
+                ? explode('>', (explode('-',$request->query->get('connections'))[0]))[1]
+                : explode('>', (explode('-',$request->query->get('connections'))[0]))[0];
+            $flight['departure_airport'] = $request->query->get('direction') === 'departure'
+                ? $airports[0]->name : $airports[1]->name;
+            $flight['arriving_airport'] = $request->query->get('direction') === 'departure'
+                ? $airports[1]->name : $airports[0]->name;
             $flight['cabin_class'] = $request->query->get('cabin_class');
         }
 
@@ -59,7 +68,25 @@ class AvailableFlightsHandler extends AbstractServiceHandler
             }
         }
 
+        $props->addProps('request', $request);
         $props->addProps('airplanes', $sortedAvailableFlights);
         $props->removeItem('airports');
+
+        if ($request->query->get('direction') === 'departure')
+        {
+            $reservationService->createReservation(
+                $model['id'], $request->query->get('pax'), $request->query->get('travel_type')
+            );
+        } else {
+            $reservation = Reservation::find($reservationService->getReservationId());
+            $reservationCosts = $reservation->reservationCosts()->create([
+                'item_name' => 'Departure fligt cost',
+                'price' => $request->query->get('cost')
+            ]);
+
+            Reservation::where('id', $reservationService->getReservationId())->update([
+                'reservation_costs_id' => $reservationCosts->id
+            ]);
+        }
     }
 }
