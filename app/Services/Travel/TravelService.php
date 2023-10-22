@@ -20,15 +20,15 @@ class TravelService
     private array $airplanes = [
         0 => [
             'type' => 'Airbus A321-200',
-            'travelSpeed' => 876
+            'travelSpeed' => 900
         ],
         1 => [
             'type' => 'Airbus A320-200',
-            'travelSpeed' => 903
+            'travelSpeed' => 900
         ],
         2 => [
             'type' => 'Boeing 737-800',
-            'travelSpeed' => 946
+            'travelSpeed' => 900
         ],
     ];
 
@@ -70,9 +70,12 @@ class TravelService
                 $item['arriving_place'] = $data['airports'][1]->municipality;
                 $item['departure_date'] = $data['request']->query->get('departure_date');
             } else {
-                $item['departure_place'] = $data['airports'][1]->municipality;
-                $item['arriving_place'] = $data['airports'][0]->municipality;
-                $item['departure_date'] = $data['request']->query->get('return_date');
+                if ($data['request']->query->get('travel_type') === 'ROUNDTRIP')
+                {
+                    $item['departure_place'] = $data['airports'][1]->municipality;
+                    $item['arriving_place'] = $data['airports'][0]->municipality;
+                    $item['departure_date'] = $data['request']->query->get('return_date');
+                }
             }
 
             $item['arriving_time'] = date("H:i",
@@ -139,17 +142,19 @@ class TravelService
         if ($time2 < $time1)
         {
             $referenceTime = new DateTime('00:00');
-            $f = clone $referenceTime;
+            $cloneOfReferenceTime = clone $referenceTime;
             $PM_partOfTime = $time1->diff(new DateTime('23:59'));
             $AM_partOfTime = $referenceTime->diff($time2);
-            $firstStringCharacter = substr($f->diff($referenceTime)->format("%Hh%I"), 0, 1);
+            $firstStringCharacter = substr($cloneOfReferenceTime
+                ->diff($referenceTime)
+                ->format("%Hh%I"), 0, 1);
 
             $referenceTime->add($PM_partOfTime);
             $referenceTime->add($AM_partOfTime);
 
             return $firstStringCharacter === '0'
-                ? substr($f->diff($referenceTime)->format("%Hh%I"), 1)
-                : $f->diff($referenceTime)->format("%Hh%I");
+                ? substr($cloneOfReferenceTime->diff($referenceTime)->format("%Hh%I"), 1)
+                : $cloneOfReferenceTime->diff($referenceTime)->format("%Hh%I");
 
         } else {
             return $time1->diff($time2);
