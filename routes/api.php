@@ -17,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/search/airplane/offers', [PrivateJetRentController::class, 'index'])->name('plane-choosing');
-Route::get('/time', CurrentTimeController::class);
+//Route::get('/search/airplane/offers', [PrivateJetRentController::class, 'index'])->name('plane-choosing');Route::get('/time', CurrentTimeController::class);
+//Route::get('/search/offers/return', [FlightServiceController::class, 'returnFlight'])->name('flight-return');
 Route::get('/{cityName}', DestinationServiceController::class);
 
-Route::get('/search/flight/offers', [FlightServiceController::class, 'index'])->name('flight-choosing');
+Route::get('/search/offers', [FlightServiceController::class, 'index'])->name('flight-choosing');
 Route::get('/flight/{id}', [FlightServiceController::class, 'getOnlyFlight']);
 Route::post('/flight/create', [FlightServiceController::class, 'storeFlight']);
 Route::patch('/flight/edit/{id}', [FlightServiceController::class, 'updateFlight']);
