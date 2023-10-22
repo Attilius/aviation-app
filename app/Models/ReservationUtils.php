@@ -21,6 +21,7 @@ class ReservationUtils extends Model
     protected $fillable = [
         'pax',
         'target_of_plane_choosing',
+        'travel_type'
     ];
 
     /**
