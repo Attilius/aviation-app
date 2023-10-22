@@ -34,13 +34,19 @@ class AirportServiceHandler extends AbstractServiceHandler
 
         $airports = $airport->FindByIata([$departure_iata, $arriving_iata]);
 
-        $model['source_airport'] = $airports[0]->municipality . ',' . $airports[0]->name;
-        $model['destination_airport'] = $airports[1]->municipality . ',' . $airports[1]->name;
+        $model['source_airport'] = $request->query->get('direction') === 'departure'
+            ? $airports[0]->municipality . ',' . $airports[0]->name
+            : $airports[1]->municipality . ',' . $airports[1]->name;
+        $model['destination_airport'] = $request->query->get('direction') === 'departure'
+            ? $airports[1]->municipality . ',' . $airports[1]->name
+            : $airports[0]->municipality . ',' . $airports[0]->name;
         $model->save();
 
-        $props->addProps('progressId', '2');
-        $props->addProps('departure', $airports[0]->municipality);
-        $props->addProps('arriving', $airports[1]->municipality);
+        $props->addProps('progressId', $request->query->get('direction') === 'departure' ? '2' : '3');
+        $props->addProps('departure', $request->query->get('direction') === 'departure'
+            ? $airports[0]->municipality : $airports[1]->municipality);
+        $props->addProps('arriving', $request->query->get('direction') === 'departure'
+            ? $airports[1]->municipality : $airports[0]->municipality);
         $props->addProps('distanceInKilometer', $travelService->calculateTravelDistance($airports));
         $props->addProps('airports', $airports);
 
