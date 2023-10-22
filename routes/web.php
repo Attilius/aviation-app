@@ -21,6 +21,9 @@ use App\Http\Controllers\Services\PrivateJetRentController;
 use App\Http\Controllers\Services\TravelInsuranceController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\Ticket\TicketController;
+use App\Services\Passenger\PassengerService;
+use App\Services\Reservation\ReservationContactService;
+use App\Services\Reservation\ReservationCostService;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\RoutePath;
 
@@ -92,13 +95,13 @@ Route::middleware([
         [PassengerController::class, 'index'])->name('create-passenger');
 
     Route::post('/checkout/passenger-details/cretate-reservation-cost',
-        [PassengerController::class, 'createReservationCost'])->name('create-reservation-cost');
+        [ReservationCostService::class, 'createReservationCost'])->name('create-reservation-cost');
 
     Route::post('/checkout/passenger-details/cretate-passenger',
-        [PassengerController::class, 'storePassenger'])->name('store-passenger');
+        [PassengerService::class, 'storePassenger'])->name('store-passenger');
 
     Route::post('/checkout/passenger-details/cretate-reservation-contact',
-        [PassengerController::class, 'storeReservationContact'])->name('store-reservation-contact');
+        [ReservationContactService::class, 'storeReservationContact'])->name('store-reservation-contact');
 
     Route::get('/checkout/ancillaries',
         [AncillariesController::class, 'index'])->name('create-ancillaries');
