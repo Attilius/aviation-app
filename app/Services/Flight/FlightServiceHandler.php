@@ -22,21 +22,26 @@ class FlightServiceHandler extends AbstractServiceHandler
 
         $props->addProps('title', 'Choose a flight');
 
-        $travelService->getTripDuration($props->getProps()['distanceInKilometer'], [
-           'airports' => $airports,
-           'request' => $request
-        ]);
+        if ($request->query->get('direction') === 'departure')
+        {
+            $travelService->getTripDuration($props->getProps()['distanceInKilometer'], [
+                'airports' => $airports,
+                'request' => $request
+            ]);
+        }
+
+        $direction = $request->query->get('direction') === 'departure' ? 'departure' : 'return';
 
         if ($request->query->get('departure_date') === date('Y-m-d'))
         {
            $availableFlights = $flightRepository->findAll()
-               ->where('direction','=','departure')
+               ->where('direction','=', $direction)
                ->where('departure_time', '>', date('H:i:s', strtotime('+2 hours')));
         } else {
-            $availableFlights = $flightRepository->findAll()->where('direction', 'departure');
+            $availableFlights = $flightRepository->findAll()->where('direction', $direction);
         }
 
-        $props->addProps('title', 'Jet Rent');
+        $props->addProps('title', 'Choose a flight');
         $props->addProps('isPrivate', false);
         $props->addProps('availableFlights', $availableFlights);
 
