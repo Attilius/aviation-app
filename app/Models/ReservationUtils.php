@@ -21,7 +21,13 @@ class ReservationUtils extends Model
     protected $fillable = [
         'pax',
         'target_of_plane_choosing',
-        'travel_type'
+        'travel_type',
+        'flight_numbers',
+        'return_flight_numbers',
+        'airplane_type',
+        'return_airplane_type',
+        'target_of_plane_choosing_back',
+        'checked_baggage_items'
     ];
 
     /**
