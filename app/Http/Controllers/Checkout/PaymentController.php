@@ -60,8 +60,7 @@ class PaymentController extends Controller
             $baggages = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['checked_baggage_items'];
             $flightDetails['airplane_img'] = Airplanes::findByType($airplaneType)->img;
         }
-
-
+        dd($targetUrlOfPlaneChoosing);
         $flightDetails['airplane_type'] = $airplaneType;
         $flightDetails['source_city'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['source_airport'])[0];
         $flightDetails['destination_city'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['destination_airport'])[0];
