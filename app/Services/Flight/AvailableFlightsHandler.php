@@ -3,6 +3,7 @@
 namespace App\Services\Flight;
 
 use App\Models\Reservation;
+use App\Models\ReservationUtils;
 use App\Services\AbstractServiceHandler;
 use App\Services\Reservation\ReservationService;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,7 @@ class AvailableFlightsHandler extends AbstractServiceHandler
     public function handle(Request $request, Model $model, Response $props): void
     {
         $reservationService = new ReservationService();
+        $reservationUtils = ReservationUtils::where('reservation_id',$reservationService->getReservationId());
         $travelService = new TravelService();
         $airports = $props->getProps()['airports'];
         $availableFlights = $props->getProps()['availableFlights'];
@@ -70,6 +72,7 @@ class AvailableFlightsHandler extends AbstractServiceHandler
 
         $props->addProps('request', $request);
         $props->addProps('airplanes', $sortedAvailableFlights);
+        $props->addProps('cost', strval($request->query->get('cost')) ?? '0');
         $props->removeItem('airports');
 
         if ($request->query->get('direction') === 'departure')
@@ -86,6 +89,11 @@ class AvailableFlightsHandler extends AbstractServiceHandler
 
             Reservation::where('id', $reservationService->getReservationId())->update([
                 'reservation_costs_id' => $reservationCosts->id
+            ]);
+
+            $reservationUtils->update([
+                'airplane_type' => $request->query->get('awayAirplaneType'),
+                'flight_numbers' => $request->query->get('awayFlightNumber')
             ]);
         }
     }
