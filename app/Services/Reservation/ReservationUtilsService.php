@@ -36,7 +36,7 @@ class ReservationUtilsService
     public function updateReservationUtils(Request $request, string $id): void
     {
         ReservationUtils::where('reservation_id', $id)->update([
-            'target_of_plane_choosing_back' => $request->get('targetOfPlaneChoosing'),
+            'target_of_plane_choosing' => $request->get('targetOfPlaneChoosing'),
             'return_flight_numbers' => $request->get('returnFlightNumber'),
             'return_airplane_type' => $request->get('returnAirplaneType')
         ]);
