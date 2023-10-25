@@ -96,7 +96,7 @@ class TravelService
      * @param array $airports
      * @return float|int
      */
-    public function calculateTravelDistance(array $airports): float|int
+    public static function calculateTravelDistance(array $airports): float|int
     {
         $calculator = new DistanceCalculator(
             $airports[0]->latitude_deg,
