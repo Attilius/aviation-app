@@ -21,7 +21,6 @@ class AirportServiceHandler extends AbstractServiceHandler
     public function handle(Request $request, Model $model, Response $props): void
     {
         $airport = new Airport();
-        $travelService = new TravelService();
 
         if($request->query->get('travel_type') === 'ROUNDTRIP')
         {
@@ -47,7 +46,7 @@ class AirportServiceHandler extends AbstractServiceHandler
             ? $airports[0]->municipality : $airports[1]->municipality);
         $props->addProps('arriving', $request->query->get('direction') === 'departure'
             ? $airports[1]->municipality : $airports[0]->municipality);
-        $props->addProps('distanceInKilometer', $travelService->calculateTravelDistance($airports));
+        $props->addProps('distanceInKilometer', TravelService::calculateTravelDistance($airports));
         $props->addProps('airports', $airports);
 
         foreach ($props->getKeys() as $keyItem)
