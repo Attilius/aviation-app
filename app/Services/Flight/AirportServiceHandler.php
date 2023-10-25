@@ -23,7 +23,7 @@ class AirportServiceHandler extends AbstractServiceHandler
         $airport = new Airport();
         $travelService = new TravelService();
 
-        if($request->query->get('travel_type') == 'ROUNDTRIP')
+        if($request->query->get('travel_type') === 'ROUNDTRIP')
         {
             $departure_iata = explode('-', explode('>', $request->query->get('connections'))[0])[0];
             $arriving_iata = explode('-', explode('>', $request->query->get('connections'))[1])[0];
