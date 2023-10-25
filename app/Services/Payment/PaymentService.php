@@ -8,33 +8,28 @@ use Illuminate\Support\Facades\Date;
 class PaymentService
 {
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new payment status resource.
      *
      * @param string $id
      * @return void
      */
     public function createPaymentStatus(string $id): void
     {
-        $reservation = Reservation::find($id);
-        $reservation->paymentStatus()->create([
+        Reservation::find($id)->paymentStatus()->create([
             'payment_due_date' => Date::now(),
             'payment_amount' => 0
         ]);
     }
 
     /**
-     * Update the specified resource in reservation utils.
+     * Update the specified resource in payment status.
      *
      * @param string $id
-     * @param int $paymentAmount
+     * @param array $data
      * @return void
      */
-    public function updatePaymentStatus(string $id, int $paymentAmount): void
+    public static function updatePaymentStatus(string $id, array $data): void
     {
-        $reservation = Reservation::find($id);
-        $reservation->paymentStatus()->update([
-            'payment_due_date' => Date::now(),
-            'payment_amount' => $paymentAmount,
-        ]);
+        Reservation::find($id)->paymentStatus()->update($data);
     }
 }
