@@ -14,7 +14,6 @@ class AirplaneServiceHandler extends  AbstractServiceHandler
 
     public function handle(Request $request, Model $model, Response $props): void
     {
-        $travelService = new TravelService();
         $reservationService = new ReservationService();
 
         if ($request->query->get('private') === 'true')
@@ -22,7 +21,7 @@ class AirplaneServiceHandler extends  AbstractServiceHandler
             $airplanes = Airplanes::findByDistanceAndPassengers(
                 $props->getProps()['distanceInKilometer'], $props->getProps()['passengers']
             );
-            $airplanesWithTripDuration = $travelService->addTripDuration(
+            $airplanesWithTripDuration = TravelService::addTripDuration(
                 $props->getProps()['distanceInKilometer'], $airplanes
             );
 
