@@ -115,7 +115,7 @@ class TravelService
      * @param array $airplanes
      * @return array
      */
-    public function addTripDuration(float|int $distanceInKilometer, array $airplanes): array
+    public static function addTripDuration(float|int $distanceInKilometer, array $airplanes): array
     {
         return array_map(function ($airplane) use ($distanceInKilometer) {
             $tripDurationCalculator = new TripDurationCalculator($airplane->travel_speed , $distanceInKilometer);
