@@ -38,7 +38,7 @@ class FlightServiceController extends Controller
      * @throws Exception
      */
     public function index(Request $request): Response
-    {//dd($request);
+    {
         $this->chain
             ->addChainLink(new AirportServiceHandler())
             ->addChainLink(new AirplaneServiceHandler())
