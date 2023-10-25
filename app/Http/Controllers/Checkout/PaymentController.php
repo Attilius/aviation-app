@@ -31,6 +31,7 @@ class PaymentController extends Controller
         $reservation = Reservation::find($reservationService->getReservationId());
         $reservationUtils = ReservationUtils::where('reservation_id', $reservation->id)->get();
         //$baggages = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['checked_baggage_items'];
+        $baggages = 0;
         $reservationUtilsPax = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['pax'];
         $targetUrlOfPlaneChoosing = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['target_of_plane_choosing'];
         $passengersId = $reservation->passengers->pluck('id');
@@ -51,17 +52,18 @@ class PaymentController extends Controller
         $reference['paypalClientId'] = env('PAYPAL_SANDBOX_CLIENT_ID');
         $reference['price'] = $totalCost;
 
-        $flightDetails['flight_number'] = FlightDetails::where('id', $flightDetailsId)->get()[0]['flight_number'];
+        if ($reservationUtils->first()->travel_type === 'ONEWAY')
+        {
+            $flightDetails['flight_number'] = FlightDetails::where('id', $flightDetailsId)->get()[0]['flight_number'];
+            $flightDetails['airplane_type'] = FlightDetails::where('id', $flightDetailsId)->get()[0]['airplane_type'];
+        }
+
+        $flightDetails['away_flight_number'] = $reservationUtils[0]->flight_numbers;
+        $flightDetails['return_flight_number'] = $reservationUtils[0]->return_flight_numbers;
         $flightDetails['airline'] = FlightDetails::where('id', $flightDetailsId)->get()[0]['airline'];
         $flightDetails['cabin_class'] = FlightDetails::where('id', $flightDetailsId)->get()[0]['cabin_class'];
-
-        if ($isPrivate)
-        {
-            $baggages = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['checked_baggage_items'];
-            $flightDetails['airplane_img'] = Airplanes::findByType($airplaneType)->img;
-        }
-        dd($targetUrlOfPlaneChoosing);
-        $flightDetails['airplane_type'] = $airplaneType;
+        $flightDetails['away_airplane_type'] = $reservationUtils[0]->airplane_type;
+        $flightDetails['return_airplane_type'] = $reservationUtils[0]->return_airplane_type;
         $flightDetails['source_city'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['source_airport'])[0];
         $flightDetails['destination_city'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['destination_airport'])[0];
         $flightDetails['source_airport'] = explode(',', FlightDetails::where('id', $flightDetailsId)->get()[0]['source_airport'])[1];
@@ -73,6 +75,8 @@ class PaymentController extends Controller
 
         if ($isPrivate)
         {
+            $baggages = ReservationUtils::where('reservation_id', $reservation->id)->get()[0]['checked_baggage_items'];
+            $flightDetails['airplane_img'] = Airplanes::findByType($airplaneType)->img;
             $flightDetails['flight_cost'] = ReservationCost::where('item_name','Flight cost')->where('reservation_id', $reservation->id)->first()->price;
         } else {
             if ($reservationUtils->first()->travel_type === 'ROUNDTRIP')
@@ -88,20 +92,27 @@ class PaymentController extends Controller
 
         $travelType = explode('&', explode('travel_type=', $targetUrlOfPlaneChoosing)[1])[0];
 
-        foreach ($passengersId as $id){
+        foreach ($passengersId as $id)
+        {
             $passenger = Passenger::where('id', $id)->get();
             $pax = explode('-', $reservationUtilsPax);
 
             $passengers[$incrementKey]['serialNumber'] = $incrementKey;
             $passengers[$incrementKey]['name'] = $passenger[0]->first_name. ' ' .$passenger[0]->last_name;
             $passengers[$incrementKey]['checkedBaggages'] = $passenger[0]->amount_of_luggage;
+            $passengers[$incrementKey]['awayingLuggage'] = $passenger[0]->amount_of_awaying_luggage;
+            $passengers[$incrementKey]['returnLuggage'] = $passenger[0]->amount_of_return_luggage;
+            $baggages += (intval($passenger[0]->amount_of_awaying_luggage ) + intval($passenger[0]->amount_of_return_luggage));
 
-            for($i = 0; $i < count($pax); $i++) {
+            for($i = 0; $i < count($pax); $i++)
+            {
                 switch($i) {
                     case 0:
                     {
-                        if ($pax[0] !== '0') {
-                            for ($j = 0; $j < intval($pax[0]); $j++) {
+                        if ($pax[0] !== '0')
+                        {
+                            for ($j = 0; $j < intval($pax[0]); $j++)
+                            {
                                 $passengers[$incrementKey]['type'] = 'adult';
                             }
                         }
@@ -109,8 +120,10 @@ class PaymentController extends Controller
                     }
                     case 1:
                     {
-                        if ($pax[1] !== '0') {
-                            for ($j = 0; $j < intval($pax[1]); $j++) {
+                        if ($pax[1] !== '0')
+                        {
+                            for ($j = 0; $j < intval($pax[1]); $j++)
+                            {
                                 $passengers[$incrementKey]['type'] = 'child';
                             }
                         }
@@ -118,8 +131,10 @@ class PaymentController extends Controller
                     }
                     case 2:
                     {
-                        if ($pax[2] !== '0') {
-                            for ($j = 0; $j < intval($pax[2]); $j++) {
+                        if ($pax[2] !== '0')
+                        {
+                            for ($j = 0; $j < intval($pax[2]); $j++)
+                            {
                                 $passengers[$incrementKey]['type'] = 'infant';
                             }
                         }
@@ -127,8 +142,10 @@ class PaymentController extends Controller
                     }
                     case 3:
                     {
-                        if ($pax[3] !== '0') {
-                            for ($j = 0; $j < intval($pax[3]); $j++) {
+                        if ($pax[3] !== '0')
+                        {
+                            for ($j = 0; $j < intval($pax[3]); $j++)
+                            {
                                 $passengers[$incrementKey]['type'] = 'senior';
                             }
                         }
@@ -136,8 +153,10 @@ class PaymentController extends Controller
                     }
                     case 4:
                     {
-                        if ($pax[4] !== '0') {
-                            for ($j = 0; $j < intval($pax[4]); $j++) {
+                        if ($pax[4] !== '0')
+                        {
+                            for ($j = 0; $j < intval($pax[4]); $j++)
+                            {
                                 $passengers[$incrementKey]['type'] = 'youth';
                             }
                         }
