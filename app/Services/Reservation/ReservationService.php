@@ -62,7 +62,7 @@ class ReservationService
      *
      * @return string
      */
-    public function getReservationId(): string
+    public static function getReservationId(): string
     {
         $authUser = Auth::user();
         $user = User::find($authUser->getAuthIdentifier());
