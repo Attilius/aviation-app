@@ -82,6 +82,7 @@ class AvailableFlightsHandler extends AbstractServiceHandler
             );
         } else {
             $reservation = Reservation::find($reservationService->getReservationId());
+
             $reservationCosts = $reservation->reservationCosts()->create([
                 'item_name' => 'Departure fligt cost',
                 'price' => $request->query->get('cost')
@@ -92,6 +93,7 @@ class AvailableFlightsHandler extends AbstractServiceHandler
             ]);
 
             $reservationUtils->update([
+                'target_of_plane_choosing' => $request->query->get('targetOfPlaneChoosing'),
                 'airplane_type' => $request->query->get('awayAirplaneType'),
                 'flight_numbers' => $request->query->get('awayFlightNumber')
             ]);
