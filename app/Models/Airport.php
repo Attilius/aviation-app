@@ -23,8 +23,10 @@ class Airport
 
         $airports = array();
 
-        foreach (json_decode($jsonData) as $value) {
-            if ($value->municipality == $cityName && $value->type !== 'heliport' && $value->type !== 'closed') {
+        foreach (json_decode($jsonData) as $value)
+        {
+            if ($value->municipality == $cityName && $value->type !== 'heliport' && $value->type !== 'closed')
+            {
                 $airports[] = $value;
             }
         }
@@ -44,13 +46,10 @@ class Airport
 
         $airports = array();
 
-        foreach (json_decode($jsonData) as $value) {
-            if ($value->iata_code == $iata[0]) {
-                $airports[0] = $value;
-            }
-            if ($value->iata_code == $iata[1]) {
-                $airports[1] = $value;
-            }
+        for ($i = 0; $i < count($iata); $i++)
+        {
+            $key = array_search($iata[$i], array_column(json_decode($jsonData), 'iata_code'));
+            $airports[$i] = json_decode($jsonData)[$key];
         }
 
         return $airports;
@@ -67,16 +66,20 @@ class Airport
         $jsonData = File::get(base_path(self::PRIVATE_JSON_FILE_PATH));
         $airports = array();
 
-        if($typeOfService !== 'private') {
+        if ($typeOfService !== 'private')
+        {
             $jsonData = File::get(base_path(self::PUBLIC_JSON_FILE_PATH));
 
-            foreach (json_decode($jsonData) as $value) {
+            foreach (json_decode($jsonData) as $value)
+            {
                 $airports[] = $value;
             }
         } else {
-            foreach (json_decode($jsonData) as $value) {
+            foreach (json_decode($jsonData) as $value)
+            {
                 if ($value->type !== 'heliport' && $value->type !== 'closed' && $value->iata_code !== '' &&
-                    $value->type !== 'small_airport' && $value->iata_code !== 'FCO') {
+                    $value->type !== 'small_airport' && $value->iata_code !== 'FCO')
+                {
                     $airports[] = $value;
                 }
             }
