@@ -18,7 +18,7 @@ class FlightServiceHandler extends AbstractServiceHandler
     {
         $travelService = new TravelService();
         $flightRepository = new FlightRepository();
-        $airports = $props->getProps()['airports'];
+        $airports = cache('airports');
 
         $props->addProps('title', 'Choose a flight');
 
@@ -43,7 +43,7 @@ class FlightServiceHandler extends AbstractServiceHandler
 
         $props->addProps('title', 'Choose a flight');
         $props->addProps('isPrivate', false);
-        $props->addProps('availableFlights', $availableFlights);
+        $props->addProps('availableFlights', $availableFlights->sortBy('id'));
 
         $props->removeItem('distanceInKilometer');
 
