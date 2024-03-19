@@ -157,7 +157,7 @@ module.exports = {
             'new_york': "url('/img/cities/new-york.jpg')",
             'zurich': "url('/img/cities/zurich.jpg')",
             'rental_car': "url('/img/services/car.jpg')",
-            'booking_hotel': "url('/img/services/hotel.jpg')",
+            'booking_hotel': "url('/img/services/hotel.jpg')"
         },
     },
 
